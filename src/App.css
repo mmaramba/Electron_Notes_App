@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 .App {
   text-align: center;
 }
@@ -35,4 +37,45 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.leftCol {
+  background-color: rgb(57, 59, 59);
+  height: 100vh;
+  font-size: 1.5em;
+}
+
+.leftIcon {
+  padding-top: 17px;
+}
+
+a {
+  color: lightgrey;
+}
+
+.midCol {
+  background-color: rgb(34, 34, 34);
+  height: 100vh;
+  color: rgb(218, 216, 216);
+}
+
+.layout {
+  height: 100vh;
+}
+
+.midColHeader {
+  background-color: rgb(41, 41, 41);
+  text-align: left;
+}
+
+.midColContent {
+  background-color: rgb(41, 41, 41);
+  padding-left: 50px;
+  text-align: left;
+}
+
+.rightCol {
+  padding-top: 20px;
+  height: 100vh;
+  background-color: rgb(30, 31, 32);
 }

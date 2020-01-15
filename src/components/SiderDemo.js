@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Avatar, Row, Col, List } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Avatar, Row, Col, List, Dropdown } from 'antd';
 import './SiderDemo.css'
 import { callbackify } from 'util';
 
@@ -16,6 +16,25 @@ for (let i = 0; i < 10; i++) {
     category: cats[Math.floor(Math.random()*cats.length)]
   });
 }
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        3rd menu item
+      </a>
+    </Menu.Item>
+  </Menu>
+);
 
 class SiderDemo extends React.Component {
   state = {
@@ -144,17 +163,43 @@ class SiderDemo extends React.Component {
             <Col span={16} style={{height: "100%", backgroundColor: "white"}}>
               <Layout style={{position: "fixed", width: "calc(100% - 470px)"}}>
                 <Content style={{width: '100%', backgroundColor: "white"}}>
-                  <div className="itemDetailToolbar">
-                    <Icon className="tbIcon" type="clock-circle" />
-                    <Icon className="tbIcon" type="star" />
+                  <div className="topDetailSection">
+                    <div className="itemDetailToolbar">
+                      <Icon className="tbIcon" type="clock-circle" />
+                      <Icon className="tbIcon" type="star" />
+                      <Icon className="tbIcon" type="ellipsis" />
+                    </div>
+                    <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
+                      <Breadcrumb.Item>Items</Breadcrumb.Item>
+                      <Breadcrumb.Item contentEditable="true" className="editable">Editable Title</Breadcrumb.Item>
+                    </Breadcrumb>
                   </div>
-                  <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
-                    <Breadcrumb.Item>Items</Breadcrumb.Item>
-                    <Breadcrumb.Item contentEditable="true" className="editable">Editable Title</Breadcrumb.Item>
-                  </Breadcrumb>
-                  <div className="editable" contentEditable="true" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}}>
-                    Click here to edit me!
+                  <div className="typingToolbar">
+                    <Dropdown overlay={menu} trigger={['click']}>
+                      <a className="ant-dropdown-link" href="#">
+                        Font <Icon style={{marginLeft: "40px", marginRight: "10px"}} type="down" />
+                      </a>
+                    </Dropdown>
+                    <Dropdown overlay={menu} trigger={['click']}>
+                      <a className="ant-dropdown-link" href="#">
+                        14 <Icon style={{marginLeft: "20px", marginRight: "10px"}} type="down" />
+                      </a>
+                    </Dropdown>
+                    <Icon className="tbIcon" type="font-size" />
+                    <span style={{marginLeft: "20px"}}></span>
+                    <Icon className="tbIcon" type="font-colors" />
+                    <Icon className="tbIcon" type="bg-colors" />
+                    <Icon className="tbIcon" type="highlight" />
+                    <span style={{marginLeft: "20px"}}></span>
+                    <Icon className="tbIcon" type="bold" />
+                    <Icon className="tbIcon" type="italic" />
+                    <Icon className="tbIcon" type="underline" />
+                    <span style={{marginLeft: "20px"}}></span>
+                    <Icon className="tbIcon" type="align-left" />
+                    <Icon className="tbIcon" type="align-center" />
+                    <Icon className="tbIcon" type="align-right" />
                   </div>
+                  <div className="editable" contentEditable="true" data-text="Click here to edit me!" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}} />
                 </Content>
               </Layout>
             </Col>

@@ -20,6 +20,10 @@
     cursor: pointer;
 }
 
+.topDetailSection {
+    margin: 0px 10px;
+}
+
 .editable {
     border: none;
     outline: 0;
@@ -36,4 +40,17 @@
 
 .tbIcon {
     margin: 5px;
+}
+
+.typingToolbar {
+    margin: 0px 10px;
+    padding-bottom: 5px;
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+}
+
+[contentEditable=true]:hover {
+    cursor: text;
 }

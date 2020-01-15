@@ -9,7 +9,8 @@ import {
   Row,
   Col,
   Icon,
-  Layout
+  Layout,
+  Breadcrumb
 } from 'antd';
 import {
   HashRouter,
@@ -24,43 +25,7 @@ function App() {
   return (
     <div className="App">
       <HashRouter>
-        <Row justify="end">
-          <Col span={2} className="leftCol">
-            <div className="leftIconTop">
-              <Link to="/">
-                <Icon type="user" />
-              </Link>
-            </div>
-            <div className="leftIconMid">
-              <Link to="/">
-                <Icon type="plus-circle" />
-              </Link>
-            </div>
-            <div className="leftIcon">
-              <Link to="/">
-                <Icon type="home" />
-              </Link>
-            </div>
-            <div className="leftIcon">
-              <Link to="/test">
-                <Icon type="book" />
-              </Link>
-            </div>
-            <div className="leftIcon">
-              <Link to="/test">
-                <Icon type="calendar" />
-              </Link>
-            </div>
-            <div className="leftIcon">
-              <Link to="/test">
-                <Icon type="carry-out" />
-              </Link>
-            </div>
-          </Col>
-          <Col span={22} className="midCol" style={{"user-select": "none"}}>
-            <SiderDemo />
-          </Col>
-        </Row>
+        <SiderDemo />
       </HashRouter>
     </div>
   );

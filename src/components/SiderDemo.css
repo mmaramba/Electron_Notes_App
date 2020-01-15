@@ -24,3 +24,16 @@
     border: none;
     outline: 0;
 }
+
+.itemDetailToolbar {
+    text-align: right;
+    margin-right: 16px;
+    padding-top: 10px;
+    position: fixed;
+    right: 16px;
+    top: -12px;
+}
+
+.tbIcon {
+    margin: 5px;
+}

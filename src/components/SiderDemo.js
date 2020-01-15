@@ -80,8 +80,8 @@ class SiderDemo extends React.Component {
             </SubMenu>
             <Menu.Item key="2" className="menuItem">
               <span>
-                <Icon type="question" />
-                <span>Uncategorized</span>
+                <Icon type="star" />
+                <span>Starred</span>
               </span>
             </Menu.Item>
           </Menu>
@@ -118,16 +118,16 @@ class SiderDemo extends React.Component {
                             "font-size": "0.7em", 
                             "font-weight": "normal"
                           }}>
-                            (1/23/45)
+                            23 Jan
                           </span>
                         </div>}
                         description={<div>
-                          <div>This is a description.</div>
+                          <div>{item.description}</div>
                           <div style={{
                             "font-size": "0.8em",
                             "padding-top": "3px"
                           }}>
-                            <span>
+                            <span style={{marginLeft: '3px', marginTop: '3px'}}>
                             <Icon type="folder" />
                             <span> {item.category}</span>
                             </span>
@@ -142,14 +142,17 @@ class SiderDemo extends React.Component {
               </Layout>
             </Col>
             <Col span={16} style={{height: "100%", backgroundColor: "white"}}>
-              <Layout style={{position: "fixed", width: "calc(100% - 500px)"}}>
+              <Layout style={{position: "fixed", width: "calc(100% - 470px)"}}>
                 <Content style={{width: '100%', backgroundColor: "white"}}>
-                  <Breadcrumb style={{ margin: '16px 16px' }}>
-                    <Breadcrumb.Item>User's Name</Breadcrumb.Item>
+                  <div className="itemDetailToolbar">
+                    <Icon className="tbIcon" type="clock-circle" />
+                    <Icon className="tbIcon" type="star" />
+                  </div>
+                  <Breadcrumb style={{ margin: '0px 16px', textAlign: 'left', paddingBottom: '10px'}}>
                     <Breadcrumb.Item>Items</Breadcrumb.Item>
-                    <Breadcrumb.Item>Item 0</Breadcrumb.Item>
+                    <Breadcrumb.Item contentEditable="true" className="editable">Editable Title</Breadcrumb.Item>
                   </Breadcrumb>
-                  <div className="editable" contentEditable="true" style={{textAlign: "left", margin: "20px"}}>
+                  <div className="editable" contentEditable="true" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}}>
                     Click here to edit me!
                   </div>
                 </Content>

@@ -148,7 +148,7 @@ class SiderDemo extends React.Component {
                     <Icon className="tbIcon" type="clock-circle" />
                     <Icon className="tbIcon" type="star" />
                   </div>
-                  <Breadcrumb style={{ margin: '0px 16px', textAlign: 'left', paddingBottom: '10px'}}>
+                  <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
                     <Breadcrumb.Item>Items</Breadcrumb.Item>
                     <Breadcrumb.Item contentEditable="true" className="editable">Editable Title</Breadcrumb.Item>
                   </Breadcrumb>

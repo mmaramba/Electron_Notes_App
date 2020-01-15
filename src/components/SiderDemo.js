@@ -152,9 +152,14 @@ class SiderDemo extends React.Component {
                   dataSource={data}
                   size="large"
                   renderItem={item => (
-                    <List.Item style={{textAlign: "left", paddingLeft: "10px", paddingBottom: "0px"}}
+                    <List.Item
                       key={item.title}
-                      style={{backgroundColor: (item.title === this.state.currentItem? "#cfcccc" : "#f0f0f0")}}
+                      style={{
+                        backgroundColor: (item.title === this.state.currentItem? "#cfcccc" : "#f0f0f0"),
+                        textAlign: "left", 
+                        paddingLeft: "10px", 
+                        paddingBottom: "0px"
+                      }}
                       onClick={(e) => this.onUserItemClicked(item.title, e)}
                     >
                       <List.Item.Meta

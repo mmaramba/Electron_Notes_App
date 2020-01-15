@@ -20,17 +20,37 @@ const menu = (
   <Menu>
     <Menu.Item>
       <a target="_blank" rel="noopener noreferrer">
-        1st menu item
+        Comic Sans
       </a>
     </Menu.Item>
     <Menu.Item>
       <a target="_blank" rel="noopener noreferrer">
-        2nd menu item
+        Arial
       </a>
     </Menu.Item>
     <Menu.Item>
       <a target="_blank" rel="noopener noreferrer">
-        3rd menu item
+        Wingdings
+      </a>
+    </Menu.Item>
+  </Menu>
+);
+
+const fontMenu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        12
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        14
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        16
       </a>
     </Menu.Item>
   </Menu>
@@ -39,7 +59,8 @@ const menu = (
 class SiderDemo extends React.Component {
   state = {
     collapsed: false,
-    name: "User's Name"
+    name: "User's Name",
+    currentItem: data[0].title
   };
 
   toggle = () => {
@@ -59,12 +80,18 @@ class SiderDemo extends React.Component {
     return padding;
   }
 
+  onUserItemClicked = (title, e) => {
+    this.setState({
+      currentItem: title
+    });
+  }
+
   render() {
     return (
       <Layout style={{ height: '100vh' }}>
         <Sider style={{"background-color": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
-            <Avatar className="userAvatar" size={64} onClick={this.userClicked()}>UN</Avatar>
+            <Avatar className="userAvatar" size={64} onClick={this.userClicked}>UN</Avatar>
             <div 
               style={{"padding-top": "10px", "color": "black", "user-select": "none"}}
             >
@@ -117,7 +144,7 @@ class SiderDemo extends React.Component {
         </Sider>
         <Layout>
           <Row>
-            <Col span={8}>
+            <Col span={8} style={{userSelect: "none"}}>
               <Layout style={{minHeight: "100vh"}}>
                 <Content style={{ backgroundColor: "f0f0f0"}}>
                 <List
@@ -127,6 +154,8 @@ class SiderDemo extends React.Component {
                   renderItem={item => (
                     <List.Item style={{textAlign: "left", paddingLeft: "10px", paddingBottom: "0px"}}
                       key={item.title}
+                      style={{backgroundColor: (item.title === this.state.currentItem? "#cfcccc" : "#f0f0f0")}}
+                      onClick={(e) => this.onUserItemClicked(item.title, e)}
                     >
                       <List.Item.Meta
                         title={<div style={{"position": "relative"}}>
@@ -167,25 +196,25 @@ class SiderDemo extends React.Component {
                     <div className="itemDetailToolbar">
                       <Icon className="tbIcon" type="clock-circle" />
                       <Icon className="tbIcon" type="star" />
+                      <Icon className="tbIcon" type="share-alt" />
                       <Icon className="tbIcon" type="ellipsis" />
                     </div>
                     <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
                       <Breadcrumb.Item>Items</Breadcrumb.Item>
-                      <Breadcrumb.Item contentEditable="true" className="editable">Editable Title</Breadcrumb.Item>
+                      <Breadcrumb.Item contentEditable="true" suppressContentEditableWarning={true} className="editable">Editable Title</Breadcrumb.Item>
                     </Breadcrumb>
                   </div>
                   <div className="typingToolbar">
                     <Dropdown overlay={menu} trigger={['click']}>
                       <a className="ant-dropdown-link" href="#">
-                        Font <Icon style={{marginLeft: "40px", marginRight: "10px"}} type="down" />
+                        Comic Sans <Icon style={{marginLeft: "40px", marginRight: "10px"}} type="down" />
                       </a>
                     </Dropdown>
-                    <Dropdown overlay={menu} trigger={['click']}>
+                    <Dropdown overlay={fontMenu} trigger={['click']}>
                       <a className="ant-dropdown-link" href="#">
-                        14 <Icon style={{marginLeft: "20px", marginRight: "10px"}} type="down" />
+                        12 <Icon style={{marginLeft: "10px", marginRight: "10px"}} type="down" />
                       </a>
                     </Dropdown>
-                    <Icon className="tbIcon" type="font-size" />
                     <span style={{marginLeft: "20px"}}></span>
                     <Icon className="tbIcon" type="font-colors" />
                     <Icon className="tbIcon" type="bg-colors" />
@@ -199,7 +228,7 @@ class SiderDemo extends React.Component {
                     <Icon className="tbIcon" type="align-center" />
                     <Icon className="tbIcon" type="align-right" />
                   </div>
-                  <div className="editable" contentEditable="true" data-text="Click here to edit me!" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}} />
+                  <div className="editable" contentEditable="true" suppressContentEditableWarning={true} data-text="Click here to edit me!" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}} />
                 </Content>
               </Layout>
             </Col>

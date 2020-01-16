@@ -57,11 +57,17 @@ const fontMenu = (
 );
 
 class SiderDemo extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+
   state = {
     collapsed: false,
     name: "User's Name",
     currentItem: data[0].title
   };
+
 
   toggle = () => {
     var display = this.state.name === "User's Name" ? "" : "User's Name";
@@ -144,7 +150,7 @@ class SiderDemo extends React.Component {
         </Sider>
         <Layout style={{backgroundColor: "white"}}>
           <Row>
-            <Col span={8} style={{userSelect: "none"}}>
+            <Col span={8} ref={this.midColRef} style={{userSelect: "none"}}>
               <Layout style={{height: "100vh"}}>
                 <Content style={{ backgroundColor: "#fafafa"}}>
                 <div className="midColMenu">

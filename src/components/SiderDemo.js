@@ -142,61 +142,74 @@ class SiderDemo extends React.Component {
             />
           </div>
         </Sider>
-        <Layout>
+        <Layout style={{backgroundColor: "white"}}>
           <Row>
             <Col span={8} style={{userSelect: "none"}}>
-              <Layout style={{minHeight: "100vh"}}>
-                <Content style={{ backgroundColor: "f0f0f0"}}>
-                <List
-                  itemLayout="horizontal"
-                  dataSource={data}
-                  size="large"
-                  renderItem={item => (
-                    <List.Item
-                      key={item.title}
-                      style={{
-                        backgroundColor: (item.title === this.state.currentItem? "#cfcccc" : "#f0f0f0"),
-                        textAlign: "left", 
-                        paddingLeft: "10px", 
-                        paddingBottom: "0px"
-                      }}
-                      onClick={(e) => this.onUserItemClicked(item.title, e)}
-                    >
-                      <List.Item.Meta
-                        title={<div style={{"position": "relative"}}>
-                          {item.title}
-                          <span style={{
-                            "position": "absolute", 
-                            "right": "20px", 
-                            "font-size": "0.7em", 
-                            "font-weight": "normal"
-                          }}>
-                            23 Jan
-                          </span>
-                        </div>}
-                        description={<div>
-                          <div>{item.description}</div>
-                          <div style={{
-                            "font-size": "0.8em",
-                            "padding-top": "3px"
-                          }}>
-                            <span style={{marginLeft: '3px', marginTop: '3px'}}>
-                            <Icon type="folder" />
-                            <span> {item.category}</span>
+              <Layout style={{height: "100vh"}}>
+                <Content style={{ backgroundColor: "#fafafa"}}>
+                <div className="midColMenu">
+                  <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>All Items</h3>
+                  <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
+                    97 notes
+                  </div>
+                  <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
+                    <Icon className="menuIcon" type="sort-ascending" />
+                    <Icon className="menuIcon" type="sort-descending" />
+                    <Icon className="menuIcon" type="search" />
+                  </div>
+                </div>
+                <div className="listContainer">
+                  <List
+                    itemLayout="horizontal"
+                    dataSource={data}
+                    size="large"
+                    renderItem={item => (
+                      <List.Item
+                        key={item.title}
+                        style={{
+                          backgroundColor: (item.title === this.state.currentItem? "#dbdbdb" : "#fafafa"),
+                          textAlign: "left", 
+                          paddingLeft: "10px", 
+                          paddingBottom: "0px"
+                        }}
+                        onClick={(e) => this.onUserItemClicked(item.title, e)}
+                      >
+                        <List.Item.Meta
+                          title={<div style={{"position": "relative"}}>
+                            {item.title}
+                            <span style={{
+                              "position": "absolute", 
+                              "right": "20px", 
+                              "font-size": "0.7em", 
+                              "font-weight": "normal"
+                            }}>
+                              9 min ago
                             </span>
-                          </div>
-                        </div>}
-                      />
-                      {item.content}
-                    </List.Item>
-                  )}
-                />
+                          </div>}
+                          description={<div>
+                            <div>{item.description}</div>
+                            <div style={{
+                              "font-size": "0.8em",
+                              "padding-top": "3px"
+                            }}>
+                              <span style={{marginLeft: '3px', marginTop: '3px'}}>
+                              <Icon type="folder" />
+                              <span> {item.category}</span>
+                              </span>
+                            </div>
+                          </div>}
+                        />
+                        {item.content}
+                      </List.Item>
+                    )}
+                  />
+                </div>
                 </Content>
               </Layout>
             </Col>
             <Col span={16} style={{height: "100%", backgroundColor: "white"}}>
-              <Layout style={{position: "fixed", width: "calc(100% - 470px)"}}>
-                <Content style={{width: '100%', backgroundColor: "white"}}>
+              <Layout style={{position: "fixed", width: "calc(100% - 600px)"}}>
+                <Content style={{width: '100%', height: "100%", backgroundColor: "white"}}>
                   <div className="topDetailSection">
                     <div className="itemDetailToolbar">
                       <Icon className="tbIcon" type="clock-circle" />
@@ -233,7 +246,18 @@ class SiderDemo extends React.Component {
                     <Icon className="tbIcon" type="align-center" />
                     <Icon className="tbIcon" type="align-right" />
                   </div>
-                  <div className="editable" contentEditable="true" suppressContentEditableWarning={true} data-text="Click here to edit me!" style={{textAlign: "left", margin: "10px 18px", paddingTop: '20px'}} />
+                  <div 
+                    className="editable" 
+                    contentEditable="true" 
+                    suppressContentEditableWarning={true} 
+                    data-text="Click here to edit me!" 
+                    style={{
+                      textAlign: "left", 
+                      margin: "10px 18px", 
+                      paddingTop: '20px',
+                      minHeight: "100vh"
+                    }} 
+                  />
                 </Content>
               </Layout>
             </Col>

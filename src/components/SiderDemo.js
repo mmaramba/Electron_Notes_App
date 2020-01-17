@@ -1,10 +1,11 @@
 import React from 'react';
-import { Layout, Menu, Breadcrumb, Icon, Avatar, Row, Col, List, Dropdown } from 'antd';
+import { Layout, Menu, Breadcrumb, Icon, Avatar, Row, Col, List, Dropdown, Button, Tooltip, Modal, Input } from 'antd';
 import './SiderDemo.css'
 import { callbackify } from 'util';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+const { Search } = Input;
 
 const data = [];
 const cats = ["Homework", "Grocery Lists", "Class Notes"];
@@ -56,6 +57,26 @@ const fontMenu = (
   </Menu>
 );
 
+const sortMenu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        Sort by time
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        Sort by length
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer">
+        Sort by something else?
+      </a>
+    </Menu.Item>
+  </Menu>
+);
+
 class SiderDemo extends React.Component {
   constructor(props){
     super(props);
@@ -65,7 +86,9 @@ class SiderDemo extends React.Component {
   state = {
     collapsed: false,
     name: "User's Name",
-    currentItem: data[0].title
+    currentItem: data[0].title,
+    visible: false,
+    settingsVisible: false
   };
 
 
@@ -92,7 +115,62 @@ class SiderDemo extends React.Component {
     });
   }
 
+  showModal = () => {
+    this.setState({
+      visible: true
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  showSettingsModal = () => {
+    this.setState({
+      settingsVisible: true
+    });
+  };
+
+  handleSettingsOk = e => {
+    console.log(e);
+    this.setState({
+      settingsVisible: false,
+    });
+  };
+
+  handleSettingsCancel = e => {
+    console.log(e);
+    this.setState({
+      settingsVisible: false,
+    });
+  };
+
   render() {
+    const userMenu = (
+      <Menu>
+        <Menu.Item onClick={this.showSettingsModal}>
+          <a target="_blank" rel="noopener noreferrer">
+            Settings
+          </a>
+        </Menu.Item>
+        <Menu.Item>
+          <a target="_blank" rel="noopener noreferrer">
+            About this application
+          </a>
+        </Menu.Item>
+      </Menu>
+    );
+
     return (
       <Layout style={{ height: '100vh' }}>
         <Sider style={{"background-color": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
@@ -102,9 +180,28 @@ class SiderDemo extends React.Component {
               style={{"padding-top": "10px", "color": "black", "user-select": "none"}}
             >
               {this.state.name}
+              <Dropdown overlay={userMenu} trigger={['click']}>
+                <a className="ant-dropdown-link" href="#">
+                  <Icon type="down" 
+                    style={{
+                      display: this.state.collapsed? "none": "initial",
+                      paddingLeft: this.state.collapsed? "0px": "10px"
+                    }} />
+                </a>
+              </Dropdown>
+              <Modal
+                title="Settings"
+                visible={this.state.settingsVisible}
+                onOk={this.handleSettingsOk}
+                onCancel={this.handleSettingsCancel}
+              >
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+                <p>Some contents...</p>
+              </Modal>
             </div>
           </div>
-          <Menu theme="light" defaultSelectedKeys={['9']} mode="inline" style={{"text-align": "left"}}>
+          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['9']} mode="inline" style={{"text-align": "left"}}>
             <Menu.Item key="1" className="menuItem">
               <span>
                 <Icon type="home" />
@@ -156,12 +253,31 @@ class SiderDemo extends React.Component {
                 <div className="midColMenu">
                   <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>All Items</h3>
                   <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
-                    97 notes
+                    11 notes
                   </div>
                   <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
-                    <Icon className="menuIcon" type="sort-ascending" />
-                    <Icon className="menuIcon" type="sort-descending" />
-                    <Icon className="menuIcon" type="search" />
+                    <Dropdown overlay={sortMenu} placement="bottomCenter">
+                      <a className="ant-dropdown-link" href="#" style={{color: "rgba(0, 0, 0, 0.65)"}}>
+                        <Icon type="caret-down" />
+                      </a>
+                    </Dropdown>
+                    <Tooltip placement="topLeft" title="Search by item name">
+                      <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="search" size="small" onClick={this.showModal} ghost />
+                    </Tooltip>
+                    <Modal
+                      title="Search by item name"
+                      visible={this.state.visible}
+                      onOk={this.handleOk}
+                      onCancel={this.handleCancel}
+                      footer={null}
+                      width="250px"
+                    >
+                      <Search
+                        placeholder="Enter name"
+                        onSearch={value => console.log(value)}
+                        style={{ width: 200 }}
+                      />
+                    </Modal>
                   </div>
                 </div>
                 <div className="listContainer">
@@ -173,7 +289,7 @@ class SiderDemo extends React.Component {
                       <List.Item
                         key={item.title}
                         style={{
-                          backgroundColor: (item.title === this.state.currentItem? "#dbdbdb" : "#fafafa"),
+                          backgroundColor: (item.title === this.state.currentItem? "#ededed" : "#fafafa"),
                           textAlign: "left", 
                           paddingLeft: "10px", 
                           paddingBottom: "0px"
@@ -218,10 +334,18 @@ class SiderDemo extends React.Component {
                 <Content style={{width: '100%', height: "100%", backgroundColor: "white"}}>
                   <div className="topDetailSection">
                     <div className="itemDetailToolbar">
-                      <Icon className="tbIcon" type="clock-circle" />
-                      <Icon className="tbIcon" type="star" />
-                      <Icon className="tbIcon" type="share-alt" />
-                      <Icon className="tbIcon" type="ellipsis" />
+                      <Tooltip placement="bottomRight" title="Create timer for item">
+                        <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="clock-circle" size="small" ghost />
+                      </Tooltip>
+                      <Tooltip placement="bottomRight" title="Star item">
+                        <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="star" size="small" ghost />
+                      </Tooltip>
+                      <Tooltip placement="bottomRight" title="Share item">
+                      <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="share-alt" size="small" ghost />
+                      </Tooltip>
+                      <Tooltip placement="bottomRight" title="More options">
+                      <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="ellipsis" size="small" ghost />
+                      </Tooltip>
                     </div>
                     <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
                       <Breadcrumb.Item>Items</Breadcrumb.Item>

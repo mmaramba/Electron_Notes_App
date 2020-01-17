@@ -116,6 +116,7 @@ class SiderDemo extends React.Component {
   }
 
   showModal = () => {
+    console.log("opening modal");
     this.setState({
       visible: true
     });
@@ -124,15 +125,23 @@ class SiderDemo extends React.Component {
   handleOk = e => {
     console.log(e);
     this.setState({
-      visible: false,
+      visible: false
     });
   };
 
   handleCancel = e => {
     console.log(e);
     this.setState({
-      visible: false,
+      visible: false
     });
+  };
+
+  handleEnterKeyOnSearch = (value, event) => {
+    console.log(value);
+    this.setState({
+      visible: false
+    });
+    console.log(this.state);
   };
 
   showSettingsModal = () => {
@@ -253,7 +262,7 @@ class SiderDemo extends React.Component {
                 <div className="midColMenu">
                   <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>All Items</h3>
                   <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
-                    11 notes
+                    10 items
                   </div>
                   <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
                     <Dropdown overlay={sortMenu} placement="bottomCenter">
@@ -262,7 +271,7 @@ class SiderDemo extends React.Component {
                       </a>
                     </Dropdown>
                     <Tooltip placement="topLeft" title="Search by item name">
-                      <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="search" size="small" onClick={this.showModal} ghost />
+                      <Icon type="search" style={{color: "rgba(0, 0, 0, 0.65)", paddingLeft: "5px"}} size="small" onClick={this.showModal} />
                     </Tooltip>
                     <Modal
                       title="Search by item name"
@@ -274,7 +283,7 @@ class SiderDemo extends React.Component {
                     >
                       <Search
                         placeholder="Enter name"
-                        onSearch={value => console.log(value)}
+                        onSearch={this.handleEnterKeyOnSearch}
                         style={{ width: 200 }}
                       />
                     </Modal>

@@ -339,7 +339,7 @@ class SiderDemo extends React.Component {
               </Layout>
             </Col>
             <Col span={16} style={{height: "100%", backgroundColor: "white"}}>
-              <Layout style={{position: "fixed", width: "calc(100% - 600px)"}}>
+              <Layout style={{position: "fixed", width: "calc(100% - 500px)"}}>
                 <Content style={{width: '100%', height: "100%", backgroundColor: "white"}}>
                   <div className="topDetailSection">
                     <div className="itemDetailToolbar">

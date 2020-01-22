@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import 'react-quill/dist/quill.snow.css';
 import Component1 from './components/Component1.js';
 import Component2 from './components/Component2.js';
 import SiderDemo from './components/SiderDemo.js';

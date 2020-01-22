@@ -2,6 +2,9 @@ import React from 'react';
 import { Layout, Menu, Breadcrumb, Icon, Avatar, Row, Col, List, Dropdown, Button, Tooltip, Modal, Input } from 'antd';
 import './SiderDemo.css'
 import { callbackify } from 'util';
+import TextEditor from './TextEditor.js';
+import TypingToolbar from './TypingToolbar.js';
+import TestReactQuill from './TestReactQuill.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -17,45 +20,6 @@ for (let i = 0; i < 10; i++) {
     category: cats[Math.floor(Math.random()*cats.length)]
   });
 }
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        Comic Sans
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        Arial
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        Wingdings
-      </a>
-    </Menu.Item>
-  </Menu>
-);
-
-const fontMenu = (
-  <Menu>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        12
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        14
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer">
-        16
-      </a>
-    </Menu.Item>
-  </Menu>
-);
 
 const sortMenu = (
   <Menu>
@@ -358,45 +322,12 @@ class SiderDemo extends React.Component {
                     </div>
                     <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
                       <Breadcrumb.Item>Items</Breadcrumb.Item>
-                      <Breadcrumb.Item contentEditable="true" suppressContentEditableWarning={true} className="editable">Editable Title</Breadcrumb.Item>
+                      <Breadcrumb.Item>Untitled</Breadcrumb.Item>
                     </Breadcrumb>
                   </div>
-                  <div className="typingToolbar">
-                    <Dropdown overlay={menu} trigger={['click']}>
-                      <a className="ant-dropdown-link" href="#">
-                        Comic Sans <Icon style={{marginLeft: "40px", marginRight: "10px"}} type="down" />
-                      </a>
-                    </Dropdown>
-                    <Dropdown overlay={fontMenu} trigger={['click']}>
-                      <a className="ant-dropdown-link" href="#">
-                        12 <Icon style={{marginLeft: "10px", marginRight: "10px"}} type="down" />
-                      </a>
-                    </Dropdown>
-                    <span style={{marginLeft: "20px"}}></span>
-                    <Icon className="tbIcon" type="font-colors" />
-                    <Icon className="tbIcon" type="bg-colors" />
-                    <Icon className="tbIcon" type="highlight" />
-                    <span style={{marginLeft: "20px"}}></span>
-                    <Icon className="tbIcon" type="bold" />
-                    <Icon className="tbIcon" type="italic" />
-                    <Icon className="tbIcon" type="underline" />
-                    <span style={{marginLeft: "20px"}}></span>
-                    <Icon className="tbIcon" type="align-left" />
-                    <Icon className="tbIcon" type="align-center" />
-                    <Icon className="tbIcon" type="align-right" />
+                  <div style={{margin: "16px"}}>
+                    <TestReactQuill placeholder="Start typing here!" />
                   </div>
-                  <div 
-                    className="editable" 
-                    contentEditable="true" 
-                    suppressContentEditableWarning={true} 
-                    data-text="Click here to edit me!" 
-                    style={{
-                      textAlign: "left", 
-                      margin: "10px 18px", 
-                      paddingTop: '20px',
-                      minHeight: "100vh"
-                    }} 
-                  />
                 </Content>
               </Layout>
             </Col>

@@ -56,6 +56,10 @@
     cursor: text;
 }
 
+[contentEditable=true] {
+    outline: none;
+}
+
 .midColMenu {
     height: 100px;
     border-bottom: 1px solid lightgray;
@@ -64,4 +68,12 @@
 
 .menuIcon {
     margin: 2px;
+}
+
+div.ql-container.ql-snow {
+    border: none;
+}
+
+div.ql-toolbar.ql-snow {
+    border: none;
 }

@@ -93,13 +93,21 @@ class ListCol extends React.Component {
   };
 
   render() {
+      let headerText = "Loading...";
+      switch(this.props.filter) {
+          case "all":
+              headerText = "All Items";
+                break;
+            case "starred":
+                headerText = "Starred Items";
+      }
     
     return (
         <Col span={8} style={{userSelect: "none"}}>
             <Layout style={{height: "100vh"}}>
                 <Content style={{ backgroundColor: "#fafafa"}}>
                     <div className="midColMenu">
-                        <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>All Items</h3>
+                        <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
                         <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
                         10 items
                         </div>

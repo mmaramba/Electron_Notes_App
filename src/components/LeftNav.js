@@ -8,6 +8,9 @@ import {
     Modal,
     Avatar
 } from 'antd';
+import {
+    Link
+} from 'react-router-dom';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -106,18 +109,18 @@ class LeftNav extends React.Component {
               </Modal>
             </div>
           </div>
-          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['9']} mode="inline" style={{"text-align": "left"}}>
+          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['1']} mode="inline" style={{"text-align": "left"}}>
             <Menu.Item key="1" className="menuItem">
-              <span>
+              <Link to="/">
                 <Icon type="home" />
                 <span>Home</span>
-              </span>
+              </Link>
             </Menu.Item>
             <Menu.Item key="9">
-              <span>
+              <Link to="/items">
                 <Icon type="file-text" />
                 <span>Items</span>
-              </span>
+              </Link>
             </Menu.Item>
             <SubMenu
               key="sub1"
@@ -133,10 +136,10 @@ class LeftNav extends React.Component {
               <Menu.Item key="5">Class Notes</Menu.Item>
             </SubMenu>
             <Menu.Item key="2" className="menuItem">
-              <span>
+              <Link to="/starred">
                 <Icon type="star" />
                 <span>Starred</span>
-              </span>
+              </Link>
             </Menu.Item>
           </Menu>
           <div className="mainFooter">

@@ -3,6 +3,7 @@ import pymongo
 from datetime import datetime
 from flask import Flask, request, jsonify
 from config import get_connection_string
+from bson.json_util import dumps
 
 app = Flask(__name__)
 client = None
@@ -17,7 +18,9 @@ def db_connect():
 
 @app.route('/items/all', methods=['GET'])
 def getAllItems():
-    pass
+    res = dumps(client.database.items.find())
+    print(res)
+    return res
 
 
 @app.route('/all', methods=['GET'])

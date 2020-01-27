@@ -52,7 +52,9 @@ class SiderDemo extends React.Component {
     name: "User's Name",
     currentItem: data[0].title,
     visible: false,
-    settingsVisible: false
+    settingsVisible: false,
+    editTitleVisible: false,
+    editTitleModalVisible: false
   };
 
 
@@ -125,6 +127,38 @@ class SiderDemo extends React.Component {
     console.log(e);
     this.setState({
       settingsVisible: false,
+    });
+  };
+
+  showEditTitleButton = () => {
+    this.setState({
+      editTitleVisible: true
+    });
+  };
+
+  hideEditTitleButton = () => {
+    this.setState({
+      editTitleVisible: false
+    });
+  };
+
+  showEditTitleModal = () => {
+    this.setState({
+      editTitleModalVisible: true
+    });
+  };
+
+  handleEditTitleOk = e => {
+    console.log(e);
+    this.setState({
+      editTitleModalVisible: false,
+    });
+  };
+
+  handleEditTitleCancel = e => {
+    console.log(e);
+    this.setState({
+      editTitleModalVisible: false,
     });
   };
 
@@ -320,11 +354,22 @@ class SiderDemo extends React.Component {
                       <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="ellipsis" size="small" ghost />
                       </Tooltip>
                     </div>
-                    <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px'}}>
+                    <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px', cursor: "pointer"}}>
                       <Breadcrumb.Item>Items</Breadcrumb.Item>
-                      <Breadcrumb.Item>Untitled</Breadcrumb.Item>
+                      <Breadcrumb.Item id="titleContainer" onMouseEnter={this.showEditTitleButton} onMouseLeave={this.hideEditTitleButton} onClick={this.showEditTitleModal}>
+                        Untitled
+                        <span id="editTitle"><Icon type="edit" style={{paddingLeft: "5px", display: this.state.editTitleVisible? "inline-block" : "none"}}/></span>
+                      </Breadcrumb.Item>
                     </Breadcrumb>
                   </div>
+                  <Modal
+                    title="Edit Title"
+                    visible={this.state.editTitleModalVisible}
+                    onOk={this.handleEditTitleOk}
+                    onCancel={this.handleEditTitleCancel}
+                  >
+                    <p>Enter a new title</p>
+                  </Modal>
                   <div style={{margin: "16px"}}>
                     <TestReactQuill placeholder="Start typing here!" />
                   </div>

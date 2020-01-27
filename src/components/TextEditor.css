@@ -15,3 +15,11 @@
 .ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
     padding-left: 5px;
 }
+
+div.ql-container.ql-snow {
+    border: none;
+}
+
+div.ql-toolbar.ql-snow {
+    border: none;
+}

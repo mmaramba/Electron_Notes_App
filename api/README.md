@@ -1,64 +1,403 @@
-### GET /items/all
-Returns a list of all of the user's items.
+# Senior Project API
+Prototype documentation for Michael Maramba's Senior Project API. This API features routes that support functionality for user registration, note-taking and saving, and data display.
 
-**Example response body:**  
-`{ 'result': [{ 'itemId': 1, 'title': 'Note 1', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2019-12-19 09:30:03.000111', 'star': False, 'content': 'This is a note.' }, { 'itemId': 2, 'title': 'Note 2', 'category': 'Notes 2', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2019-12-19 09:30:03.000111', 'star': True, 'content': 'This is a starred note.' }] }`
+## Version: 1.0.0
 
-### GET /categories/{category_id}
-Returns a list of all of the items associated with a user's specific category.
+**Contact information:**  
+mpmaramb@calpoly.edu  
 
-**Example response body:**  
-`{ 'result': [{ 'itemId': 1, 'title': 'Note 1', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2019-12-19 09:30:03.000111', 'star': False, 'content': 'This is a note.' }] }`
+### /item
 
-### GET /items/starred
-Returns a list of all of the user's starred items.
+#### POST
+##### Summary:
 
-**Example response body:**  
-`{ 'result': [{ 'itemId': 2, 'title': 'Note 2', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2019-12-19 09:30:03.000111', 'star': True, 'content': 'This is a starred note.' }] }`
+Create item
 
-### GET /items/{item_id}
-Returns the content of a user's individual item.
+##### Parameters
 
-**Example response body:**  
-`{ 'itemId': 1, 'title': 'Note 1', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2019-12-19 09:30:03.000111', 'star': False, 'content': 'This is a note.' }`
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body | Created item object | Yes | [Item](#item) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /item/all
+
+#### GET
+##### Summary:
+
+Retrieve user's items
+
+##### Description:
+
+Returns a list of all of the user's items
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | object |
+
+### /item/starred
+
+#### GET
+##### Summary:
+
+Retrieve user's starred items
+
+##### Description:
+
+Returns a list of all of the user's starred items
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | object |
+
+### /item/cat/{categoryId}
+
+#### GET
+##### Summary:
+
+Retrieve items by category
+
+##### Description:
+
+Returns a single pet
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| categoryId | path | ID of category to search items by | Yes | integer |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | object |
+
+### /item/{itemId}
+
+#### GET
+##### Summary:
+
+Retrieve item by ID
+
+##### Description:
+
+Returns a single item
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| itemId | path | ID of item to return | Yes | integer |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [Item](#item) |
+
+#### PUT
+##### Summary:
+
+Update an existing item
+
+##### Description:
 
 
-### PUT /items/{item_id}
-Edit information about an item. Can supply fields such as `"title"`, `"content"`, etc.
 
-**Example Request body:** `{ "content" : "I just edited this note." }`
+##### Parameters
 
-**Example response body:**  
-`{ 'itemId': 1, 'title': 'Note 1', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2020-1-27 09:30:03.000111', 'star': False, 'content': 'I just edited this note.' }`
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| itemId | path | ID of item to edit | Yes | integer |
 
+##### Responses
 
-### PUT /categories/{category_id}
-Edit information about a category. Can supply fields such as `"title"`, `"content"`, etc.
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
 
-**Example Request body:** `{ "name" : "New Category Name" }`
+#### DELETE
+##### Summary:
 
-**Example Response body:** 
-`{ 'categoryId': 1, 'name': 'New Category Name' }`
+Delete an item
 
-### POST /items
-Create a new item.
-
-**Example Request body:** `{ "title" : "Note 5", "content": "Newly created item." }`
-
-**Example Response body:** 
-`{ 'itemId': 5, 'title': 'Note 5', 'category': 'Notes', 'dateCreated': '2018-12-19 09:26:03.478039', 'dateModified': '2020-1-27 09:30:03.000111', 'star': False, 'content': 'Newly created item.' }`
-
-### POST /categories
-Create a new category.
-
-**Example Request body:** `{ "name" : "My new category" }`
-
-**Example Response body:** 
-`{ 'categoryId': 3, 'name': 'My new category' }`
-
-### DELETE /items/{item_id}
-Delete an item. Returns HTTP 200 OK upon success.
+##### Description:
 
 
-### DELETE /categories/{category_id}
-Delete a category. Returns HTTP 200 OK upon success.
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| itemId | path | Item ID to delete | Yes | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /user
+
+#### POST
+##### Summary:
+
+Register user
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body | Created user object | Yes | [User](#user) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /user/{userId}
+
+#### GET
+##### Summary:
+
+Retrieve user by ID
+
+##### Description:
+
+Returns a single user
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| userId | path | ID of item to return | Yes | integer |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | [User](#user) |
+
+#### PUT
+##### Summary:
+
+Update user information
+
+##### Description:
+
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| userId | path | ID of user to update | Yes | integer |
+| body | body | Updated information of user | Yes | [User](#user) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+#### DELETE
+##### Summary:
+
+Delete an account
+
+##### Description:
+
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| userId | path | User ID to delete | Yes | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /session
+
+#### POST
+##### Summary:
+
+User Login
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body | User login information | Yes | object |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | object |
+
+### /session/{sessionId}
+
+#### DELETE
+##### Summary:
+
+User logout
+
+##### Description:
+
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| sessionId | path | Session ID to delete | Yes | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /category
+
+#### POST
+##### Summary:
+
+Create category
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| body | body | Created category | Yes | [Category](#category) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### /category/all
+
+#### GET
+##### Summary:
+
+Retrieve user's categories
+
+##### Description:
+
+Returns a list of user's categories
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+
+##### Responses
+
+| Code | Description | Schema |
+| ---- | ----------- | ------ |
+| 200 | successful operation | object |
+
+### /category/{categoryId}
+
+#### PUT
+##### Summary:
+
+Edit an existing category
+
+##### Description:
+
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| categoryId | path | ID of category to edit | Yes | integer |
+| body | body | Created user object | Yes | [Category](#category) |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+#### DELETE
+##### Summary:
+
+Delete a category
+
+##### Description:
+
+
+
+##### Parameters
+
+| Name | Located in | Description | Required | Schema |
+| ---- | ---------- | ----------- | -------- | ---- |
+| categoryId | path | Category ID to delete | Yes | integer |
+
+##### Responses
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | successful operation |
+
+### Models
+
+
+#### Category
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| name | string |  | Yes |
+
+#### User
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| firstName | string |  | No |
+| lastName | string |  | No |
+| email | string |  | Yes |
+| password | string |  | Yes |
+
+#### Item
+
+| Name | Type | Description | Required |
+| ---- | ---- | ----------- | -------- |
+| id | integer |  | No |
+| title | string |  | No |
+| category | string |  | No |
+| dateCreated | dateTime |  | No |
+| dateModified | dateTime |  | No |
+| star | boolean | whether item is starred or not | No |
+| content | string | HTML representation of item content | Yes |

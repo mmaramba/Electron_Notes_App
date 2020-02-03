@@ -91,7 +91,7 @@ def singleUserOperation():
     if request.method == 'GET':
         pass
     # Update user information
-    if request.method == 'PUT':
+    elif request.method == 'PUT':
         pass
     # Delete an account
     elif request.method == 'DELETE':

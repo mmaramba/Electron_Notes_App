@@ -78,7 +78,7 @@ Retrieve items by category
 
 ##### Description:
 
-Returns a single pet
+Returns a list of items in a user-specified category
 
 ##### Parameters
 

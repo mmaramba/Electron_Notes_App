@@ -1,12 +1,16 @@
 import json
 import pymongo
 from datetime import datetime
-from flask import Flask, request, jsonify
-from config import get_connection_string
+from flask import Flask, request, jsonify, abort, make_response, session
+from flask_bcrypt import Bcrypt
+from config import get_connection_string, get_secret_key
 from bson.json_util import dumps
+from pprint import pprint
 
 
 app = Flask(__name__)
+bcrypt = Bcrypt(app)
+app.secret_key = get_secret_key()
 client = None
 
 
@@ -81,7 +85,37 @@ def singleCategoryOperation():
 # Register user
 @app.route('/user', methods=['POST'])
 def createUser():
-    pass
+    content = request.get_json()
+
+    # Check duplicate email
+    email = content['email']
+    dup = client.db.users.count_documents({'email': email})
+    if dup:
+        abort(400, "Duplicate email")
+
+
+    # Salt and hash password
+    password = content['password']
+    pw_hash = bcrypt.generate_password_hash(password)
+
+    first_name = content['firstName']
+    last_name = content['lastName']
+    
+    # Store in DB
+    user_doc = {
+        'email': email,
+        'password': pw_hash,
+        'firstName': first_name,
+        'lastName': last_name,
+        'categories': [],
+        'items': []
+    }
+    client.db.users.insert_one(user_doc)
+    
+    resp = jsonify(success=True)
+    return resp
+
+
 
 
 # Operations on an individual user
@@ -101,13 +135,34 @@ def singleUserOperation():
 # User login
 @app.route('/session', methods=['POST'])
 def login():
-    pass
+    content = request.get_json()
+
+    email = content['email']
+    user_doc = client.db.users.find_one({'email': email})
+    pprint(user_doc)
+
+    candidate = content['password']
+    pw_success = bcrypt.check_password_hash(user_doc['password'], candidate)
+    print(pw_success)
+
+    # Return 401 Unauthorized if incorrect password
+    if not pw_success:
+        abort(401, "Incorrect password")
+        
+    # Add email to sessions
+    resp = jsonify(success=True)
+    session['email'] = email
+    return resp
 
 
 # User logout
-@app.route('/session/<sessionId>', methods=['DELETE'])
+@app.route('/session', methods=['DELETE'])
 def logout():
-    pass
+    print(session['email'])
+    session.pop('email', None)
+
+    resp = jsonify(success=True)
+    return resp
 
 
 if __name__ == '__main__':

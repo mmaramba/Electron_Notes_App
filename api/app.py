@@ -22,7 +22,7 @@ def db_connect():
 
 
 # Create item
-@app.route('/item/all', methods=['POST'])
+@app.route('/item', methods=['POST'])
 def createItem():
     pass
 
@@ -68,7 +68,14 @@ def createCategory():
 # Retrieve user's categories
 @app.route('/category/all', methods=['GET'])
 def getAllCategories():
-    pass
+    if 'email' in session:
+        email = session['email']
+        res = client.db.users.find_one({'email': email})
+        cats = res['categories']
+        print(cats)
+        return jsonify(cats)
+    else:
+        abort(401, "Not logged in")
 
 
 # Operations on an individual category
@@ -119,11 +126,18 @@ def createUser():
 
 
 # Operations on an individual user
-@app.route('/user/<userId>', methods=['GET', 'PUT, DELETE'])
+@app.route('/user', methods=['GET', 'PUT, DELETE'])
 def singleUserOperation():
     # Retrieve user information
     if request.method == 'GET':
-        pass
+        if 'email' in session:
+            print("Logged in")
+            email = session['email']
+            resp = dumps(client.db.users.find_one({'email': email}))
+            print(resp)
+            return resp
+        else: 
+            abort(401, "Not logged in")
     # Update user information
     elif request.method == 'PUT':
         pass

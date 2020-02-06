@@ -24,13 +24,46 @@ def db_connect():
 # Create item
 @app.route('/item', methods=['POST'])
 def createItem():
-    pass
+    if 'email' in session:
+        email = session['email']
+
+        creation_time = datetime.now()
+
+        # Get item object
+        content = request.get_json()
+        new_item = {
+            'title': content['title'],
+            'category': content['category'],
+            'dateCreated': creation_time,
+            'dateModified': creation_time,
+            'star': False,
+            'content': content['content']
+        }
+
+        # TODO: Check duplicate titles
+
+        # Add to array in embedded document (currently ignores duplicates)
+        client.db.users.update_one(
+            { 'email': email },
+            {'$addToSet': { 'items': new_item }}
+        )
+
+        return jsonify(success=True)
+    else:
+        abort(401, "Not logged in")
 
 
 # Retrieve user's items
 @app.route('/item/all', methods=['GET'])
 def getAllItems():
-    pass
+    if 'email' in session:
+        email = session['email']
+        res = client.db.users.find_one({'email': email})
+        items = res['items']
+        print(items)
+        return jsonify(items)
+    else:
+        abort(401, "Not logged in")
 
 
 # Retrieve user's starred items
@@ -62,7 +95,25 @@ def singleItemOperation():
 # Create category
 @app.route('/category', methods=['POST'])
 def createCategory():
-    pass
+    if 'email' in session:
+        email = session['email']
+
+        # Get new category name
+        content = request.get_json()
+        cat_name = content['name']
+        new_cat = {
+            'name': cat_name
+        }
+
+        # Add to array in embedded document (currently ignores duplicates)
+        client.db.users.update_one(
+            { 'email': email },
+            {'$addToSet': { 'categories': new_cat }}
+        )
+
+        return jsonify(success=True)
+    else:
+        abort(401, "Not logged in")
 
 
 # Retrieve user's categories
@@ -151,10 +202,12 @@ def singleUserOperation():
 def login():
     content = request.get_json()
 
+    # Search for email in DB
     email = content['email']
     user_doc = client.db.users.find_one({'email': email})
     pprint(user_doc)
 
+    # Check password
     candidate = content['password']
     pw_success = bcrypt.check_password_hash(user_doc['password'], candidate)
     print(pw_success)

@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, abort, make_response, session
 from flask_bcrypt import Bcrypt
 from config import get_connection_string, get_secret_key
 from bson.json_util import dumps
+from bson.objectid import ObjectId
 from pprint import pprint
 
 
@@ -32,6 +33,7 @@ def createItem():
         # Get item object
         content = request.get_json()
         new_item = {
+            '_id': ObjectId(),
             'title': content['title'],
             'category': content['category'],
             'dateCreated': creation_time,
@@ -61,7 +63,10 @@ def getAllItems():
         res = client.db.users.find_one({'email': email})
         items = res['items']
         print(items)
-        return jsonify(items)
+
+        # Sanitize (for ObjectId)
+        sanitized = json.loads(dumps(items))
+        return jsonify(sanitized)
     else:
         abort(401, "Not logged in")
 
@@ -69,27 +74,105 @@ def getAllItems():
 # Retrieve user's starred items
 @app.route('/item/starred', methods=['GET'])
 def getStarredItems():
-    pass
+    if 'email' in session:
+        email = session['email']
+        res = client.db.users.find_one({'email': email})
+        items = res['items']
+
+        # Add starred to result array
+        starred = []
+        for item in items:
+            if item['star']:
+                starred.append(item)
+        print(starred)
+
+        sanitized = json.loads(dumps(starred))
+        return jsonify(sanitized)
+    else:
+        abort(401, "Not logged in")
 
 
 # Retrieve user's items in given category
-@app.route('/item/cat/<categoryId>', methods=['GET'])
-def getItemsByCategory():
-    pass
+@app.route('/item/cat/<categoryName>', methods=['GET'])
+def getItemsByCategory(categoryName):
+    if 'email' in session:
+        email = session['email']
+        res = client.db.users.find_one({'email': email})
+        items = res['items']
+
+        # Add items from category to result array
+        starred = []
+        for item in items:
+            if item['category'].lower() == categoryName.lower():
+                starred.append(item)
+        print(starred)
+
+        sanitized = json.loads(dumps(starred))
+        return jsonify(sanitized)
+    else:
+        abort(401, "Not logged in")
 
 
 # Operations on an individual item
 @app.route('/item/<itemId>', methods=['GET', 'PUT', 'DELETE'])
-def singleItemOperation():
+def singleItemOperation(itemId):
     # Retrieve item
     if request.method == 'GET':
-        pass
+        if 'email' in session:
+            email = session['email']
+            res = client.db.users.find_one({'email': email})
+            items = res['items']
+
+            for item in items:
+                if '_id' in item and str(item['_id']) == itemId:
+                    sanitized = json.loads(dumps(item))
+                    return jsonify(sanitized)
+            
+            abort(404, "Item not found")
+        else:
+            abort(401, "Not logged in")
+
     # Update an existing item
     elif request.method == 'PUT':
-        pass
+        if 'email' in session:
+            email = session['email']
+            content = request.get_json()
+
+            # Create Python obj with fields and vals to update
+            set_obj = {}
+            for field in content:
+                if field == '_id':
+                    abort(403, "Forbidden request to change ID")
+                print(field, content[field])
+                key_str = 'items.$.' + field
+                val = content[field]
+                set_obj[key_str] = val
+            print(set_obj)
+            
+            
+            # Update $ from array in embedded document
+            client.db.users.update_one(
+                { 'email': email, 'items._id': ObjectId(itemId) },
+                { '$set': set_obj }
+            )
+
+            return jsonify(success=True)            
+        else:
+            abort(401, "Not logged in")
     # Delete an item
     elif request.method == 'DELETE':
-        pass
+        if 'email' in session:
+            email = session['email']
+
+            # Remove from array in embedded document
+            client.db.users.update_one(
+                { 'email': email },
+                {'$pull': { 'items': { '_id': ObjectId(itemId) } }}
+            )
+
+            return jsonify(success=True)
+        else:
+            abort(401, "Not logged in")
 
 
 # Create category
@@ -102,6 +185,7 @@ def createCategory():
         content = request.get_json()
         cat_name = content['name']
         new_cat = {
+            '_id': ObjectId(),
             'name': cat_name
         }
 
@@ -123,8 +207,10 @@ def getAllCategories():
         email = session['email']
         res = client.db.users.find_one({'email': email})
         cats = res['categories']
-        print(cats)
-        return jsonify(cats)
+
+        # Sanitize (for ObjectId)
+        sanitized = json.loads(dumps(cats))
+        return jsonify(sanitized)
     else:
         abort(401, "Not logged in")
 

@@ -192,6 +192,8 @@ def createCategory():
             'name': cat_name
         }
 
+        #TODO: Check dup category
+
         # Add to array in embedded document (currently ignores duplicates)
         client.db.users.update_one(
             { 'email': email },

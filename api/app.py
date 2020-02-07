@@ -292,7 +292,7 @@ def createUser():
 
 
 # Operations on an individual user
-@app.route('/user', methods=['GET', 'PUT, DELETE'])
+@app.route('/user', methods=['GET', 'PUT', 'DELETE'])
 def singleUserOperation():
     # Retrieve user information
     if request.method == 'GET':
@@ -306,10 +306,39 @@ def singleUserOperation():
             abort(401, "Not logged in")
     # Update user information
     elif request.method == 'PUT':
-        pass
-    # Delete an account
+        if 'email' in session:
+            email = session['email']
+            content = request.get_json()
+
+            # Create Python obj with fields and vals to update
+            set_obj = {}
+            for field in content:
+                if field == '_id' or field == 'email':
+                    abort(403, "Forbidden request")
+                else:
+                    print(field, content[field])
+                    set_obj[field] = content[field]
+            print(set_obj)
+
+            client.db.users.update_one(
+                {'email': email},
+                {'$set': set_obj}
+            )
+
+            resp = jsonify(success=True)
+            return resp
+        else: 
+            abort(401, "Not logged in")
+    # Delete user account
     elif request.method == 'DELETE':
-        pass
+        if 'email' in session:
+            email = session['email']
+            client.db.users.delete_one({'email': email})
+
+            resp = jsonify(success=True)
+            return resp
+        else: 
+            abort(401, "Not logged in")
 
 
 # User login

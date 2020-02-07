@@ -22,7 +22,7 @@ def db_connect():
     print(client)
 
 
-# Create item
+# Create item (must supply null categoryId if none yet)
 @app.route('/item', methods=['POST'])
 def createItem():
     if 'email' in session:
@@ -35,7 +35,7 @@ def createItem():
         new_item = {
             '_id': ObjectId(),
             'title': content['title'],
-            'category': content['category'],
+            'categoryId': content['categoryId'],
             'dateCreated': creation_time,
             'dateModified': creation_time,
             'star': False,
@@ -93,8 +93,8 @@ def getStarredItems():
 
 
 # Retrieve user's items in given category
-@app.route('/item/cat/<categoryName>', methods=['GET'])
-def getItemsByCategory(categoryName):
+@app.route('/item/cat/<categoryId>', methods=['GET'])
+def getItemsByCategory(categoryId):
     if 'email' in session:
         email = session['email']
         res = client.db.users.find_one({'email': email})
@@ -103,7 +103,7 @@ def getItemsByCategory(categoryName):
         # Add items from category to result array
         starred = []
         for item in items:
-            if item['category'].lower() == categoryName.lower():
+            if 'categoryId' in item and str(item['categoryId']) == categoryId:
                 starred.append(item)
         print(starred)
 
@@ -143,10 +143,13 @@ def singleItemOperation(itemId):
             for field in content:
                 if field == '_id':
                     abort(403, "Forbidden request to change ID")
-                print(field, content[field])
-                key_str = 'items.$.' + field
-                val = content[field]
-                set_obj[key_str] = val
+                elif field == 'categoryId':
+                    set_obj['items.$.categoryId'] = ObjectId(content['categoryId'])
+                else:
+                    print(field, content[field])
+                    key_str = 'items.$.' + field
+                    val = content[field]
+                    set_obj[key_str] = val
             print(set_obj)
             
             

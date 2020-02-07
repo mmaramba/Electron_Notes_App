@@ -221,14 +221,38 @@ def getAllCategories():
 
 
 # Operations on an individual category
-@app.route('/category/<categoryId>', methods=['PUT, DELETE'])
-def singleCategoryOperation():
-    # Edit an existing category
+@app.route('/category/<categoryId>', methods=['PUT', 'DELETE'])
+def singleCategoryOperation(categoryId):
+    # Rename category
     if request.method == 'PUT':
-        pass
+        if 'email' in session:
+            email = session['email']
+            content = request.get_json()
+            
+            
+            # Update $ from array in embedded document
+            client.db.users.update_one(
+                { 'email': email, 'categories._id': ObjectId(categoryId) },
+                { '$set': { 'categories.$.name': content['name'] } }
+            )
+
+            return jsonify(success=True)            
+        else:
+            abort(401, "Not logged in")
     # Delete a category
     elif request.method == 'DELETE':
-        pass
+        if 'email' in session:
+            email = session['email']
+
+            # Remove from array in embedded document
+            client.db.users.update_one(
+                { 'email': email },
+                {'$pull': { 'categories': { '_id': ObjectId(categoryId) } }}
+            )
+
+            return jsonify(success=True)
+        else:
+            abort(401, "Not logged in")
 
 
 # Register user

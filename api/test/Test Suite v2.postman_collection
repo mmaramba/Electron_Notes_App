@@ -1,0 +1,7143 @@
+{
+	"info": {
+		"_postman_id": "160e89cb-6f56-4601-ad9e-0e7aa4df8631",
+		"name": "Senior Project API",
+		"description": "Prototype documentation for Michael Maramba's Senior Project API. This API features routes that support functionality for user registration, note-taking and saving, and data display.\n\nContact Support:\n Email: mpmaramb@calpoly.edu",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Test 401 Not Logged In",
+			"item": [
+				{
+					"name": "Retrieve user's categories Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"all"
+							]
+						},
+						"description": "Returns a list of user's categories"
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Create category Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete a category Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category/:categoryId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "test",
+									"description": "Category ID to delete"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "id not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Edit an existing category Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/:categoryId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "test",
+									"description": "ID of category to edit"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "id not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Retrieve user Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "Returns current user"
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"_id\": {\n  \"$oid\": \"<string>\"\n },\n \"firstName\": \"<string>\",\n \"lastName\": \"<string>\",\n \"email\": \"<string>\",\n \"password\": \"<string>\",\n \"items\": [\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  },\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  }\n ],\n \"categories\": [\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  },\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  }\n ]\n}"
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update user information Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete an account Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Retrieve items by category Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/cat/:categoryId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								"cat",
+								":categoryId"
+							],
+							"variable": [
+								{
+									"key": "categoryId",
+									"value": "<integer>",
+									"description": "ID of category to search items by"
+								}
+							]
+						},
+						"description": "Returns a list of items in user-specified category."
+					},
+					"response": [
+						{
+							"name": "ID not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Retrieve user's starred items Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/starred",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								"starred"
+							]
+						},
+						"description": "Returns a list of all of the user's starred items"
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/starred",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"starred"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/starred",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"starred"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Retrieve user's items Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/all",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								"all"
+							]
+						},
+						"description": "Returns a list of all of the user's items"
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"all"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create item Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/item",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete an item Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/:itemId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "<integer>",
+									"description": "Item ID to delete"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "ID not found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update an existing item Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/:itemId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "<integer>",
+									"description": "ID of item to edit"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "ID not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Retrieve item by ID Copy",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/item/:itemId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"item",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "<integer>",
+									"description": "ID of item to return"
+								}
+							]
+						},
+						"description": "Returns a single item"
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "ID not found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"_id\": {\n  \"$oid\": \"<string>\"\n },\n \"content\": \"<string>\",\n \"title\": \"<string>\",\n \"categoryId\": {\n  \"$oid\": \"<string>\"\n },\n \"dateCreated\": \"<dateTime>\",\n \"dateModified\": \"<dateTime>\",\n \"star\": \"<boolean>\"\n}"
+						}
+					]
+				}
+			],
+			"description": "Testing all routes that require login for 401 error pre-login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "541bf648-6e47-425e-8b69-3143578c4c91",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Test Accounts & Sessions",
+			"item": [
+				{
+					"name": "Create acc1 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc056d81-c338-4fc9-b366-bcd4a684ff58",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create acc dup email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a1076d1-5f3d-4334-b8ff-1c028b8b94df",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test2\",\n    \"lastName\": \"test2\",\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create acc missing fields",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cdfb0077-a47a-4e29-8659-2a8ccc0a1de5",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"asdf\",\n    \"lastName\": \"asdf\",\n    \"email\": \"hello@hi.com\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login acc1 incorrect pw",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d23a9883-2fd0-46ae-b940-f6967e95d11c",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"nottest\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login acc1 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "093edc11-d65f-466d-a3d5-15a510db88e5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a18e24c1-58f4-4d3b-8aa3-8b5c75e031fd",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login acc1 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a20a1502-5839-43b1-abee-e9b4e88ef07a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Delete acc1 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a226a7e-4561-43b0-93e6-07deb414484c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login acc1 invalid email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "54c4cc26-4299-41e8-a510-318c0490fb75",
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Create acc2 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc056d81-c338-4fc9-b366-bcd4a684ff58",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test2\",\n    \"lastName\": \"test2\",\n    \"email\": \"test2@test.com\",\n    \"password\": \"test2\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Login acc2 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a20a1502-5839-43b1-abee-e9b4e88ef07a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test2@test.com\",\n    \"password\": \"test2\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/session",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"session"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get info acc2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d221780f-d0e1-4fda-8ac1-ec5c80a3e955",
+								"exec": [
+									"pm.test('Has correct info', function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[\"email\"]).to.eql(\"test2@test.com\");\r",
+									"    pm.expect(jsonData[\"firstName\"]).to.eql(\"test1234\");\r",
+									"    pm.expect(jsonData[\"lastName\"]).to.eql(\"test2\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "Returns current user"
+					},
+					"response": [
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"_id\": {\n  \"$oid\": \"<string>\"\n },\n \"firstName\": \"<string>\",\n \"lastName\": \"<string>\",\n \"email\": \"<string>\",\n \"password\": \"<string>\",\n \"items\": [\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  },\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  }\n ],\n \"categories\": [\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  },\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  }\n ]\n}"
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Update user f name",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"test12345\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad request. Also provides reason",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				},
+				{
+					"name": "Get info acc2 updated f name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "bcb373cb-e5fc-4c27-947c-5d29ca4672ad",
+								"exec": [
+									"pm.test('Has correct info 2', function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[\"email\"]).to.eql(\"test2@test.com\");\r",
+									"    pm.expect(jsonData[\"firstName\"]).to.eql(\"test12345\");\r",
+									"    pm.expect(jsonData[\"lastName\"]).to.eql(\"test2\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "Returns current user"
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"_id\": {\n  \"$oid\": \"<string>\"\n },\n \"firstName\": \"<string>\",\n \"lastName\": \"<string>\",\n \"email\": \"<string>\",\n \"password\": \"<string>\",\n \"items\": [\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  },\n  {\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   },\n   \"content\": \"<string>\",\n   \"title\": \"<string>\",\n   \"categoryId\": {\n    \"$oid\": \"<string>\"\n   },\n   \"dateCreated\": \"<dateTime>\",\n   \"dateModified\": \"<dateTime>\",\n   \"star\": \"<boolean>\"\n  }\n ],\n \"categories\": [\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  },\n  {\n   \"name\": \"<string>\",\n   \"_id\": {\n    \"$oid\": \"<string>\"\n   }\n  }\n ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete acc2 valid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3a226a7e-4561-43b0-93e6-07deb414484c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "not logged in",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						},
+						{
+							"name": "successful operation",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "text",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "text/plain"
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "Testing API endpoints for accounts and sessions",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Test Categories and Items",
+			"item": [
+				{
+					"name": "Item Creation, Category Creation/Editing/Deletion",
+					"item": [
+						{
+							"name": "Create acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fc056d81-c338-4fc9-b366-bcd4a684ff58",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Login acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "093edc11-d65f-466d-a3d5-15a510db88e5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/session",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"session"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/session",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"session"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create category 1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2d818270-a0ec-4bbf-9120-0455cdfc4982",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category 1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get all categories Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cef1687f-0f2b-4c4e-ae88-5032d78f6c8e",
+										"exec": [
+											"pm.test('Set env variable', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.environment.set(\"envCatId\", jsonData[0]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create category 1 duplicate",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5453c321-4e1e-426e-bf2e-0d76a8da6fcb",
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category 1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create item in cat1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f747a889-5fb9-45e3-842f-7b4833a20240",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Content here\",\n    \"title\": \"Title here\",\n    \"categoryId\": \"{{envCatId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create item null cat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e642cec-a303-4abb-8e85-505a6ba2c19b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Cont\",\n    \"title\": \"Title\",\n    \"categoryId\": null\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create category 2 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "073bf07d-05ee-4dd6-9cf8-b1554cac7d2a",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category 2\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get all categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9603e735-c192-4211-9232-11fc8da3dd21",
+										"exec": [
+											"pm.test('Set env variable and check name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['name']).to.eql(\"Category 1\");\r",
+											"    pm.expect(jsonData[1]['name']).to.eql(\"Category 2\");\r",
+											"    pm.environment.set(\"envCatId\", jsonData[1]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "Edit category 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "817ef536-2591-4273-b259-fdac1e041b3d",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"New cat name\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "{{envCatId}}",
+											"description": "ID of category to edit"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "id not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get check category 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8f52bd12-744c-49dc-bd95-7756b784195d",
+										"exec": [
+											"pm.test('check name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['name']).to.eql(\"Category 1\");\r",
+											"    pm.expect(jsonData[1]['name']).to.eql(\"New cat name\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete category 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "76d8392b-b1d8-48af-bb9c-e79ae38f7ee5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "{{envCatId}}",
+											"description": "Category ID to delete"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "id not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Get check cat2 deletion",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "519c7c13-fd78-4beb-b5c6-6867eec677ce",
+										"exec": [
+											"pm.test('check new length after delete', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.length).to.eql(1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "Delete acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3a226a7e-4561-43b0-93e6-07deb414484c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Item Editing, Item Retrieval and Queries",
+					"item": [
+						{
+							"name": "Create acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fc056d81-c338-4fc9-b366-bcd4a684ff58",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"test\",\n    \"lastName\": \"test\",\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"firstName\": \"<string>\",\n    \"lastName\": \"<string>\",\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Login acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "093edc11-d65f-466d-a3d5-15a510db88e5",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"test@test.com\",\n    \"password\": \"test\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/session",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"session"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/session",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"session"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"email\": \"<string>\",\n    \"password\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/session",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"session"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create category 1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2d818270-a0ec-4bbf-9120-0455cdfc4982",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category 1\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Create category 2 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2d818270-a0ec-4bbf-9120-0455cdfc4982",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Category 2\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/category",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Bad request. Also provides reason",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/category",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "set env to cat 1",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9603e735-c192-4211-9232-11fc8da3dd21",
+										"exec": [
+											"pm.test('Set env variable and check name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['name']).to.eql(\"Category 1\");\r",
+											"    pm.expect(jsonData[1]['name']).to.eql(\"Category 2\");\r",
+											"    pm.environment.set(\"envCatId\", jsonData[0]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "Create item in cat1 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f747a889-5fb9-45e3-842f-7b4833a20240",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Content here\",\n    \"title\": \"Title here\",\n    \"categoryId\": \"{{envCatId}}\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Retrieve items by category Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "87138b70-81eb-4f3d-8c1d-34b014f249e7",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['title']).to.eql(\"Title here\");\r",
+											"    pm.expect(jsonData[0]['content']).to.eql(\"Content here\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"description": "ID of category to search items by",
+											"key": "categoryId",
+											"value": "{{envCatId}}"
+										}
+									]
+								},
+								"description": "Returns a list of items in user-specified category."
+							},
+							"response": [
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "set env to cat 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9603e735-c192-4211-9232-11fc8da3dd21",
+										"exec": [
+											"pm.test('Set env variable and check name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.environment.set(\"envCatId\", jsonData[1]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Retrieve items in cat 2 empty",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "99f5cccc-190e-4918-93f7-b886efc3f92f",
+										"exec": [
+											"pm.test('Check length', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.length).to.eql(0);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"key": "categoryId",
+											"value": "{{envCatId}}",
+											"description": "ID of category to search items by"
+										}
+									]
+								},
+								"description": "Returns a list of items in user-specified category."
+							},
+							"response": [
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "Get all items set item env var",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a0853256-38d6-488d-bde8-b5d969be788e",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['title']).to.eql(\"Title here\");\r",
+											"    pm.expect(jsonData[0]['content']).to.eql(\"Content here\");\r",
+											"    pm.expect(jsonData.length).to.eql(1);\r",
+											"    pm.environment.set(\"envItemId\", jsonData[0]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"all"
+									]
+								},
+								"description": "Returns a list of all of the user's items"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "star item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f2d316ee-920d-4500-94e3-e3c3faf0b1c3",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"star\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "{{envItemId}}",
+											"description": "ID of item to edit"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "check successful star",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "445043ab-8c7f-49a0-8964-b8851b02ac8a",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData['title']).to.eql(\"Title here\");\r",
+											"    pm.expect(jsonData['content']).to.eql(\"Content here\");\r",
+											"    pm.expect(jsonData['star']).to.eql(true);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"key": "itemId",
+											"value": "{{envItemId}}",
+											"description": "ID of item to return"
+										}
+									]
+								},
+								"description": "Returns a single item"
+							},
+							"response": [
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n \"_id\": {\n  \"$oid\": \"<string>\"\n },\n \"content\": \"<string>\",\n \"title\": \"<string>\",\n \"categoryId\": {\n  \"$oid\": \"<string>\"\n },\n \"dateCreated\": \"<dateTime>\",\n \"dateModified\": \"<dateTime>\",\n \"star\": \"<boolean>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "get starred items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "16dc48a2-1480-4ffe-9000-43615affa787",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData[0]['star']).to.eql(true);\r",
+											"    pm.expect(jsonData.length).to.eql(1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/starred",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"starred"
+									]
+								},
+								"description": "Returns a list of all of the user's starred items"
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/starred",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"starred"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/starred",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"starred"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "Create item null cat",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "5e642cec-a303-4abb-8e85-505a6ba2c19b",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"Cont\",\n    \"title\": \"Title\",\n    \"categoryId\": null\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"content\": \"<string>\",\n    \"title\": \"<string>\",\n    \"categoryId\": \"<string>\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/item",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "get all items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "71fe61b3-a3ec-4ebf-9fbe-aa851938378a",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.length).to.eql(2);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"all"
+									]
+								},
+								"description": "Returns a list of all of the user's items"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete first item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "050786c2-2937-4872-91af-a7215e39aaf9",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/:itemId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										":itemId"
+									],
+									"variable": [
+										{
+											"description": "Item ID to delete",
+											"key": "itemId",
+											"value": "{{envItemId}}"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/:itemId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												":itemId"
+											],
+											"variable": [
+												{
+													"key": "itemId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "check delete first item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "71fe61b3-a3ec-4ebf-9fbe-aa851938378a",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.length).to.eql(1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"all"
+									]
+								},
+								"description": "Returns a list of all of the user's items"
+							},
+							"response": [
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								}
+							]
+						},
+						{
+							"name": "set env to cat 1 Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9603e735-c192-4211-9232-11fc8da3dd21",
+										"exec": [
+											"pm.test('Set env variable and check name', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.environment.set(\"envCatId\", jsonData[0]['_id']['$oid']);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/category/all",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"category",
+										"all"
+									]
+								},
+								"description": "Returns a list of user's categories"
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n },\n {\n  \"name\": \"<string>\",\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  }\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/category/all",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"category",
+												"all"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "get items in cat 1 empty",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "87138b70-81eb-4f3d-8c1d-34b014f249e7",
+										"exec": [
+											"pm.test('Check fields', function() {\r",
+											"    var jsonData = pm.response.json();\r",
+											"    pm.expect(jsonData.length).to.eql(0);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/item/cat/:categoryId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"item",
+										"cat",
+										":categoryId"
+									],
+									"variable": [
+										{
+											"description": "ID of category to search items by",
+											"key": "categoryId",
+											"value": "{{envCatId}}"
+										}
+									]
+								},
+								"description": "Returns a list of items in user-specified category."
+							},
+							"response": [
+								{
+									"name": "ID not found",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n },\n {\n  \"_id\": {\n   \"$oid\": \"<string>\"\n  },\n  \"content\": \"<string>\",\n  \"title\": \"<string>\",\n  \"categoryId\": {\n   \"$oid\": \"<string>\"\n  },\n  \"dateCreated\": \"<dateTime>\",\n  \"dateModified\": \"<dateTime>\",\n  \"star\": \"<boolean>\"\n }\n]"
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/item/cat/:categoryId",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"item",
+												"cat",
+												":categoryId"
+											],
+											"variable": [
+												{
+													"key": "categoryId"
+												}
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "Delete acc1 valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3a226a7e-4561-43b0-93e6-07deb414484c",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "successful operation",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								},
+								{
+									"name": "not logged in",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/user",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"user"
+											]
+										}
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "Testing the core functionality (categories and items)",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

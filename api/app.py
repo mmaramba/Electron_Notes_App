@@ -42,8 +42,6 @@ def createItem():
             'content': content['content']
         }
 
-        # TODO: Check duplicate titles
-
         # Add to array in embedded document (currently ignores duplicates)
         client.db.users.update_one(
             { 'email': email },
@@ -99,6 +97,16 @@ def getItemsByCategory(categoryId):
         email = session['email']
         res = client.db.users.find_one({'email': email})
         items = res['items']
+        cats = res['categories']
+
+        # Check if id is in user's categories
+        id_found = False
+        for cat in cats:
+            if '_id' in cat and str(cat['_id']) == categoryId:
+                id_found = True
+        
+        if not id_found:
+            abort(404, "ID not found")
 
         # Add items from category to result array
         starred = []
@@ -192,7 +200,12 @@ def createCategory():
             'name': cat_name
         }
 
-        #TODO: Check dup category
+        # Check dup category
+        res = client.db.users.find_one({'email': email})
+        cats = res['categories']
+        for cat in cats:
+            if 'name' in cat and cat['name'] == cat_name:
+                abort(400, "Duplicate category name")
 
         # Add to array in embedded document (currently ignores duplicates)
         client.db.users.update_one(
@@ -229,6 +242,9 @@ def singleCategoryOperation(categoryId):
             email = session['email']
             content = request.get_json()
             
+            # Make sure name field is in request
+            if 'name' not in content:
+                abort(400, "Does not contain name field")
             
             # Update $ from array in embedded document
             client.db.users.update_one(
@@ -259,6 +275,12 @@ def singleCategoryOperation(categoryId):
 @app.route('/user', methods=['POST'])
 def createUser():
     content = request.get_json()
+
+    # TODO: Check content for all fields
+    REQ_FIELDS = ['email', 'password', 'firstName', 'lastName']
+    for field in REQ_FIELDS:
+        if field not in content:
+            abort(400, "Missing fields")
 
     # Check duplicate email
     email = content['email']
@@ -310,10 +332,12 @@ def singleUserOperation():
             email = session['email']
             content = request.get_json()
 
+            # TODO: Changing email, changing password
             # Create Python obj with fields and vals to update
+            VALID_FIELDS = ["firstName", "lastName"]
             set_obj = {}
             for field in content:
-                if field == '_id' or field == 'email':
+                if field not in VALID_FIELDS:
                     abort(403, "Forbidden request")
                 else:
                     print(field, content[field])
@@ -349,7 +373,8 @@ def login():
     # Search for email in DB
     email = content['email']
     user_doc = client.db.users.find_one({'email': email})
-    pprint(user_doc)
+    if not user_doc:
+        abort(401, "Invalid email")
 
     # Check password
     candidate = content['password']
@@ -369,7 +394,6 @@ def login():
 # User logout
 @app.route('/session', methods=['DELETE'])
 def logout():
-    print(session['email'])
     session.pop('email', None)
 
     resp = jsonify(success=True)

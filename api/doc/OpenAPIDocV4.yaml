@@ -6,7 +6,7 @@ info:
     and saving, and data display.
   contact:
     email: mpmaramb@calpoly.edu
-  version: 3.0.0
+  version: 1.0.3
 servers:
 - url: /
 tags:
@@ -142,8 +142,8 @@ paths:
           description: successful operation
         401:
           description: not logged in
-        404:
-          description: ID not found
+        403:
+          description: forbidden request
     delete:
       tags:
       - item
@@ -161,8 +161,6 @@ paths:
           description: successful operation
         401:
           description: not logged in
-        404:
-          description: ID not found
   /user:
     post:
       tags:
@@ -246,8 +244,8 @@ paths:
       responses:
         200:
           description: successful operation
-        400:
-          description: Bad request. Also provides reason
+        401:
+          description: Invalid credentials
     delete:
       tags:
       - session
@@ -256,8 +254,6 @@ paths:
       responses:
         200:
           description: successful operation
-        401:
-          description: not logged in
   /category:
     post:
       tags:
@@ -323,8 +319,6 @@ paths:
           description: Bad request. Also provides reason
         401:
           description: not logged in
-        404:
-          description: id not found
     delete:
       tags:
       - category

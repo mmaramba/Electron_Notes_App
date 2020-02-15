@@ -1,0 +1,12 @@
+/* For demo */
+.ant-carousel .slick-slide {
+    line-height: 400px;
+}
+  
+.ant-carousel .slick-slide h1 {
+    color: #fff;
+}
+
+.carouselContainer {
+    user-select: none;
+}

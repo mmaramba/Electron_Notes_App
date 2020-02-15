@@ -41,14 +41,14 @@ class Login extends React.Component {
     return (
         <div style={{textAlign: "center", paddingTop: "100px"}}>
             <div style={{display: "inline-block"}}>
-                <div style={{marginBottom: "25px"}}>
+                <div style={{marginBottom: "20px"}}>
                   <Title level={4}>Sign in with your account</Title>
                 </div>
-                <div style={{marginBottom: "20px", height: "30px"}}>
+                <div style={{marginBottom: "25px", height: "30px", width: "300px", textAlign: "center", paddingLeft: "20px"}}>
                   <Text type="warning"> { this.state.errorText } </Text>
                 </div>
                 
-                <Form onSubmit={this.handleSubmit} className="login-form">
+                <Form onSubmit={this.handleSubmit} className="login-form" style={{width: "300px"}}>
                 <Form.Item>
                     {getFieldDecorator('email', {
                     rules: [{ required: true, message: 'Please input your email!' }],
@@ -71,7 +71,7 @@ class Login extends React.Component {
                     )}
                 </Form.Item>
                 <Form.Item>
-                    <Button type="default" htmlType="submit" className="login-form-button" style={{width: "50px"}}>
+                    <Button type="default" htmlType="submit" className="login-form-button" style={{width: "50px", marginTop: "10px"}}>
                       <Icon type="login" />
                     </Button>
                     <div>

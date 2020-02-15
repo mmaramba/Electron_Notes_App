@@ -1,10 +1,11 @@
 import React from 'react';
-import { Layout, Row } from 'antd';
+import { Layout, Row, Col } from 'antd';
 import LeftNav from './LeftNav.js';
 import ItemsView from './ItemsView.js';
 import HomeView from './HomeView.js';
 import WrappedNormalLoginForm from './Login.js';
 import WrappedRegistrationForm from './Register.js';
+import LoginCarousel from './LoginCarousel.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 
@@ -28,19 +29,28 @@ class ViewManager extends React.Component {
     const isLoggedIn = this.state.isLoggedIn;
     if (!isLoggedIn) {
       return (
-        <HashRouter>
-          <Switch>
-            <Route path="/login">
-              <WrappedNormalLoginForm onUserLogin={this.handleUserLogin} />
-            </Route>
-            <Route path="/register">
-              <WrappedRegistrationForm onUserLogin={this.handleUserLogin} />
-            </Route>
-            <Route path="/">
-              <Redirect to="/login" />
-            </Route>
-          </Switch>
-        </HashRouter>
+        <Layout style={{ height: '100vh' }}>
+          <Row style={{ height: '100vh'}}>
+            <Col span={10} style={{ height: "100%"}}>
+              <HashRouter>
+                <Switch>
+                  <Route path="/login">
+                    <WrappedNormalLoginForm onUserLogin={this.handleUserLogin} />
+                  </Route>
+                  <Route path="/register">
+                    <WrappedRegistrationForm onUserLogin={this.handleUserLogin} />
+                  </Route>
+                  <Route path="/">
+                    <Redirect to="/login" />
+                  </Route>
+                </Switch>
+              </HashRouter>
+            </Col>
+            <Col span={14} style={{ height: "100%", backgroundColor: "red"}}>
+              <LoginCarousel />
+            </Col>
+          </Row>
+        </Layout>
       );
     }
 

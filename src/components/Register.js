@@ -85,12 +85,12 @@ class Register extends React.Component {
 
         const formItemLayout = {
         labelCol: {
-            xs: { span: 24 },
-            sm: { span: 8 },
+            xs: { span: 10 },
+            sm: { span: 10 },
         },
         wrapperCol: {
-            xs: { span: 24 },
-            sm: { span: 16 },
+            xs: { span: 10 },
+            sm: { span: 12 },
         },
         };
         const tailFormItemLayout = {
@@ -107,16 +107,17 @@ class Register extends React.Component {
         };
 
         return (
-            <div style={{textAlign: "center", paddingTop: "75px", paddingRight: "75px"}}>
-                <div style={{display: "inline-block", width: "400px"}}>
-                    <div style={{marginLeft: "120px", marginBottom: "20px"}}>
+            <div style={{paddingTop: "75px", textAlign: "left"}}>
+                <div style={{textAlign: "center"}}>
+                    <div style={{textAlign: "center", marginBottom: "20px"}}>
                         <Title level={4}>Register an account</Title>
                     </div>
-                    <div style={{ marginLeft: "120px", height: "50px"}}>
+                    <div style={{ textAlign: "center", height: "50px"}}>
                         <Text type="warning"> { this.state.errorText } </Text>
                     </div>
-                    <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                        <Form.Item label="Email">
+                    <Form onSubmit={this.handleSubmit} style={{display: "inline-block", width: "300px"}}>
+                        <div style={{textAlign: "left"}}>Email</div>
+                        <Form.Item>
                         {getFieldDecorator('email', {
                             rules: [
                             {
@@ -128,9 +129,10 @@ class Register extends React.Component {
                                 message: 'Please input your email!',
                             },
                             ],
-                        })(<Input />)}
+                        })(<Input placeholder="Email" prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />} />)}
                         </Form.Item>
-                        <Form.Item label="Password" hasFeedback>
+                        <div style={{textAlign: "left"}}>Password</div>
+                        <Form.Item hasFeedback style={{marginBottom: "5px"}}>
                         {getFieldDecorator('password', {
                             rules: [
                             {
@@ -141,9 +143,9 @@ class Register extends React.Component {
                                 validator: this.validateToNextPassword,
                             },
                             ],
-                        })(<Input.Password />)}
+                        })(<Input.Password placeholder="Enter a Password" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} />)}
                         </Form.Item>
-                        <Form.Item label="Confirm Password" hasFeedback>
+                        <Form.Item hasFeedback>
                         {getFieldDecorator('confirm', {
                             rules: [
                             {
@@ -154,8 +156,9 @@ class Register extends React.Component {
                                 validator: this.compareToFirstPassword,
                             },
                             ],
-                        })(<Input.Password onBlur={this.handleConfirmBlur} />)}
+                        })(<Input.Password onBlur={this.handleConfirmBlur} placeholder="Confirm Password" prefix={<Icon type="safety" style={{ color: 'rgba(0,0,0,.25)' }} />} />)}
                         </Form.Item>
+                        {/*
                         <Form.Item
                             label={
                                 <span>
@@ -178,13 +181,15 @@ class Register extends React.Component {
                                 rules: [{ required: false, message: '', whitespace: true }],
                             })(<Input />)}
                         </Form.Item>
-                        <Form.Item {...tailFormItemLayout}>
+                        */}
+                        <Form.Item style={{paddingTop: "10px"}}>
                         <Button type="default" htmlType="submit">
                             Register
                         </Button>
-                        <div>Already have an account? <Link to="/login">Log in!</Link></div>
+                        
                         </Form.Item>
                     </Form>
+                    <div style={{textAlign: "center"}}>Already have an account? <Link to="/login">Log in!</Link></div>
                 </div>
             </div>
         );

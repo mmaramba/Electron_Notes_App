@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout } from 'antd';
 
-
 class HomeView extends React.Component {
   constructor(props){
     super(props);

@@ -2,6 +2,7 @@ import json
 import pymongo
 from datetime import datetime
 from flask import Flask, request, jsonify, abort, make_response, session
+from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from config import get_connection_string, get_secret_key
 from bson.json_util import dumps
@@ -10,6 +11,7 @@ from pprint import pprint
 
 
 app = Flask(__name__)
+CORS(app)
 bcrypt = Bcrypt(app)
 app.secret_key = get_secret_key()
 client = None
@@ -277,24 +279,41 @@ def createUser():
     content = request.get_json()
 
     # TODO: Check content for all fields
-    REQ_FIELDS = ['email', 'password', 'firstName', 'lastName']
+    REQ_FIELDS = ['email', 'password']
     for field in REQ_FIELDS:
         if field not in content:
-            abort(400, "Missing fields")
+            #abort(400, "Missing fields")
+            result = {
+                "success": False,
+                "error": "Your registration request contained missing fields."
+            }
+            return jsonify(result), 400
 
     # Check duplicate email
     email = content['email']
     dup = client.db.users.count_documents({'email': email})
     if dup:
-        abort(400, "Duplicate email")
+        #abort(400, "Duplicate email")
+        result = {
+            "success": False,
+            "error": "The email you want to register is already in our system."
+        }
+        return jsonify(result), 400
 
 
     # Salt and hash password
     password = content['password']
     pw_hash = bcrypt.generate_password_hash(password)
 
-    first_name = content['firstName']
-    last_name = content['lastName']
+    if 'firstName' not in content:
+        first_name = ''
+    else:
+        first_name = content['firstName']
+
+    if 'lastName' not in content:
+        last_name = ''
+    else:
+        last_name = content['lastName']
     
     # Store in DB
     user_doc = {
@@ -370,11 +389,18 @@ def singleUserOperation():
 def login():
     content = request.get_json()
 
+    print(content['email'])
+    print(content['password'])
     # Search for email in DB
     email = content['email']
     user_doc = client.db.users.find_one({'email': email})
     if not user_doc:
-        abort(401, "Invalid email")
+        #abort(401, "Invalid email")
+        result = {
+            "success": False,
+            "error": "Your email does not match any emails in our system."
+        }
+        return jsonify(result), 401
 
     # Check password
     candidate = content['password']
@@ -383,7 +409,12 @@ def login():
 
     # Return 401 Unauthorized if incorrect password
     if not pw_success:
-        abort(401, "Incorrect password")
+        #abort(401, "Incorrect password")
+        result = {
+            "success": False,
+            "error": "You have entered an incorrect password."
+        }
+        return jsonify(result), 401
         
     # Add email to sessions
     resp = jsonify(success=True)

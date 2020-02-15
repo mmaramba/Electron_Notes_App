@@ -81,11 +81,11 @@ class LeftNav extends React.Component {
       );
     
     return (
-        <Sider style={{"background-color": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
+        <Sider style={{"backgroundColor": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
             <Avatar className="userAvatar" size={64} onClick={this.userClickedAvatar}>UN</Avatar>
             <div 
-              style={{"padding-top": "10px", "color": "black", "user-select": "none"}}
+              style={{"paddingTop": "10px", "color": "black", "userSelect": "none"}}
             >
               {this.state.name}
               <Dropdown overlay={userMenu} trigger={['click']}>
@@ -109,7 +109,7 @@ class LeftNav extends React.Component {
               </Modal>
             </div>
           </div>
-          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['1']} mode="inline" style={{"text-align": "left"}}>
+          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['1']} mode="inline" style={{"textAlign": "left"}}>
             <Menu.Item key="1" className="menuItem">
               <Link to="/">
                 <Icon type="home" />
@@ -148,7 +148,7 @@ class LeftNav extends React.Component {
               type={this.state.collapsed ? 'right' : 'left'}
               onClick={this.toggle}
               style={{
-                "padding-left": this.getPaddingFooter()
+                "paddingLeft": this.getPaddingFooter()
               }}
             />
           </div>

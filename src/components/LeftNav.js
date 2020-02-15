@@ -11,6 +11,7 @@ import {
 import {
     Link
 } from 'react-router-dom';
+import { getUserCategories } from '../api.js';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -22,9 +23,10 @@ class LeftNav extends React.Component {
   }
 
   state = {
-    collapsed: false,
-    name: "User's Name",
-    settingsVisible: false
+    collapsed: true,
+    name: "",
+    settingsVisible: false,
+    cats: []
   };
 
   getPaddingFooter = () => {
@@ -64,6 +66,16 @@ class LeftNav extends React.Component {
     });
   };
 
+  componentDidMount() {
+    console.log("Fetch categories here");
+    getUserCategories().then((res) => {
+      console.log(res);
+      this.setState({
+        cats: res
+      });
+    });
+  }
+
   render() {
     const userMenu = (
         <Menu>
@@ -80,10 +92,16 @@ class LeftNav extends React.Component {
         </Menu>
       );
     
+    const userCats = this.state.cats.map((cat) => {
+      return (<Menu.Item key={cat._id}>{cat.name}</Menu.Item>);
+    });
+
+
+    
     return (
         <Sider style={{"backgroundColor": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
-            <Avatar className="userAvatar" size={64} onClick={this.userClickedAvatar}>UN</Avatar>
+            <Avatar className="userAvatar" size={48} onClick={this.userClickedAvatar}>UN</Avatar>
             <div 
               style={{"paddingTop": "10px", "color": "black", "userSelect": "none"}}
             >
@@ -131,9 +149,7 @@ class LeftNav extends React.Component {
                 </span>
               }
             >
-              <Menu.Item key="3">Homework</Menu.Item>
-              <Menu.Item key="4">Grocery Lists</Menu.Item>
-              <Menu.Item key="5">Class Notes</Menu.Item>
+              {userCats}
             </SubMenu>
             <Menu.Item key="2" className="menuItem">
               <Link to="/starred">

@@ -7,7 +7,7 @@ async function userLogin(data) {
         method: 'POST',
         mode: 'cors',
         cache: 'no-cache',
-        credentials: 'same-origin',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -36,6 +36,17 @@ async function registerUser(data) {
     .catch(error => console.log(error));
 }
 
+async function getUserCategories() {
+    return fetch(baseUrl + '/category/all', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function handleErrors(response) {
     const json = await response.json()
     console.log(json);
@@ -47,3 +58,4 @@ async function handleErrors(response) {
 
 module.exports.userLogin = userLogin;
 module.exports.registerUser = registerUser;
+module.exports.getUserCategories = getUserCategories;

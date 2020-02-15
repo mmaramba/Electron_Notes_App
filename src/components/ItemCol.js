@@ -59,9 +59,9 @@ class ItemCol extends React.Component {
   render() {
     
     return (
-        <Col span={16} style={{height: "100%", backgroundColor: "white"}}>
+        <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", overflowY: "scroll"}}>
             <Layout style={{position: "fixed", width: "calc(100% - 500px)"}}>
-                <Content style={{width: '100%', height: "100%", backgroundColor: "white"}}>
+                <Content style={{width: '100%', backgroundColor: "white"}}>
                     <div className="topDetailSection">
                         <div className="itemDetailToolbar">
                             <Tooltip placement="bottomRight" title="Create timer for item">

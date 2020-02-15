@@ -11,7 +11,7 @@ from pprint import pprint
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, supports_credentials=True)
 bcrypt = Bcrypt(app)
 app.secret_key = get_secret_key()
 client = None

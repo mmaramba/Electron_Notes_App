@@ -103,7 +103,7 @@ class ListCol extends React.Component {
       }
     
     return (
-        <Col span={8} style={{userSelect: "none"}}>
+        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden"}}>
             <Layout style={{height: "100vh"}}>
                 <Content style={{ backgroundColor: "#fafafa"}}>
                     <div className="midColMenu">

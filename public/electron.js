@@ -9,10 +9,10 @@ let win
 function createWindow () {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1016,
-    height: 600,
-    minWidth: 1016,
-    minHeight: 600,
+    width: 800,
+    height: 550,
+    minWidth: 800,
+    minHeight: 550,
     webPreferences: {
       nodeIntegration: true
     }

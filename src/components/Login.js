@@ -39,17 +39,17 @@ class Login extends React.Component {
     const { getFieldDecorator } = this.props.form;
 
     return (
-        <div style={{textAlign: "center", paddingTop: "100px"}}>
+        <div style={{textAlign: "center", paddingTop: "40px"}}>
             <div style={{display: "inline-block"}}>
-                <div style={{marginBottom: "20px"}}>
+                <div style={{marginBottom: "20px", width: "200px"}}>
                   <Title level={4}>Sign in with your account</Title>
                 </div>
-                <div style={{marginBottom: "25px", height: "30px", width: "300px", textAlign: "center", paddingLeft: "20px"}}>
+                <div style={{marginBottom: "20px", height: "30px", width: "200px", textAlign: "center", paddingLeft: "20px"}}>
                   <Text type="warning"> { this.state.errorText } </Text>
                 </div>
                 
-                <Form onSubmit={this.handleSubmit} className="login-form" style={{width: "300px"}}>
-                <Form.Item>
+                <Form onSubmit={this.handleSubmit} className="login-form" style={{width: "200px"}}>
+                <Form.Item style={{marginBottom: "10px"}}>
                     {getFieldDecorator('email', {
                     rules: [{ required: true, message: 'Please input your email!' }],
                     })(

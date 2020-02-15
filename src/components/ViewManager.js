@@ -31,7 +31,7 @@ class ViewManager extends React.Component {
       return (
         <Layout style={{ height: '100vh' }}>
           <Row style={{ height: '100vh'}}>
-            <Col span={10} style={{ height: "100%"}}>
+            <Col span={10} style={{ height: "100%", overflow: "auto"}}>
               <HashRouter>
                 <Switch>
                   <Route path="/login">

@@ -107,17 +107,17 @@ class Register extends React.Component {
         };
 
         return (
-            <div style={{paddingTop: "75px", textAlign: "left"}}>
+            <div style={{paddingTop: "40px", textAlign: "left"}}>
                 <div style={{textAlign: "center"}}>
-                    <div style={{textAlign: "center", marginBottom: "20px"}}>
+                    <div style={{textAlign: "center", marginBottom: "5px"}}>
                         <Title level={4}>Register an account</Title>
                     </div>
-                    <div style={{ textAlign: "center", height: "50px"}}>
+                    <div style={{ textAlign: "center", height: "30px", marginBottom: "10px"}}>
                         <Text type="warning"> { this.state.errorText } </Text>
                     </div>
-                    <Form onSubmit={this.handleSubmit} style={{display: "inline-block", width: "300px"}}>
+                    <Form onSubmit={this.handleSubmit} style={{display: "inline-block", width: "200px"}}>
                         <div style={{textAlign: "left"}}>Email</div>
-                        <Form.Item>
+                        <Form.Item style={{marginBottom: "10px"}}>
                         {getFieldDecorator('email', {
                             rules: [
                             {
@@ -182,12 +182,12 @@ class Register extends React.Component {
                             })(<Input />)}
                         </Form.Item>
                         */}
-                        <Form.Item style={{paddingTop: "10px"}}>
+                        <Form.Item style={{marginBottom: "15px"}}>
                         <Button type="default" htmlType="submit">
                             Register
                         </Button>
                         
-                        </Form.Item>
+                        </Form.Item >
                     </Form>
                     <div style={{textAlign: "center"}}>Already have an account? <Link to="/login">Log in!</Link></div>
                 </div>

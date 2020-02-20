@@ -6,7 +6,8 @@ import {
     Dropdown,
     Icon,
     Modal,
-    Avatar
+    Avatar,
+    Spin
 } from 'antd';
 import {
     Link
@@ -25,8 +26,7 @@ class LeftNav extends React.Component {
   state = {
     collapsed: true,
     name: "",
-    settingsVisible: false,
-    cats: []
+    settingsVisible: false
   };
 
   getPaddingFooter = () => {
@@ -35,7 +35,13 @@ class LeftNav extends React.Component {
   }
 
   toggle = () => {
-    var display = this.state.name === "User's Name" ? "" : "User's Name";
+    var display;
+    if (this.props.first && this.props.last) {
+      display = this.state.name? "" : `${this.props.first} ${this.props.last}`;
+    } else {
+      display = this.state.name? "" : this.props.email;
+    }
+    
     this.setState({
       collapsed: !this.state.collapsed,
       name: display
@@ -66,17 +72,8 @@ class LeftNav extends React.Component {
     });
   };
 
-  componentDidMount() {
-    console.log("Fetch categories here");
-    getUserCategories().then((res) => {
-      console.log(res);
-      this.setState({
-        cats: res
-      });
-    });
-  }
-
   render() {
+    
     const userMenu = (
         <Menu>
           <Menu.Item onClick={this.showSettingsModal}>
@@ -92,16 +89,22 @@ class LeftNav extends React.Component {
         </Menu>
       );
     
-    const userCats = this.state.cats.map((cat) => {
-      return (<Menu.Item key={cat._id}>{cat.name}</Menu.Item>);
+    const userCats = this.props.cats.map((cat) => {
+      return (
+        <Menu.Item key={cat._id.$oid}>
+          <Link to={"/cat/" + cat._id.$oid}>{cat.name}</Link>
+        </Menu.Item>
+      );
     });
 
+    const userInitials = this.props.first && this.props.last? 
+      `${this.props.first[0].toUpperCase()}${this.props.last[0].toUpperCase()}` :
+      this.props.email[0].toUpperCase()
 
-    
     return (
         <Sider style={{"backgroundColor": "white"}} trigger={null} collapsible collapsed={this.state.collapsed}>
           <div className="logo">
-            <Avatar className="userAvatar" size={48} onClick={this.userClickedAvatar}>UN</Avatar>
+            <Avatar className="userAvatar" size={48} onClick={this.userClickedAvatar}>{userInitials}</Avatar>
             <div 
               style={{"paddingTop": "10px", "color": "black", "userSelect": "none"}}
             >
@@ -128,12 +131,12 @@ class LeftNav extends React.Component {
             </div>
           </div>
           <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['1']} mode="inline" style={{"textAlign": "left"}}>
-            <Menu.Item key="1" className="menuItem">
+            {/*<Menu.Item key="1" className="menuItem">
               <Link to="/">
                 <Icon type="home" />
                 <span>Home</span>
               </Link>
-            </Menu.Item>
+                  </Menu.Item>*/}
             <Menu.Item key="9">
               <Link to="/items">
                 <Icon type="file-text" />

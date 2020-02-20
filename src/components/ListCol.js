@@ -11,20 +11,11 @@ import {
     List,
     Input
 } from 'antd';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
+import addHours from 'date-fns/addHours';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Search } = Input;
-
-const data = [];
-const cats = ["Homework", "Grocery Lists", "Class Notes"];
-for (let i = 0; i < 10; i++) {
-  data.push({
-    title: `Item ${i}`,
-    description:
-      `This is a description for item ${i}.`,
-    category: cats[Math.floor(Math.random()*cats.length)]
-  });
-}
 
 const sortMenu = (
     <Menu>
@@ -53,11 +44,23 @@ class ListCol extends React.Component {
   }
 
   state = {
-    currentItem: data[0].title,
+    currentItem: "",
     searchModalVisible: false
   };
 
+  findItemCategory = (catId) => {
+    if (!catId) {
+      return "Uncategorized";
+    }
+    console.log(this.props.cats);
+    console.log(catId);
+    let res = this.props.cats.find(e => e._id.$oid === catId);
+    console.log(res);
+    return res.name;
+  }
+
   onUserItemClicked = (title, e) => {
+    console.log(title);
     this.setState({
       currentItem: title
     });
@@ -93,23 +96,27 @@ class ListCol extends React.Component {
   };
 
   render() {
-      let headerText = "Loading...";
-      switch(this.props.filter) {
-          case "all":
-              headerText = "All Items";
-                break;
-            case "starred":
-                headerText = "Starred Items";
-      }
+    let headerText = "Loading...";
+    switch(this.props.filter) {
+        case "all":
+          headerText = "All Items";
+          break;
+        case "starred":
+          headerText = "Starred Items";
+          break;
+        case "category": 
+          headerText = this.findItemCategory(this.props.location.pathname.split("/")[2]);
+          break;
+    }
     
     return (
-        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden"}}>
+        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden", backgroundColor: "#fafafa"}}>
             <Layout style={{height: "100vh"}}>
-                <Content style={{ backgroundColor: "#fafafa"}}>
+                <Content style={{backgroundColor: "#fafafa"}}>
                     <div className="midColMenu">
                         <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
                         <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
-                        10 items
+                        {this.props.items.length} Items
                         </div>
                         <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
                         <Dropdown overlay={sortMenu} placement="bottomCenter">
@@ -139,7 +146,7 @@ class ListCol extends React.Component {
                     <div className="listContainer">
                         <List
                         itemLayout="horizontal"
-                        dataSource={data}
+                        dataSource={this.props.items}
                         size="large"
                         renderItem={item => (
                             <List.Item
@@ -153,31 +160,34 @@ class ListCol extends React.Component {
                             onClick={(e) => this.onUserItemClicked(item.title, e)}
                             >
                             <List.Item.Meta
-                                title={<div style={{"position": "relative"}}>
-                                {item.title}
-                                <span style={{
-                                    "position": "absolute", 
-                                    "right": "20px", 
-                                    "font-size": "0.7em", 
-                                    "font-weight": "normal"
-                                }}>
-                                    9 min ago
-                                </span>
-                                </div>}
-                                description={<div>
-                                <div>{item.description}</div>
-                                <div style={{
-                                    "font-size": "0.8em",
-                                    "padding-top": "3px"
-                                }}>
-                                    <span style={{marginLeft: '3px', marginTop: '3px'}}>
-                                    <Icon type="folder" />
-                                    <span> {item.category}</span>
+                                title={
+                                  <div style={{"position": "relative"}}>
+                                    {item.title}
+                                    <span style={{
+                                      position: "absolute", 
+                                      right: "20px", 
+                                      fontSize: "0.7em", 
+                                      fontWeight: "normal"
+                                    }}>
+                                      {formatDistanceToNow(addHours(new Date(item.dateModified.$date), 8))} ago
                                     </span>
-                                </div>
-                                </div>}
+                                  </div>
+                                }
+                                description={
+                                  <div>
+                                    <div>{item.content}</div>
+                                    <div style={{
+                                      fontSize: "0.8em",
+                                      paddingTop: "3px"
+                                    }}>
+                                      <span style={{marginLeft: '3px', marginTop: '3px'}}>
+                                      <Icon type="folder" />
+                                      <span> {this.findItemCategory(item.categoryId)}</span>
+                                      </span>
+                                    </div>
+                                 </div>
+                                }
                             />
-                            {item.content}
                             </List.Item>
                         )}
                         />

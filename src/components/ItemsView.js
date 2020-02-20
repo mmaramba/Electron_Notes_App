@@ -10,11 +10,26 @@ class ItemsView extends React.Component {
   }
 
   render() {
+    var items;
+    switch(this.props.filter) {
+      case "all":
+        console.log("HERE");
+        items = this.props.items;
+        break;
+      case "starred":
+        items = this.props.items;
+        break;
+      case "category":
+        items = this.props.items.filter(e => e.categoryId === this.props.location.pathname.split("/")[2]);
+        console.log(this.props.location.pathname);
+        console.log(items);
+        break;
+    }
 
     return (
         <Layout style={{backgroundColor: "white"}}>
           <Row>
-            <ListCol {...this.props} />
+            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location}/>
             <ItemCol />
           </Row>
         </Layout>

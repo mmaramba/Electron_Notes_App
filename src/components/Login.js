@@ -22,7 +22,7 @@ class Login extends React.Component {
         userLogin(values).then((res) => {
           if (res.success) {
             this.props.onUserLogin();
-            this.setState({errorText: ''});
+            //this.setState({errorText: ''});
           } else {
             console.log("Do something with error");
             this.setState({errorText: res.error});

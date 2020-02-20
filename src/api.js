@@ -47,6 +47,17 @@ async function getUserCategories() {
     .catch(error => console.log(error));  
 }
 
+async function getUser() {
+    return fetch(baseUrl + '/user', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function handleErrors(response) {
     const json = await response.json()
     console.log(json);
@@ -59,3 +70,4 @@ async function handleErrors(response) {
 module.exports.userLogin = userLogin;
 module.exports.registerUser = registerUser;
 module.exports.getUserCategories = getUserCategories;
+module.exports.getUser = getUser;

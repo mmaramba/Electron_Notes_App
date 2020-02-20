@@ -28,44 +28,44 @@ function insertStar () {
  */
 const CustomToolbar = () => (
   <div id="toolbar">
-    <span class="ql-formats">
-        <select className="ql-header" defaultValue={""} onChange={e => e.persist()}>
-        <option selected></option>
+    <span className="ql-formats">
+        <select className="ql-header" defaultValue={"3"} onChange={e => e.persist()}>
+        <option value="3"></option>
         <option value="2"></option>
         <option value="1"></option>
         </select>
     </span>
-    <span class="ql-formats">
+    <span className="ql-formats">
         <button className="ql-bold"></button>
         <button className="ql-italic">
         </button>
-        <select className="ql-color">
+        <select className="ql-color" defaultValue={"black"}>
             <option value="red"></option>
             <option value="green"></option>
             <option value="blue"></option>
             <option value="orange"></option>
             <option value="violet"></option>
             <option value="#d0d1d2"></option>
-            <option selected></option>
+            <option value="black"></option>
         </select>
-        <select className="ql-background">
+        <select className="ql-background" defaultValue={"white"}>
             <option value="#a6b8bf"></option>
             <option value="green"></option>
             <option value="blue"></option>
             <option value="orange"></option>
             <option value="violet"></option>
             <option value="#d0d1d2"></option>
-            <option selected></option>
+            <option value="white"></option>
         </select>
     </span>
-    <span class="ql-formats">
-        <button class="ql-list" value="ordered"></button>
-        <button class="ql-list" value="bullet"></button>
+    <span className="ql-formats">
+        <button className="ql-list" value="ordered"></button>
+        <button className="ql-list" value="bullet"></button>
     </span>
-    <span class="ql-formats">
-        <button class="ql-link"></button>
-        <button class="ql-blockquote"></button>
-        <button class="ql-code-block"></button>
+    <span className="ql-formats">
+        <button className="ql-link"></button>
+        <button className="ql-blockquote"></button>
+        <button className="ql-code-block"></button>
     </span>
   </div>
 )

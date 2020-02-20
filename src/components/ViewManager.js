@@ -6,6 +6,7 @@ import HomeView from './HomeView.js';
 import WrappedNormalLoginForm from './Login.js';
 import WrappedRegistrationForm from './Register.js';
 import LoginCarousel from './LoginCarousel.js';
+import LoggedInView from './LoggedInView.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 
@@ -55,22 +56,7 @@ class ViewManager extends React.Component {
     }
 
     return (
-      <Layout style={{ height: '100vh' }}>
-        <HashRouter>
-          <LeftNav />
-          <Switch>
-            <Route path="/items">
-              <ItemsView filter="all"/>
-            </Route>
-            <Route path="/starred">
-              <ItemsView filter="starred" />
-            </Route>
-            <Route path="/">
-              <HomeView />
-            </Route>
-          </Switch>
-        </HashRouter>
-      </Layout>
+      <LoggedInView />
     );
   }
 }

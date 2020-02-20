@@ -52,10 +52,7 @@ class ListCol extends React.Component {
     if (!catId) {
       return "Uncategorized";
     }
-    console.log(this.props.cats);
-    console.log(catId);
     let res = this.props.cats.find(e => e._id.$oid === catId);
-    console.log(res);
     return res.name;
   }
 
@@ -110,37 +107,37 @@ class ListCol extends React.Component {
     }
     
     return (
-        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden", backgroundColor: "#fafafa"}}>
+        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden", backgroundColor: "white"}}>
             <Layout style={{height: "100vh"}}>
-                <Content style={{backgroundColor: "#fafafa"}}>
+                <Content style={{backgroundColor: "white", position: "relative"}}>
                     <div className="midColMenu">
                         <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
                         <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
-                        {this.props.items.length} Items
+                          {this.props.items.length} Items
                         </div>
                         <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
-                        <Dropdown overlay={sortMenu} placement="bottomCenter">
-                            <a className="ant-dropdown-link" href="#" style={{color: "rgba(0, 0, 0, 0.65)"}}>
-                            <Icon type="caret-down" />
-                            </a>
-                        </Dropdown>
-                        <Tooltip placement="topLeft" title="Search by item name">
-                            <Icon type="search" style={{color: "rgba(0, 0, 0, 0.65)", paddingLeft: "5px"}} size="small" onClick={this.showSearchModal} />
-                        </Tooltip>
-                        <Modal
-                            title="Search by item name"
-                            visible={this.state.searchModalVisible}
-                            onOk={this.handleSearchOk}
-                            onCancel={this.handleSearchCancel}
-                            footer={null}
-                            width="250px"
-                        >
-                            <Search
-                            placeholder="Enter name"
-                            onSearch={this.handleEnterKeyOnSearch}
-                            style={{ width: 200 }}
-                            />
-                        </Modal>
+                          <Dropdown overlay={sortMenu} placement="bottomCenter">
+                              <a className="ant-dropdown-link" href="#" style={{color: "rgba(0, 0, 0, 0.65)"}}>
+                              <Icon type="caret-down" />
+                              </a>
+                          </Dropdown>
+                          <Tooltip placement="topLeft" title="Search by item name">
+                              <Icon type="search" style={{color: "rgba(0, 0, 0, 0.65)", paddingLeft: "5px"}} size="small" onClick={this.showSearchModal} />
+                          </Tooltip>
+                          <Modal
+                              title="Search by item name"
+                              visible={this.state.searchModalVisible}
+                              onOk={this.handleSearchOk}
+                              onCancel={this.handleSearchCancel}
+                              footer={null}
+                              width="250px"
+                          >
+                              <Search
+                              placeholder="Enter name"
+                              onSearch={this.handleEnterKeyOnSearch}
+                              style={{ width: 200 }}
+                              />
+                          </Modal>
                         </div>
                     </div>
                     <div className="listContainer">
@@ -150,23 +147,25 @@ class ListCol extends React.Component {
                         size="large"
                         renderItem={item => (
                             <List.Item
-                            key={item.title}
+                            key={item._id.$oid}
                             style={{
-                                backgroundColor: (item.title === this.state.currentItem? "#ededed" : "#fafafa"),
+                                backgroundColor: (item.title === this.state.currentItem? "#ededed" : "white"),
                                 textAlign: "left", 
                                 paddingLeft: "10px", 
-                                paddingBottom: "0px"
+                                paddingBottom: "2px",
+                                paddingTop: "6px"
                             }}
                             onClick={(e) => this.onUserItemClicked(item.title, e)}
                             >
                             <List.Item.Meta
                                 title={
                                   <div style={{"position": "relative"}}>
-                                    {item.title}
+                                    <span style={{marginLeft: '3px', marginTop: '3px', fontSize: "0.8em"}}>
+                                      <Icon type="folder" />
+                                      <span> {this.findItemCategory(item.categoryId)} · </span>
+                                    </span>
                                     <span style={{
-                                      position: "absolute", 
-                                      right: "20px", 
-                                      fontSize: "0.7em", 
+                                      fontSize: "0.8em", 
                                       fontWeight: "normal"
                                     }}>
                                       {formatDistanceToNow(addHours(new Date(item.dateModified.$date), 8))} ago
@@ -174,17 +173,26 @@ class ListCol extends React.Component {
                                   </div>
                                 }
                                 description={
-                                  <div>
-                                    <div>{item.content}</div>
+                                  <div style={{"position": "relative"}}>
+                                    <div style={{fontWeight: "600", color: "#666666"}}>{item.title}</div>
                                     <div style={{
                                       fontSize: "0.8em",
                                       paddingTop: "3px"
                                     }}>
-                                      <span style={{marginLeft: '3px', marginTop: '3px'}}>
-                                      <Icon type="folder" />
-                                      <span> {this.findItemCategory(item.categoryId)}</span>
-                                      </span>
+                                      {item.content}
                                     </div>
+                                    <span
+                                      style={{
+                                        position: "absolute",
+                                        right: "15px",
+                                        bottom: 0,
+                                        fontSize: "1em", 
+                                        fontWeight: "normal",
+                                      }}
+                                      onClick={() => console.log("Star clicked. Put here")}
+                                    >
+                                      {item.star? <Icon type="star" theme="filled" /> : <Icon type="star" />}
+                                    </span>
                                  </div>
                                 }
                             />

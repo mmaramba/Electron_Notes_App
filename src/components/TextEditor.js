@@ -13,6 +13,7 @@ const Font = ReactQuill.Quill.import('formats/font');
 Font.whitelist = ['large', 'medium', "small", "regular", "bold", "pullquote"] ;
 ReactQuill.Quill.register(Font, true);
 
+
 /*
  * Event handler to be attached using Quill toolbar module
  * http://quilljs.com/docs/modules/toolbar/
@@ -30,9 +31,9 @@ const CustomToolbar = () => (
   <div id="toolbar">
     <span className="ql-formats">
         <select className="ql-header" defaultValue={"3"} onChange={e => e.persist()}>
-        <option value="3"></option>
-        <option value="2"></option>
-        <option value="1"></option>
+        <option value="3">Small</option>
+        <option value="2">Medium</option>
+        <option value="1">Large</option>
         </select>
     </span>
     <span className="ql-formats">

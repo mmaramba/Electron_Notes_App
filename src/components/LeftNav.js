@@ -7,7 +7,8 @@ import {
     Icon,
     Modal,
     Avatar,
-    Spin
+    Spin,
+    Tooltip
 } from 'antd';
 import {
     Link
@@ -130,13 +131,13 @@ class LeftNav extends React.Component {
               </Modal>
             </div>
           </div>
-          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['1']} mode="inline" style={{"textAlign": "left"}}>
-            {/*<Menu.Item key="1" className="menuItem">
-              <Link to="/">
-                <Icon type="home" />
-                <span>Home</span>
-              </Link>
-                  </Menu.Item>*/}
+          <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['9']} mode="inline" style={{"textAlign": "left"}}>
+            <Menu.Item key="1" className="createItemButton" disabled={true}>
+              <div onClick={() => console.log("HISDFS")}>
+                <Icon type="plus-circle" theme="filled" style={{color: "rgba(0, 0, 0, 0.65)"}} />
+                <span style={{color: "rgba(0, 0, 0, 0.65)"}}>Create Item</span>
+              </div>
+            </Menu.Item>
             <Menu.Item key="9">
               <Link to="/items">
                 <Icon type="file-text" />

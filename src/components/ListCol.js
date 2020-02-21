@@ -49,6 +49,15 @@ class ListCol extends React.Component {
     searchModalVisible: false
   };
 
+  limitPreviewContentLength = (content) => {
+    const MAX_LEN = 30;
+    if (content.length > MAX_LEN) {
+      return content.slice(0, MAX_LEN) + '...';
+    } else {
+      return content
+    }
+  }
+
   findItemCategory = (catId) => {
     if (!catId) {
       return "Uncategorized";
@@ -117,7 +126,7 @@ class ListCol extends React.Component {
                       ref={node => {
                         this.container = node;
                       }}
-                      style={{height: "100vh", overflowY: "scroll"}}
+                      style={{height: "100vh", overflowY: "scroll", overflowX: "hidden"}}
                     >
                       <div
                         style={{height: "1000px"}}
@@ -125,7 +134,7 @@ class ListCol extends React.Component {
                         <Affix target={() => this.container}>
                     <div className="midColMenu">
                         <h3 style={{textAlign: "left", paddingTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
-                        <div style={{textAlign: "left", height: "100%", width: "100%", marginLeft: "10px"}}>
+                        <div style={{textAlign: "left", height: "100%", width: "100%", paddingTop: "30px", marginLeft: "10px"}}>
                           {this.props.items.length} Items
                         </div>
                         {/*
@@ -195,9 +204,10 @@ class ListCol extends React.Component {
                                     <div 
                                       style={{
                                         fontSize: "0.8em",
-                                        paddingTop: "3px"
+                                        paddingTop: "3px",
+                                        height: "30px"
                                       }}
-                                      dangerouslySetInnerHTML={{__html: item.content}}
+                                      dangerouslySetInnerHTML={{__html: this.limitPreviewContentLength(item.content)}}
                                     />
                                     <span
                                       style={{
@@ -206,6 +216,8 @@ class ListCol extends React.Component {
                                         bottom: 0,
                                         fontSize: "1em", 
                                         fontWeight: "normal",
+                                        height: "30px",
+                                        paddingTop: "3px"
                                       }}
                                       onClick={() => console.log("Star clicked. Put here")}
                                     >

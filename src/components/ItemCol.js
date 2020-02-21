@@ -9,7 +9,8 @@ import {
     Modal,
     Col,
     Tooltip,
-    message
+    message,
+    PageHeader
 } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -82,14 +83,14 @@ class ItemCol extends React.Component {
     }
     
     return (
-        <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", overflowY: "scroll"}}>
+        <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", height: "100vh", overflowY: "auto"}}>
             <Layout style={{position: "fixed", width: "calc(100% - 500px)"}}>
                 <Content style={{width: '100%', backgroundColor: "white"}}>
                     <div className="topDetailSection">
                         <div className="itemDetailToolbar">
-                            <Tooltip placement="bottomRight" title="Create timer for item">
+                            {/*<Tooltip placement="bottomRight" title="Create timer for item">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="clock-circle" size="small" ghost />
-                            </Tooltip>
+                            </Tooltip>*/}
                             <Tooltip placement="bottomRight" title="Star item">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="star" size="small" ghost />
                             </Tooltip>
@@ -99,17 +100,25 @@ class ItemCol extends React.Component {
                             <Tooltip placement="bottomRight" title="Save">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="save" size="small" ghost onClick={success} />
                             </Tooltip>
-                            <Tooltip placement="bottomRight" title="More options">
+                            {/*<Tooltip placement="bottomRight" title="More options">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="ellipsis" size="small" ghost />
-                            </Tooltip>
+                            </Tooltip>*/}
                         </div>
-                        <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px', cursor: "pointer"}}>
+                        {/*<Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px', cursor: "pointer"}}>
                             <Breadcrumb.Item>{catName}</Breadcrumb.Item>
                             <Breadcrumb.Item id="titleContainer" onMouseEnter={this.showEditTitleButton} onMouseLeave={this.hideEditTitleButton} onClick={this.showEditTitleModal}>
                             {item? item.title : ""}
                             <span id="editTitle"><Icon type="edit" style={{paddingLeft: "5px", display: this.state.editTitleVisible? "inline-block" : "none"}}/></span>
                             </Breadcrumb.Item>
-                        </Breadcrumb>
+                        </Breadcrumb>*/}
+                        <PageHeader
+                          title={<div style={{cursor: "pointer"}}>{item.title}</div>}
+                          subTitle={
+                            <div style={{cursor: "pointer"}}>
+                              <span><Icon type="folder" /> {this.findItemCategory(item)} </span>
+                            </div>
+                          }
+                        />
                     </div>
                     <Modal
                         title="Edit Title"

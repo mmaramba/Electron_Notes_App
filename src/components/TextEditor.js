@@ -104,6 +104,7 @@ class TextEditor extends React.Component {
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
           value={this.state.editorHtml}
+          style={{height: "300px", width: "100%"}}
         />
       </div>
     )

@@ -9,7 +9,8 @@ import {
     Col,
     Tooltip,
     List,
-    Input
+    Input,
+    Affix
 } from 'antd';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import addHours from 'date-fns/addHours';
@@ -108,15 +109,27 @@ class ListCol extends React.Component {
     }
     
     return (
-        <Col span={8} style={{userSelect: "none", overflowY: "scroll", overflowX: "hidden", backgroundColor: "white"}}>
+        <Col span={8} style={{userSelect: "none", overflowX: "hidden", backgroundColor: "white"}}>
             <Layout style={{height: "100vh"}}>
                 <Content style={{backgroundColor: "white", position: "relative"}}>
+                    <div
+                      className="scrollable-container"
+                      ref={node => {
+                        this.container = node;
+                      }}
+                      style={{height: "100vh", overflowY: "scroll"}}
+                    >
+                      <div
+                        style={{height: "1000px"}}
+                      >
+                        <Affix target={() => this.container}>
                     <div className="midColMenu">
-                        <h3 style={{textAlign: "left", marginTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
-                        <div style={{textAlign: "left", position: "absolute", height: "100%", width: "100%", top: "75px", marginLeft: "10px"}}>
+                        <h3 style={{textAlign: "left", paddingTop: "10px", marginLeft: "10px"}}>{headerText}</h3>
+                        <div style={{textAlign: "left", height: "100%", width: "100%", marginLeft: "10px"}}>
                           {this.props.items.length} Items
                         </div>
-                        <div style={{textAlign: "right", position: "absolute", height: "100%", width: "100%", top: "75px", right: "16px"}}>
+                        {/*
+                        <div style={{textAlign: "right", height: "100%", width: "100%"}}>
                           <Dropdown overlay={sortMenu} placement="bottomCenter">
                               <a className="ant-dropdown-link" href="#" style={{color: "rgba(0, 0, 0, 0.65)"}}>
                               <Icon type="caret-down" />
@@ -140,7 +153,9 @@ class ListCol extends React.Component {
                               />
                           </Modal>
                         </div>
+                        */}
                     </div>
+                    </Affix>
                     <div className="listContainer">
                         <List
                         itemLayout="horizontal"
@@ -202,6 +217,8 @@ class ListCol extends React.Component {
                             </List.Item>
                         )}
                         />
+                    </div>
+                    </div>
                     </div>
                 </Content>
             </Layout>

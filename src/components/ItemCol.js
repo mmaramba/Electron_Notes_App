@@ -8,7 +8,8 @@ import {
     Icon,
     Modal,
     Col,
-    Tooltip
+    Tooltip,
+    message
 } from 'antd';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -71,6 +72,14 @@ class ItemCol extends React.Component {
     console.log(this.props.filter);
     const item = this.props.items.find(e => e._id.$oid === this.props.currItem);
     const catName = this.findItemCategory(item);
+    const success = () => {
+      const hide = message.loading('Make PUT API call here...', 0);
+      setTimeout(hide, 2000);
+    }
+
+    if (!item) {
+      return <div></div>
+    }
     
     return (
         <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", overflowY: "scroll"}}>
@@ -86,6 +95,9 @@ class ItemCol extends React.Component {
                             </Tooltip>
                             <Tooltip placement="bottomRight" title="Share item">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="share-alt" size="small" ghost />
+                            </Tooltip>
+                            <Tooltip placement="bottomRight" title="Save">
+                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="save" size="small" ghost onClick={success} />
                             </Tooltip>
                             <Tooltip placement="bottomRight" title="More options">
                             <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="ellipsis" size="small" ghost />

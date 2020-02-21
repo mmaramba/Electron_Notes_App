@@ -146,6 +146,7 @@ class ListCol extends React.Component {
                         itemLayout="horizontal"
                         dataSource={this.props.items}
                         size="large"
+                        locale={{emptyText: "No items have been created. :("}}
                         renderItem={item => (
                             <List.Item
                             key={item._id.$oid}
@@ -176,12 +177,13 @@ class ListCol extends React.Component {
                                 description={
                                   <div style={{"position": "relative"}}>
                                     <div style={{fontWeight: "600", color: "#666666"}}>{item.title}</div>
-                                    <div style={{
-                                      fontSize: "0.8em",
-                                      paddingTop: "3px"
-                                    }}>
-                                      {item.content}
-                                    </div>
+                                    <div 
+                                      style={{
+                                        fontSize: "0.8em",
+                                        paddingTop: "3px"
+                                      }}
+                                      dangerouslySetInnerHTML={{__html: item.content}}
+                                    />
                                     <span
                                       style={{
                                         position: "absolute",
@@ -192,7 +194,7 @@ class ListCol extends React.Component {
                                       }}
                                       onClick={() => console.log("Star clicked. Put here")}
                                     >
-                                      {item.star? <Icon type="star" theme="filled" /> : <Icon type="star" />}
+                                      {item.star? <Icon type="star" theme="filled" /> : ""}
                                     </span>
                                  </div>
                                 }

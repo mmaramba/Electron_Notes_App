@@ -9,6 +9,17 @@ class ItemsView extends React.Component {
     super(props);
   }
 
+  state = {
+    currentItem: null
+  }
+
+  onItemChange = (itemId) => {
+    console.log(itemId);
+    this.setState({
+      currentItem: itemId
+    });
+  }
+
   render() {
     var items;
     switch(this.props.filter) {
@@ -29,8 +40,8 @@ class ItemsView extends React.Component {
     return (
         <Layout style={{backgroundColor: "white"}}>
           <Row>
-            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location}/>
-            <ItemCol />
+            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location} currItemCallback={this.onItemChange}/>
+            <ItemCol items={items} cats={this.props.cats} location={this.props.location} filter={this.props.filter} currItem={this.state.currentItem} />
           </Row>
         </Layout>
     );

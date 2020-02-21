@@ -56,7 +56,21 @@ class ItemCol extends React.Component {
     });
   };
 
+  findItemCategory = (item) => {
+    if (!item) {
+      return "";
+    }
+    if (!item.categoryId) {
+      return "Uncategorized";
+    }
+    let res = this.props.cats.find(e => e._id.$oid === item.categoryId);
+    return res.name;
+  }
+
   render() {
+    console.log(this.props.filter);
+    const item = this.props.items.find(e => e._id.$oid === this.props.currItem);
+    const catName = this.findItemCategory(item);
     
     return (
         <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", overflowY: "scroll"}}>
@@ -78,9 +92,9 @@ class ItemCol extends React.Component {
                             </Tooltip>
                         </div>
                         <Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px', cursor: "pointer"}}>
-                            <Breadcrumb.Item>Items</Breadcrumb.Item>
+                            <Breadcrumb.Item>{catName}</Breadcrumb.Item>
                             <Breadcrumb.Item id="titleContainer" onMouseEnter={this.showEditTitleButton} onMouseLeave={this.hideEditTitleButton} onClick={this.showEditTitleModal}>
-                            Untitled
+                            {item? item.title : ""}
                             <span id="editTitle"><Icon type="edit" style={{paddingLeft: "5px", display: this.state.editTitleVisible? "inline-block" : "none"}}/></span>
                             </Breadcrumb.Item>
                         </Breadcrumb>
@@ -94,7 +108,7 @@ class ItemCol extends React.Component {
                         <p>Enter a new title</p>
                     </Modal>
                     <div style={{margin: "16px"}}>
-                        <TextEditor placeholder="Start typing here!" />
+                        <TextEditor placeholder="Start typing here!" content={item? item.content : ""} />
                     </div>
                 </Content>
             </Layout>

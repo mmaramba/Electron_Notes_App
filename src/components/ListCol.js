@@ -56,10 +56,11 @@ class ListCol extends React.Component {
     return res.name;
   }
 
-  onUserItemClicked = (title, e) => {
-    console.log(title);
+  onUserItemClicked = (item, e) => {
+    console.log(item);
+    this.props.currItemCallback(item);
     this.setState({
-      currentItem: title
+      currentItem: item
     });
   }
 
@@ -149,13 +150,13 @@ class ListCol extends React.Component {
                             <List.Item
                             key={item._id.$oid}
                             style={{
-                                backgroundColor: (item.title === this.state.currentItem? "#ededed" : "white"),
+                                backgroundColor: (item._id.$oid === this.state.currentItem? "#ededed" : "white"),
                                 textAlign: "left", 
                                 paddingLeft: "10px", 
                                 paddingBottom: "2px",
                                 paddingTop: "6px"
                             }}
-                            onClick={(e) => this.onUserItemClicked(item.title, e)}
+                            onClick={(e) => this.onUserItemClicked(item._id.$oid, e)}
                             >
                             <List.Item.Meta
                                 title={

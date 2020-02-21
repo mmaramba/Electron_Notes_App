@@ -77,7 +77,8 @@ const CustomToolbar = () => (
 class TextEditor extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { editorHtml: '' }
+    //console.log(this.props.content);
+    this.state = { editorHtml: this.props.content }
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -85,7 +86,16 @@ class TextEditor extends React.Component {
   	this.setState({ editorHtml: html });
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props.content !== prevProps.content) {
+      this.setState({
+        editorHtml: this.props.content
+      });
+    }
+  }
+
   render() {
+    console.log(this.state.editorHtml);
     return (
       <div className="text-editor">
         <CustomToolbar />
@@ -93,6 +103,7 @@ class TextEditor extends React.Component {
           onChange={this.handleChange}
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
+          value={this.state.editorHtml}
         />
       </div>
     )

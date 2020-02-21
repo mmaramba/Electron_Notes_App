@@ -134,7 +134,7 @@ class LeftNav extends React.Component {
           <Menu ref={this.menuRef} theme="light" defaultSelectedKeys={['9']} mode="inline" style={{"textAlign": "left"}}>
             <Menu.Item key="1" className="createItemButton" disabled={true}>
               <div onClick={() => console.log("HISDFS")}>
-                <Icon type="plus-circle" theme="filled" style={{color: "rgba(0, 0, 0, 0.65)"}} />
+                <Icon className="createItemIcon" type="plus-circle" theme="filled" />
                 <span style={{color: "rgba(0, 0, 0, 0.65)"}}>Create Item</span>
               </div>
             </Menu.Item>

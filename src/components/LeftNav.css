@@ -1,5 +1,5 @@
 .logo {
-    height: 120px;
+    height: 150px;
     padding-top: 30px;
     background: rgba(255, 255, 255, 0.2);
     /* border: 1px solid black; */
@@ -22,5 +22,10 @@
 
 .createItemButton {
     cursor: pointer;
+    color: rgba(0, 0, 0, 0.65);
+    font-weight: bold;
+}
+
+.createItemIcon {
     color: rgba(0, 0, 0, 0.65);
 }

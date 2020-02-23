@@ -84,8 +84,8 @@ class ItemCol extends React.Component {
     
     return (
         <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", height: "100vh", overflowY: "auto"}}>
-            <Layout style={{position: "fixed", width: "calc(100% - 500px)"}}>
-                <Content style={{width: '100%', backgroundColor: "white"}}>
+            <Layout style={{position: "fixed", width: "60%"}}>
+                <Content style={{width: "100%", backgroundColor: "white"}}>
                     <div className="topDetailSection">
                         <div className="itemDetailToolbar">
                             {/*<Tooltip placement="bottomRight" title="Create timer for item">
@@ -110,7 +110,7 @@ class ItemCol extends React.Component {
                             {item? item.title : ""}
                             <span id="editTitle"><Icon type="edit" style={{paddingLeft: "5px", display: this.state.editTitleVisible? "inline-block" : "none"}}/></span>
                             </Breadcrumb.Item>
-                        </Breadcrumb>*/}
+                        </Breadcrumb>
                         <PageHeader
                           title={<div style={{cursor: "pointer"}}>{item.title}</div>}
                           subTitle={
@@ -118,7 +118,7 @@ class ItemCol extends React.Component {
                               <span><Icon type="folder" /> {this.findItemCategory(item)} </span>
                             </div>
                           }
-                        />
+                        />*/}
                     </div>
                     <Modal
                         title="Edit Title"
@@ -129,7 +129,7 @@ class ItemCol extends React.Component {
                         <p>Enter a new title</p>
                     </Modal>
                     <div style={{margin: "16px"}}>
-                        <TextEditor placeholder="Start typing here!" content={item? item.content : ""} />
+                        <TextEditor title={item.title} cat={this.findItemCategory(item)} placeholder="Start typing here!" content={item? item.content : ""} />
                     </div>
                 </Content>
             </Layout>

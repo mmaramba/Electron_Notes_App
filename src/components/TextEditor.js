@@ -98,7 +98,11 @@ class TextEditor extends React.Component {
     console.log(this.state.editorHtml);
     return (
       <div className="text-editor">
+        <h4 style={{textAlign: "left", marginLeft: "16px", color: "rgba(0, 0, 0, 0.65)", cursor: "pointer"}}>
+          <span><Icon type="folder" /> {this.props.cat}</span>
+        </h4>
         <CustomToolbar />
+        <h2 style={{textAlign: "left", marginTop: "8px", marginLeft: "16px", cursor: "pointer", userSelect: "none"}}>{this.props.title}</h2>
         <ReactQuill
           onChange={this.handleChange}
           placeholder={this.props.placeholder}

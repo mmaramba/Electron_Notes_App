@@ -27,7 +27,8 @@ class LeftNav extends React.Component {
   state = {
     collapsed: true,
     name: "",
-    settingsVisible: false
+    settingsVisible: false,
+    collapseIconVisible: false
   };
 
   getPaddingFooter = () => {
@@ -162,15 +163,20 @@ class LeftNav extends React.Component {
               </Link>
             </Menu.Item>
           </Menu>
-          <div className="mainFooter">
-            <Icon 
-              className="trigger"
-              type={this.state.collapsed ? 'right' : 'left'}
-              onClick={this.toggle}
-              style={{
-                "paddingLeft": this.getPaddingFooter()
-              }}
-            />
+          <div className="mainFooter"
+            onMouseEnter={() => this.setState({ collapseIconVisible: true })}
+            onMouseLeave={() => this.setState({ collapseIconVisible: false })}>
+            { !this.state.collapsed || this.state.collapseIconVisible? 
+              <Icon 
+                className="trigger"
+                type={this.state.collapsed ? 'right' : 'left'}
+                onClick={this.toggle}
+                style={{
+                  "paddingLeft": this.getPaddingFooter()
+                }}
+              /> :
+              ""
+            }
           </div>
         </Sider>
     )

@@ -13,6 +13,16 @@ class ItemsView extends React.Component {
     currentItem: null
   }
 
+  getCurrentItem = (items) => {
+    if (this.state.currentItem) {
+      return this.state.currentItem;
+    } else if (!this.state.currentItem && items.length > 0) {
+      return items[0]._id.$oid;
+    } else {
+      return null;
+    }
+  }
+
   onItemChange = (itemId) => {
     console.log(itemId);
     this.setState({
@@ -37,11 +47,13 @@ class ItemsView extends React.Component {
         break;
     }
 
+    var currItem = this.getCurrentItem(items);
+
     return (
         <Layout style={{backgroundColor: "white"}}>
           <Row>
-            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location} currItemCallback={this.onItemChange}/>
-            <ItemCol items={items} cats={this.props.cats} location={this.props.location} filter={this.props.filter} currItem={this.state.currentItem} />
+            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location} currItem={currItem} currItemCallback={this.onItemChange}/>
+            <ItemCol items={items} cats={this.props.cats} location={this.props.location} filter={this.props.filter} currItem={currItem} />
           </Row>
         </Layout>
     );

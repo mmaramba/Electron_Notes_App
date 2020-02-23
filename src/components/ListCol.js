@@ -45,7 +45,7 @@ class ListCol extends React.Component {
   }
 
   state = {
-    currentItem: "",
+    currentItem: this.props.currItem,
     searchModalVisible: false
   };
 
@@ -129,7 +129,7 @@ class ListCol extends React.Component {
                       style={{height: "100vh", overflowY: "scroll", overflowX: "hidden"}}
                     >
                       <div
-                        style={{height: "1000px"}}
+                        style={{height: "1000px", backgroundColor: "#fcfcfc"}}
                       >
                         <Affix target={() => this.container}>
                     <div className="midColMenu">
@@ -179,7 +179,8 @@ class ListCol extends React.Component {
                                 textAlign: "left", 
                                 paddingLeft: "10px", 
                                 paddingBottom: "2px",
-                                paddingTop: "6px"
+                                paddingTop: "6px",
+                                borderBottom: "1px solid #e8e8e8"
                             }}
                             onClick={(e) => this.onUserItemClicked(item._id.$oid, e)}
                             >

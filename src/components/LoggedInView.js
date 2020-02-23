@@ -40,13 +40,13 @@ class LoggedInView extends React.Component {
           <LeftNav cats={this.state.user.categories} first={this.state.user.firstName} last={this.state.user.lastName} email={this.state.user.email}/>
           <Switch>
             <Route path="/items">
-              <ItemsView filter="all" items={this.state.user.items.reverse()} cats={this.state.user.categories} />
+              <ItemsView filter="all" items={this.state.user.items} cats={this.state.user.categories} />
             </Route>
             <Route path="/starred">
-              <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star).reverse()} cats={this.state.user.categories} />
+              <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} cats={this.state.user.categories} />
             </Route>
             <Route path="/cat/:categoryId" render={(props) => {
-                return <ItemsView filter="category" items={this.state.user.items.reverse()} cats={this.state.user.categories} {...props} />
+                return <ItemsView filter="category" items={this.state.user.items} cats={this.state.user.categories} {...props} />
             }}>
             </Route>
             <Route path="/">

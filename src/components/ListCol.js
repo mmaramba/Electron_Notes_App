@@ -170,7 +170,7 @@ class ListCol extends React.Component {
                         itemLayout="horizontal"
                         dataSource={this.props.items}
                         size="large"
-                        locale={{emptyText: "No items have been created. :("}}
+                        locale={{emptyText: <span role="img" aria-label="Sad Pensive Face">No items were found. 😔</span>}}
                         renderItem={item => (
                             <List.Item
                             key={item._id.$oid}

@@ -1,32 +1,15 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import { Icon } from 'antd';
-import './TextEditor.css'
+import { Icon, Button } from 'antd';
+import './TextEditor.css';
+import styled from 'styled-components';
 
-/*
- * Custom "star" icon for the toolbar using an Octicon
- * https://octicons.github.io
- */
-const CustomButton = () => <Icon type="star" theme="filled"/>
-
+// Register Quill font sizes
 const Font = ReactQuill.Quill.import('formats/font');
 Font.whitelist = ['large', 'medium', "small", "regular", "bold", "pullquote"] ;
 ReactQuill.Quill.register(Font, true);
 
-
-/*
- * Event handler to be attached using Quill toolbar module
- * http://quilljs.com/docs/modules/toolbar/
- */
-function insertStar () {
-  const cursorPosition = this.quill.getSelection().index
-  this.quill.insertText(cursorPosition, "★")
-  this.quill.setSelection(cursorPosition + 1)
-}
-
-/*
- * Custom toolbar component including insertStar button and dropdowns
- */
+// From QuillJS Custom Toolbar Example
 const CustomToolbar = () => (
   <div id="toolbar">
     <span className="ql-formats">
@@ -71,9 +54,26 @@ const CustomToolbar = () => (
   </div>
 )
 
-/*
- * Editor component with custom toolbar and content containers
- */
+const CategoryLabel = styled.h4`
+  text-align: left;
+  margin-left: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+`
+
+const ItemTitle = styled.h2`
+  text-align: left;
+  margin-top: 8px;
+  margin-left: 16px;
+  cursor: pointer;
+  user-select: none;
+`
+
+const StyledReactQuill = styled(ReactQuill)`
+  height: 300px;
+  width: 100%;
+`
+
 class TextEditor extends React.Component {
   constructor (props) {
     super(props)
@@ -97,41 +97,33 @@ class TextEditor extends React.Component {
   render() {
     console.log(this.state.editorHtml);
     return (
-      <div className="text-editor">
-        <h4 style={{textAlign: "left", marginLeft: "16px", color: "rgba(0, 0, 0, 0.65)", cursor: "pointer"}}>
+      <div>
+        <CategoryLabel>
           <span><Icon type="folder" /> {this.props.cat}</span>
-        </h4>
+        </CategoryLabel>
         <CustomToolbar />
-        <h2 style={{textAlign: "left", marginTop: "8px", marginLeft: "16px", cursor: "pointer", userSelect: "none"}}>{this.props.title}</h2>
-        <ReactQuill
+        <ItemTitle>{this.props.title}</ItemTitle>
+        <StyledReactQuill
           onChange={this.handleChange}
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
           value={this.state.editorHtml}
-          style={{height: "300px", width: "100%"}}
         />
       </div>
     )
   }
 }
 
-/*
- * Quill modules to attach to editor
- * See http://quilljs.com/docs/modules/ for complete options
- */
+// Attach Quill toolbar to module
 TextEditor.modules = {
   toolbar: {
     container: "#toolbar",
     handlers: {
-      "insertStar": insertStar,
     }
   }
 }
 
-/*
- * Quill editor formats
- * See http://quilljs.com/docs/formats/
- */
+// Quill editor formats
 TextEditor.formats = [
   'header', 'font', 'size',
   'bold', 'italic', 'underline', 'strike', 'blockquote',

@@ -2,7 +2,11 @@ import React from 'react';
 import { Layout, Row } from 'antd';
 import ListCol from './ListCol.js';
 import ItemCol from './ItemCol.js';
+import styled from 'styled-components';
 
+const StyledLayout = styled(Layout)`
+  background-color: white;
+`
 
 class ItemsView extends React.Component {
   constructor(props){
@@ -50,12 +54,25 @@ class ItemsView extends React.Component {
     var currItem = this.getCurrentItem(items);
 
     return (
-        <Layout style={{backgroundColor: "white"}}>
+        <StyledLayout>
           <Row>
-            <ListCol items={items} cats={this.props.cats} filter={this.props.filter} location={this.props.location} currItem={currItem} currItemCallback={this.onItemChange}/>
-            <ItemCol items={items} cats={this.props.cats} location={this.props.location} filter={this.props.filter} currItem={currItem} />
+            <ListCol
+              items={items}
+              cats={this.props.cats}
+              filter={this.props.filter}
+              location={this.props.location}
+              currItem={currItem}
+              currItemCallback={this.onItemChange}
+            />
+            <ItemCol
+              items={items}
+              cats={this.props.cats}
+              location={this.props.location}
+              filter={this.props.filter}
+              currItem={currItem}
+            />
           </Row>
-        </Layout>
+        </StyledLayout>
     );
   }
 }

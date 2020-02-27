@@ -1,19 +1,51 @@
 import React from 'react';
-import './ItemCol.css';
 import TextEditor from './TextEditor.js';
+import { editItem } from '../api.js';
 import {
     Layout,
     Button,
-    Breadcrumb,
     Icon,
-    Modal,
     Col,
     Tooltip,
-    message,
-    PageHeader
+    message
 } from 'antd';
+import styled from 'styled-components';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content } = Layout;
+
+const ItemColumnContainer = styled(Col)`
+  background-color: white;
+  overflow-x: hidden; 
+  height: 100vh;
+  overflow-y: auto;
+`
+
+const ItemColumnLayout = styled(Layout)`
+  position: fixed;
+  width: 60%;
+`
+
+const ItemColumnContent = styled(Content)`
+  width: 100%;
+  background-color: white;
+`
+
+const TopRightToolbar = styled.div`
+  text-align: right;
+  margin-right: 16px;
+  padding-top: 10px;
+  position: fixed;
+  right: 8px;
+  top: 2px;
+`
+
+const ColoredButton = styled(Button)`
+  color: rgba(0, 0, 0, 0.65);
+`
+
+const ItemContentContainer = styled.div`
+  margin: 16px;
+`
 
 
 class ItemCol extends React.Component {
@@ -21,42 +53,21 @@ class ItemCol extends React.Component {
     super(props)
   }
 
-  state = {
-    editTitleVisible: false,
-    editTitleModalVisible: false
-  };
-
-  showEditTitleButton = () => {
-    this.setState({
-      editTitleVisible: true
-    });
-  };
-
-  hideEditTitleButton = () => {
-    this.setState({
-      editTitleVisible: false
-    });
-  };
-
-  showEditTitleModal = () => {
-    this.setState({
-      editTitleModalVisible: true
-    });
-  };
-
-  handleEditTitleOk = e => {
+  handleStarPressed = (e, item) => {
     console.log(e);
-    this.setState({
-      editTitleModalVisible: false,
+    console.log("star button pressed");
+    const reqBody = {
+      star: !item.star
+    }
+    editItem(item._id.$oid, reqBody).then((res) => {
+      if (res.success) {
+        console.log("item star button press successful");
+      } else {
+        console.log("error starring item");
+        console.log(res.error);
+      }
     });
-  };
-
-  handleEditTitleCancel = e => {
-    console.log(e);
-    this.setState({
-      editTitleModalVisible: false,
-    });
-  };
+  }
 
   findItemCategory = (item) => {
     if (!item) {
@@ -83,57 +94,41 @@ class ItemCol extends React.Component {
     }
     
     return (
-        <Col span={16} style={{backgroundColor: "white", overflowX: "hidden", height: "100vh", overflowY: "auto"}}>
-            <Layout style={{position: "fixed", width: "60%"}}>
-                <Content style={{width: "100%", backgroundColor: "white"}}>
-                    <div className="topDetailSection">
-                        <div className="itemDetailToolbar">
-                            {/*<Tooltip placement="bottomRight" title="Create timer for item">
-                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="clock-circle" size="small" ghost />
-                            </Tooltip>*/}
-                            <Tooltip placement="bottomRight" title="Star item">
-                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="star" size="small" ghost />
-                            </Tooltip>
-                            <Tooltip placement="bottomRight" title="Share item">
-                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="share-alt" size="small" ghost />
-                            </Tooltip>
-                            <Tooltip placement="bottomRight" title="Save">
-                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="save" size="small" ghost onClick={success} />
-                            </Tooltip>
-                            {/*<Tooltip placement="bottomRight" title="More options">
-                            <Button type="link" style={{color: "rgba(0, 0, 0, 0.65)"}} icon="ellipsis" size="small" ghost />
-                            </Tooltip>*/}
-                        </div>
-                        {/*<Breadcrumb style={{ margin: '16px 16px', textAlign: 'left', paddingBottom: '10px', cursor: "pointer"}}>
-                            <Breadcrumb.Item>{catName}</Breadcrumb.Item>
-                            <Breadcrumb.Item id="titleContainer" onMouseEnter={this.showEditTitleButton} onMouseLeave={this.hideEditTitleButton} onClick={this.showEditTitleModal}>
-                            {item? item.title : ""}
-                            <span id="editTitle"><Icon type="edit" style={{paddingLeft: "5px", display: this.state.editTitleVisible? "inline-block" : "none"}}/></span>
-                            </Breadcrumb.Item>
-                        </Breadcrumb>
-                        <PageHeader
-                          title={<div style={{cursor: "pointer"}}>{item.title}</div>}
-                          subTitle={
-                            <div style={{cursor: "pointer"}}>
-                              <span><Icon type="folder" /> {this.findItemCategory(item)} </span>
-                            </div>
-                          }
-                        />*/}
-                    </div>
-                    <Modal
-                        title="Edit Title"
-                        visible={this.state.editTitleModalVisible}
-                        onOk={this.handleEditTitleOk}
-                        onCancel={this.handleEditTitleCancel}
-                        >
-                        <p>Enter a new title</p>
-                    </Modal>
-                    <div style={{margin: "16px"}}>
-                        <TextEditor title={item.title} cat={this.findItemCategory(item)} placeholder="Start typing here!" content={item? item.content : ""} />
-                    </div>
-                </Content>
-            </Layout>
-        </Col>
+      <ItemColumnContainer span={16}>
+        <ItemColumnLayout>
+          <ItemColumnContent>
+            <TopRightToolbar>
+              <Tooltip placement="bottomRight" title="Star item">
+                <ColoredButton
+                  size="small"
+                  type="link"
+                  onClick={e => this.handleStarPressed(e, item)}
+                >
+                  <Icon type="star" theme={item.star? "filled" : "outlined"} />
+                </ColoredButton>
+              </Tooltip>
+              <Tooltip placement="bottomRight" title="Share item">
+                <ColoredButton type="link" size="small">
+                  <Icon type="share-alt" theme="outlined" />
+                </ColoredButton>
+              </Tooltip>
+              <Tooltip placement="bottomRight" title="Save">
+                <ColoredButton type="link" size="small" onClick={success}>
+                  <Icon type="save" theme="outlined" />
+                </ColoredButton>
+              </Tooltip>
+            </TopRightToolbar>
+            <ItemContentContainer>
+                <TextEditor
+                  title={item.title}
+                  cat={this.findItemCategory(item)}
+                  placeholder="Start typing here!"
+                  content={item? item.content : ""}
+                />
+            </ItemContentContainer>
+          </ItemColumnContent>
+        </ItemColumnLayout>
+      </ItemColumnContainer>
     )
   }
 }

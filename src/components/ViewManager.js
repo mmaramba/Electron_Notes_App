@@ -1,11 +1,9 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
-import LeftNav from './LeftNav.js';
 import ItemsView from './ItemsView.js';
-import HomeView from './HomeView.js';
-import WrappedNormalLoginForm from './Login.js';
-import WrappedRegistrationForm from './Register.js';
-import LoginCarousel from './LoginCarousel.js';
+import WrappedNormalLoginForm from './Account/Login.js';
+import WrappedRegistrationForm from './Account/Register.js';
+import LoginCarousel from './Account/LoginCarousel.js';
 import LoggedInView from './LoggedInView.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 

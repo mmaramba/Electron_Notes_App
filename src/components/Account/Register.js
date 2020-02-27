@@ -3,23 +3,14 @@ import { Link } from 'react-router-dom';
 import {
 	Form,
 	Input,
-	Tooltip,
 	Icon,
-	Cascader,
-	Select,
-	Row,
-	Col,
-	Checkbox,
 	Button,
-	AutoComplete,
 	Typography
 } from 'antd';
 import { registerUser, userLogin } from '../../api.js';
 import styled from 'styled-components';
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 const RegistrationContainer = styled.div`
     text-align: left;
@@ -69,7 +60,6 @@ const FormIcon = styled(Icon)`
 class Register extends React.Component {
 	state = {
 		confirmDirty: false,
-		autoCompleteResult: [],
 		errorText: ''
 	};
 
@@ -126,30 +116,6 @@ class Register extends React.Component {
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
-		const { autoCompleteResult } = this.state;
-
-		const formItemLayout = {
-			labelCol: {
-				xs: { span: 10 },
-				sm: { span: 10 },
-			},
-			wrapperCol: {
-				xs: { span: 10 },
-				sm: { span: 12 },
-			},
-		};
-		const tailFormItemLayout = {
-			wrapperCol: {
-				xs: {
-					span: 24,
-					offset: 0,
-				},
-				sm: {
-					span: 16,
-					offset: 8,
-				},
-			},
-		};
 
 		return (
 			<RegistrationContainer>
@@ -203,30 +169,6 @@ class Register extends React.Component {
 								],
 							})(<Input.Password onBlur={this.handleConfirmBlur} placeholder="Confirm Password" prefix={<FormIcon type="safety" />} />)}
 						</Form.Item>
-						{/*
-                        <Form.Item
-                            label={
-                                <span>
-                                First Name&nbsp;
-                                </span>
-                            }
-                            >
-                            {getFieldDecorator('firstName', {
-                                rules: [{ required: false, message: '', whitespace: true }],
-                            })(<Input />)}
-                        </Form.Item>
-                        <Form.Item
-                            label={
-                                <span>
-                                Last Name&nbsp;
-                                </span>
-                            }
-                            >
-                            {getFieldDecorator('lastName', {
-                                rules: [{ required: false, message: '', whitespace: true }],
-                            })(<Input />)}
-                        </Form.Item>
-                        */}
 						<RegisterFormItem>
 							<Button type="default" htmlType="submit">
 								Register

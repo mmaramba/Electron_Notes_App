@@ -1,10 +1,7 @@
 import React from 'react';
 import {
 	Icon,
-	Avatar,
-	Menu,
-	Dropdown,
-	Modal
+	Menu
 } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';

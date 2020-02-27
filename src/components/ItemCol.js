@@ -11,7 +11,7 @@ import {
 } from 'antd';
 import styled from 'styled-components';
 
-const { Header, Content } = Layout;
+const { Content } = Layout;
 
 const ItemColumnContainer = styled(Col)`
   background-color: white;
@@ -83,7 +83,6 @@ class ItemCol extends React.Component {
   render() {
     console.log(this.props.filter);
     const item = this.props.items.find(e => e._id.$oid === this.props.currItem);
-    const catName = this.findItemCategory(item);
     const success = () => {
       const hide = message.loading('Make PUT API call here...', 0);
       setTimeout(hide, 2000);

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import { Icon, Button } from 'antd';
+import { Icon } from 'antd';
 import './TextEditor.css';
 import styled from 'styled-components';
 

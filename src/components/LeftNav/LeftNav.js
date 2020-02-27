@@ -1,12 +1,11 @@
 import React from 'react';
-import { Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
 import styled from 'styled-components';
 import NavFooter from './NavFooter.js';
 import NavHeader from './NavHeader.js';
 import NavMenu from './NavMenu.js';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 const StyledSider = styled(Sider)`
   background-color: white;

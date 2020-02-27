@@ -3,11 +3,8 @@ import './ListCol.css';
 import {
     Layout,
     Menu,
-    Dropdown,
     Icon,
-    Modal,
     Col,
-    Tooltip,
     List,
     Input,
     Affix
@@ -15,7 +12,7 @@ import {
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import addHours from 'date-fns/addHours';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Content } = Layout;
 const { Search } = Input;
 
 const sortMenu = (

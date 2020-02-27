@@ -1,6 +1,5 @@
 import React from 'react';
 import { Layout, Row, Col } from 'antd';
-import ItemsView from './ItemsView.js';
 import WrappedNormalLoginForm from './Account/Login.js';
 import WrappedRegistrationForm from './Account/Register.js';
 import LoginCarousel from './Account/LoginCarousel.js';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Row, Col, Spin } from 'antd';
+import { Layout, Spin } from 'antd';
 import LeftNav from './LeftNav/LeftNav.js';
 import ItemsView from './ItemsView.js';
 import { getUser } from '../api.js';

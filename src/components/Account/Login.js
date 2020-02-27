@@ -1,10 +1,10 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox, Typography } from 'antd';
+import { Form, Icon, Input, Button, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { userLogin } from '../../api.js';
 import styled from 'styled-components';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Text } = Typography;
 
 const FormIcon = styled(Icon)`
     color: rgba(0, 0, 0, 0.25);

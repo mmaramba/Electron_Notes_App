@@ -23,7 +23,12 @@ const PaddedHeaderIcon = styled(Icon)`
 		:
 		`
       padding-left: 10px;
-      display: initial;
+			display: initial;
+			color: rgba(0, 0, 0, 0.25);
+			
+			:hover {
+				color: #1890ff;
+			}
     `
 	}
 `

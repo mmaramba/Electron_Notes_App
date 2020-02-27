@@ -8,12 +8,17 @@ import {
   Link,
   Switch
 } from "react-router-dom";
+import styled from 'styled-components';
+
+const CenteredDiv = styled.div`
+  text-align: center;
+`
 
 function App() {
   return (
-    <div className="App">
+    <CenteredDiv>
       <ViewManager />
-    </div>
+    </CenteredDiv>
   );
 }
 

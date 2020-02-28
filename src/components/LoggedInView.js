@@ -4,6 +4,12 @@ import LeftNav from './LeftNav/LeftNav.js';
 import ItemsView from './ItemsView.js';
 import { getUser } from '../api.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import styled from 'styled-components';
+
+const SpinContainer = styled.div`
+  display: inline-block;
+  padding-top: 200px;
+`
 
 
 class LoggedInView extends React.Component {
@@ -30,7 +36,7 @@ class LoggedInView extends React.Component {
 
     // if empty object
     if (Object.keys(this.state.user).length === 0 && this.state.user.constructor === Object) {
-        return <Spin />
+        return <SpinContainer><Spin /></SpinContainer>
     }
 
     return (

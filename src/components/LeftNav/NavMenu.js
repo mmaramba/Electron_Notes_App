@@ -1,7 +1,8 @@
 import React from 'react';
 import {
 	Icon,
-	Menu
+	Menu,
+	Tooltip
 } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,10 +17,10 @@ const StyledSpan = styled.span`
   color: rgba(0, 0, 0, 0.65);
 `
 
-const MenuCreateItemOption = styled(Menu.Item)`
+const SpecialMenuOption = styled(Menu.Item)`
   cursor: pointer;
   color: rgba(0, 0, 0, 0.65);
-  font-weight: bold;
+	font-weight: bold;
 `
 
 const ColoredIcon = styled(Icon)`
@@ -47,12 +48,18 @@ class NavMenu extends React.Component {
 
 		return (
 			<StyledMenuContainer theme="light" defaultSelectedKeys={['9']} mode="inline">
-				<MenuCreateItemOption key="1" disabled={true}>
+				<SpecialMenuOption key="1" disabled={true}>
 					<div onClick={() => console.log("HISDFS")}>
 						<ColoredIcon type="plus-circle" theme="filled" />
 						<StyledSpan>Create Item</StyledSpan>
 					</div>
-				</MenuCreateItemOption>
+				</SpecialMenuOption>
+				<SpecialMenuOption key="10" disabled={true}>
+					<div onClick={() => console.log("ASDF")}>
+						<ColoredIcon type="search" />
+						<StyledSpan>Search All Items</StyledSpan>
+					</div>
+				</SpecialMenuOption>
 				<Menu.Item key="9">
 					<Link to="/items">
 						<Icon type="file-text" />

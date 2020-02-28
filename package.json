@@ -10,10 +10,11 @@
   },
   "homepage": "./",
   "dependencies": {
+    "@ant-design/icons": "^2.1.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "antd": "^3.26.6",
+    "antd": "^3.26.12",
     "axios": "^0.19.2",
     "cross-env": "^6.0.3",
     "date-fns": "^2.9.0",

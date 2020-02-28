@@ -13,7 +13,7 @@ const NavFooterContainer = styled.div`
 `
 
 const PaddedFooterIcon = styled(Icon)`
-  ${({ collapsed }) => collapsed ?
+  ${({ collapsed }) => collapsed === "true" ?
 		`padding-left: 5px;` :
 		`padding-left: 150px;`
 	}
@@ -37,7 +37,7 @@ class NavFooter extends React.Component {
 					<PaddedFooterIcon
 						collapsed={this.props.collapsed}
 						className="trigger"
-						type={this.props.collapsed ? 'right' : 'left'}
+						type={this.props.collapsed === "true" ? 'right' : 'left'}
 						onClick={() => this.props.handleToggle()}
 					/> :
 					""

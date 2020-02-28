@@ -15,7 +15,7 @@ const NavHeaderContainer = styled.div`
 `
 
 const PaddedHeaderIcon = styled(Icon)`
-  ${({ collapsed }) => collapsed ?
+  ${({ collapsed }) => collapsed === "true" ?
 		`
       display: none !important;
       padding-left: 0px;

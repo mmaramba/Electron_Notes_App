@@ -1,6 +1,6 @@
 import React from 'react';
 import TextEditor from './TextEditor.js';
-import { editItem } from '../api.js';
+import { editItem } from '../../../api.js';
 import {
     Layout,
     Button,

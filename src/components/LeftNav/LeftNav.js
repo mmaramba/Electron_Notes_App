@@ -41,14 +41,14 @@ class LeftNav extends React.Component {
       <StyledSider trigger={null} collapsible collapsed={this.state.collapsed}>
         <NavHeader
           name={this.state.name}
-          collapsed={this.state.collapsed}
+          collapsed={this.state.collapsed.toString()}
           first={this.props.first}
           last={this.props.last}
           email={this.props.email}
         />
         <NavMenu cats={this.props.cats} />
         <NavFooter
-          collapsed={this.state.collapsed}
+          collapsed={this.state.collapsed.toString()}
           handleToggle={this.toggle}
         />
       </StyledSider>

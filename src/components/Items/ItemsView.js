@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Row } from 'antd';
-import ListCol from './ListCol.js';
-import ItemCol from './ItemCol.js';
+import ListCol from './ListCol/ListCol.js';
+import ItemCol from './ItemCol/ItemCol.js';
 import styled from 'styled-components';
 
 const StyledLayout = styled(Layout)`

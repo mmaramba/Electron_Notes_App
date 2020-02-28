@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Spin } from 'antd';
 import LeftNav from './LeftNav/LeftNav.js';
-import ItemsView from './ItemsView.js';
+import ItemsView from './Items/ItemsView.js';
 import { getUser } from '../api.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
@@ -9,6 +9,10 @@ import styled from 'styled-components';
 const SpinContainer = styled.div`
   display: inline-block;
   padding-top: 200px;
+`
+
+const StyledLayout = styled(Layout)`
+  height: 100vh;
 `
 
 
@@ -40,7 +44,7 @@ class LoggedInView extends React.Component {
     }
 
     return (
-      <Layout style={{ height: '100vh' }}>
+      <StyledLayout>
         <HashRouter>
           <LeftNav cats={this.state.user.categories} first={this.state.user.firstName} last={this.state.user.lastName} email={this.state.user.email}/>
           <Switch>
@@ -52,15 +56,13 @@ class LoggedInView extends React.Component {
             </Route>
             <Route path="/cat/:categoryId" render={(props) => {
                 return <ItemsView filter="category" items={this.state.user.items} cats={this.state.user.categories} {...props} />
-            }}>
-            </Route>
+            }} />
             <Route path="/">
-              {/*<HomeView />*/}
               <Redirect to="/items" />
             </Route>
           </Switch>
         </HashRouter>
-      </Layout>
+      </StyledLayout>
     );
   }
 }

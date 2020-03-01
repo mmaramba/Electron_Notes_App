@@ -151,8 +151,9 @@ class ListCol extends React.Component {
       "scroll",
       () => {
         this.affixRef.current.updatePosition();
-      }
-    )
+      },
+      true
+    );
   }
 
   render() {
@@ -178,7 +179,6 @@ class ListCol extends React.Component {
                 <Affix ref={this.affixRef} target={() => this.container}>
                   <ListColHeader
                     location={this.props.location}
-                    containerRef={this.container}
                     numItems={this.props.items.length}
                     headerText={headerText}
                   />

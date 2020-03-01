@@ -49,7 +49,7 @@ class NavMenu extends React.Component {
 		return (
 			<StyledMenuContainer theme="light" defaultSelectedKeys={['9']} mode="inline">
 				<SpecialMenuOption key="1" disabled={true}>
-					<div onClick={() => console.log("HISDFS")}>
+					<div onClick={() => this.props.createItemHandler()}>
 						<ColoredIcon type="plus-circle" theme="filled" />
 						<StyledSpan>Create Item</StyledSpan>
 					</div>

@@ -47,21 +47,33 @@ const ItemContentContainer = styled.div`
   margin: 16px;
 `
 
-
+// https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html
+// derives state from props, uses key to render new component on item change
 class ItemCol extends React.Component {
   constructor(props) {
     super(props)
   }
 
+  state = {
+    currItemObj: this.props.currItemObj
+  }
+
   handleStarPressed = (e, item) => {
     console.log(e);
     console.log("star button pressed");
+    this.setState(prevState => ({
+      currItemObj: {
+        ...prevState.currItemObj,
+        star: !item.star
+      }
+    }));
     const reqBody = {
       star: !item.star
     }
     editItem(item._id.$oid, reqBody).then((res) => {
       if (res.success) {
         console.log("item star button press successful");
+        this.props.editCallback(this.state.currItemObj);
       } else {
         console.log("error starring item");
         console.log(res.error);
@@ -69,6 +81,35 @@ class ItemCol extends React.Component {
     });
   }
 
+  handleSave = (e, item) => {
+    console.log("saving...");
+    console.log(item.content);
+    const hide = message.loading('Saving item...', 0);
+    const reqBody = {
+      content: item.content
+    }
+    editItem(item._id.$oid, reqBody).then((res) => {
+      if (res.success) {
+        console.log("item save content successful");
+        this.props.editCallback(item);
+      } else {
+        console.log("error saving item");
+        console.log(res.error);
+      }
+    });
+    setTimeout(hide, 750);
+  }
+
+  handleContentChange = (html) => {
+    console.log("ITEM CHANGED");
+    this.setState(prevState => ({
+      currItemObj: {
+        ...prevState.currItemObj,
+        content: html
+      }
+    }));
+  }
+  
   findItemCategory = (item) => {
     if (!item) {
       return "";
@@ -81,14 +122,10 @@ class ItemCol extends React.Component {
   }
 
   render() {
-    console.log(this.props.filter);
-    const item = this.props.items.find(e => e._id.$oid === this.props.currItem);
-    const success = () => {
-      const hide = message.loading('Make PUT API call here...', 0);
-      setTimeout(hide, 2000);
-    }
+    //console.log(this.props.filter);
+    //console.log(this.props.currItemObj);
 
-    if (!item) {
+    if (!this.props.currItemObj || !this.state.currItemObj) {
       return <div></div>
     }
     
@@ -101,9 +138,9 @@ class ItemCol extends React.Component {
                 <ColoredButton
                   size="small"
                   type="link"
-                  onClick={e => this.handleStarPressed(e, item)}
+                  onClick={e => this.handleStarPressed(e, this.props.currItemObj)}
                 >
-                  <Icon type="star" theme={item.star? "filled" : "outlined"} />
+                  <Icon type="star" theme={this.state.currItemObj.star? "filled" : "outlined"} />
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Share item">
@@ -112,17 +149,18 @@ class ItemCol extends React.Component {
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Save">
-                <ColoredButton type="link" size="small" onClick={success}>
+                <ColoredButton type="link" size="small" onClick={e => this.handleSave(e, this.state.currItemObj)}>
                   <Icon type="save" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
             </TopRightToolbar>
             <ItemContentContainer>
                 <TextEditor
-                  title={item.title}
-                  cat={this.findItemCategory(item)}
+                  title={this.state.currItemObj.title}
+                  cat={this.findItemCategory(this.state.currItemObj)}
                   placeholder="Start typing here!"
-                  content={item? item.content : ""}
+                  content={this.state.currItemObj.content}
+                  handleContentChange={this.handleContentChange}
                 />
             </ItemContentContainer>
           </ItemColumnContent>

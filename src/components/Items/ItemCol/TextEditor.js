@@ -59,6 +59,7 @@ const CategoryLabel = styled.h4`
   margin-left: 16px;
   color: rgba(0, 0, 0, 0.65);
   cursor: pointer;
+  user-select: none;
 `
 
 const ItemTitle = styled.h2`
@@ -78,14 +79,17 @@ class TextEditor extends React.Component {
   constructor (props) {
     super(props)
     //console.log(this.props.content);
-    this.state = { editorHtml: this.props.content }
-    this.handleChange = this.handleChange.bind(this)
+    //this.state = { editorHtml: this.props.content }
+    //this.handleChange = this.handleChange.bind(this)
   }
 
+  /*
   handleChange (html) {
+    console.log("here...");
   	this.setState({ editorHtml: html });
   }
 
+  
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.content !== prevProps.content) {
       this.setState({
@@ -93,9 +97,10 @@ class TextEditor extends React.Component {
       });
     }
   }
+  */
 
   render() {
-    console.log(this.state.editorHtml);
+    //console.log(this.state.editorHtml);
     return (
       <div>
         <CategoryLabel>
@@ -104,10 +109,10 @@ class TextEditor extends React.Component {
         <CustomToolbar />
         <ItemTitle>{this.props.title}</ItemTitle>
         <StyledReactQuill
-          onChange={this.handleChange}
+          onChange={this.props.handleContentChange}
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
-          value={this.state.editorHtml}
+          value={this.props.content}
         />
       </div>
     )

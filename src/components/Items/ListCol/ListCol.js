@@ -98,15 +98,31 @@ class ListCol extends React.Component {
   }
 
   state = {
-    currentItem: this.props.currItem
+    currentItem: this.props.currItem,
+    currentItemObj: this.props.currItemObj
   };
 
   limitPreviewContentLength = (content) => {
     const MAX_LEN = 30;
-    if (content.length > MAX_LEN) {
-      return content.slice(0, MAX_LEN) + '...';
+    var noLineBreaks = content.replace(/\s/g, "")
+    if (noLineBreaks.length > MAX_LEN) {
+      return noLineBreaks.slice(0, MAX_LEN) + '...';
     } else {
-      return content
+      return noLineBreaks;
+    }
+  }
+
+  extractTextFromContent = (content) => {
+    const MAX_LEN = 30;
+    var div = document.createElement('div');
+    div.innerHTML = content;
+    var text = div.textContent;
+    console.log(text);
+
+    if (text.length > MAX_LEN) {
+      return text.slice(0, MAX_LEN) + '...';
+    } else {
+      return text;
     }
   }
 
@@ -118,11 +134,13 @@ class ListCol extends React.Component {
     return res.name;
   }
 
-  onUserItemClicked = (item, e) => {
+  onUserItemClicked = (itemId, e, item) => {
+    console.log(itemId);
     console.log(item);
-    this.props.currItemCallback(item);
+    this.props.currItemCallback(itemId, item);
     this.setState({
-      currentItem: item
+      currentItem: itemId,
+      currentItemObj: item
     });
   }
 
@@ -169,7 +187,7 @@ class ListCol extends React.Component {
                       <StyledListItem
                         key={item._id.$oid}
                         iscurrentitem={(item._id.$oid === this.state.currentItem).toString()}
-                        onClick={(e) => this.onUserItemClicked(item._id.$oid, e)}
+                        onClick={(e) => this.onUserItemClicked(item._id.$oid, e, item)}
                       >
                         <List.Item.Meta
                           title={
@@ -186,9 +204,9 @@ class ListCol extends React.Component {
                           description={
                             <RelativeDiv>
                               <ListItemTitleDiv>{item.title}</ListItemTitleDiv>
-                              <ListItemContentPreview
-                                dangerouslySetInnerHTML={{ __html: this.limitPreviewContentLength(item.content) }}
-                              />
+                              <ListItemContentPreview>
+                                {this.extractTextFromContent(item.content)}
+                              </ListItemContentPreview>
                               <ListItemStar>
                                 {item.star ? <Icon type="star" theme="filled" /> : ""}
                               </ListItemStar>

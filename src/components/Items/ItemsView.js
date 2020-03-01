@@ -14,7 +14,9 @@ class ItemsView extends React.Component {
   }
 
   state = {
-    currentItem: null
+    currentItem: null,
+    currentItemObj: null,
+    items: this.props.items
   }
 
   getCurrentItem = (items) => {
@@ -27,11 +29,52 @@ class ItemsView extends React.Component {
     }
   }
 
-  onItemChange = (itemId) => {
+  getCurrentItemObj = (items) => {
+    if (this.state.currentItemObj) {
+      return this.state.currentItemObj;
+    } else if (!this.state.currentItemObj && items.length > 0) {
+      return items[0];
+    } else {
+      return null;
+    }
+  }
+
+  onItemChange = (itemId, item) => {
     console.log(itemId);
+    console.log(item);
     this.setState({
-      currentItem: itemId
+      currentItem: itemId,
+      currentItemObj: item
     });
+  }
+
+  onItemEdit = (item) => {
+    console.log(item);
+    console.log("change item object here");
+
+    var newItems = this.state.items.map(el => {
+      if (el._id.$oid === this.state.currentItemObj._id.$oid) {
+        return Object.assign({}, el, item);
+      }
+      return el;
+    });
+
+    this.setState({
+      currentItemObj: item,
+      items: newItems
+    });
+
+    console.log("items changed");
+    console.log(this.state.items);
+  }
+
+  // update when item is created or deleted
+  componentDidUpdate(prevProps) {
+    if (this.props.items.length !== prevProps.items.length) {
+      this.setState({
+        items: this.props.items
+      });
+    }
   }
 
   render() {
@@ -39,19 +82,20 @@ class ItemsView extends React.Component {
     switch(this.props.filter) {
       case "all":
         console.log("HERE");
-        items = this.props.items;
+        items = this.state.items;
         break;
       case "starred":
-        items = this.props.items;
+        items = this.state.items;
         break;
       case "category":
-        items = this.props.items.filter(e => e.categoryId === this.props.location.pathname.split("/")[2]);
+        items = this.state.items.filter(e => e.categoryId === this.props.location.pathname.split("/")[2]);
         console.log(this.props.location.pathname);
         console.log(items);
         break;
     }
 
     var currItem = this.getCurrentItem(items);
+    var currItemObj = this.getCurrentItemObj(items);
 
     return (
         <StyledLayout>
@@ -62,6 +106,7 @@ class ItemsView extends React.Component {
               filter={this.props.filter}
               location={this.props.location}
               currItem={currItem}
+              currItemObj={currItemObj}
               currItemCallback={this.onItemChange}
             />
             <ItemCol
@@ -70,6 +115,9 @@ class ItemsView extends React.Component {
               location={this.props.location}
               filter={this.props.filter}
               currItem={currItem}
+              currItemObj={currItemObj}
+              editCallback={this.onItemEdit}
+              key={currItem}
             />
           </Row>
         </StyledLayout>

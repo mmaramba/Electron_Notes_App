@@ -50,7 +50,11 @@ def createItem():
             {'$addToSet': { 'items': new_item }}
         )
 
-        return jsonify(success=True)
+        sanitized = json.loads(dumps(new_item))
+        res = jsonify(sanitized)
+        return res
+
+        #return jsonify(success=True)
     else:
         abort(401, "Not logged in")
 

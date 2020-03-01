@@ -38,7 +38,7 @@ const AffixContainer = styled.div`
 `
 
 const ScrollableArea = styled.div`
-  height: 1000px;
+  height: 4000px;
   background-color: #fcfcfc;
 `
 
@@ -94,7 +94,9 @@ const ListItemStar = styled.span`
 
 class ListCol extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
+    this.affixRef = React.createRef();
+    this.container = React.createRef();
   }
 
   state = {
@@ -144,6 +146,15 @@ class ListCol extends React.Component {
     });
   }
 
+  componentDidMount() {
+    window.addEventListener(
+      "scroll",
+      () => {
+        this.affixRef.current.updatePosition();
+      }
+    )
+  }
+
   render() {
     let headerText = "Loading...";
     switch (this.props.filter) {
@@ -164,7 +175,7 @@ class ListCol extends React.Component {
           <StyledContent>
             <AffixContainer ref={node => this.container = node}>
               <ScrollableArea>
-                <Affix target={() => this.container}>
+                <Affix ref={this.affixRef} target={() => this.container}>
                   <ListColHeader
                     location={this.props.location}
                     containerRef={this.container}
@@ -186,7 +197,7 @@ class ListCol extends React.Component {
                     renderItem={item => (
                       <StyledListItem
                         key={item._id.$oid}
-                        iscurrentitem={(item._id.$oid === this.state.currentItem).toString()}
+                        iscurrentitem={(item._id.$oid === this.props.currItem).toString()}
                         onClick={(e) => this.onUserItemClicked(item._id.$oid, e, item)}
                       >
                         <List.Item.Meta

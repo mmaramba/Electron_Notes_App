@@ -70,7 +70,7 @@ class LoggedInView extends React.Component {
 
     }];
     */
-
+    
   }
 
   render() {

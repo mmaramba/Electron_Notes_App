@@ -19,6 +19,16 @@ class ItemsView extends React.Component {
     items: this.props.items
   }
 
+  switchToCreatedItem = () => {
+    console.log("in child component, set current here");
+    /*
+    this.setState({
+      currentItem: this.state.items[this.state.items.length-1]._id.$oid,
+      currentItemObj: this.state.items[this.state.items.length-1]
+    });
+    */
+  }
+
   getCurrentItem = (items) => {
     if (this.state.currentItem) {
       return this.state.currentItem;
@@ -68,11 +78,13 @@ class ItemsView extends React.Component {
     console.log(this.state.items);
   }
 
-  // update when item is created or deleted
+  // update when item is created (or deleted, take care)
   componentDidUpdate(prevProps) {
     if (this.props.items.length !== prevProps.items.length) {
       this.setState({
-        items: this.props.items
+        items: this.props.items,
+        currentItem: this.props.items[this.props.items.length-1]._id.$oid,
+        currentItemObj: this.props.items[this.props.items.length-1]
       });
     }
   }
@@ -105,8 +117,8 @@ class ItemsView extends React.Component {
               cats={this.props.cats}
               filter={this.props.filter}
               location={this.props.location}
-              currItem={currItem}
-              currItemObj={currItemObj}
+              currItem={this.state.currentItem}
+              currItemObj={this.state.currentItemObj}
               currItemCallback={this.onItemChange}
             />
             <ItemCol

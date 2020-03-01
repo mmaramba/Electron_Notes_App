@@ -143,6 +143,11 @@ class ItemCol extends React.Component {
                   <Icon type="star" theme={this.state.currItemObj.star? "filled" : "outlined"} />
                 </ColoredButton>
               </Tooltip>
+              <Tooltip placement="bottomRight" title="Delete item">
+                <ColoredButton type="link" size="small" onClick={() => console.log("delete pressed")}>
+                  <Icon type="delete" theme="outlined" />
+                </ColoredButton>
+              </Tooltip>
               <Tooltip placement="bottomRight" title="Share item">
                 <ColoredButton type="link" size="small">
                   <Icon type="share-alt" theme="outlined" />

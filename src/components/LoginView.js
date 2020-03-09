@@ -32,6 +32,7 @@ class LoginView extends React.Component {
 	}
 
 	render() {
+		console.log(this.props);
 		return (
 			<StyledLayout>
 				<StyledRow>
@@ -39,10 +40,10 @@ class LoginView extends React.Component {
 						<HashRouter>
 							<Switch>
 								<Route path="/login">
-									<WrappedNormalLoginForm onUserLogin={this.props.onUserLogin} />
+									<WrappedNormalLoginForm login={this.props.login} loginStatus={this.props.loginStatus}/>
 								</Route>
 								<Route path="/register">
-									<WrappedRegistrationForm onUserLogin={this.props.onUserLogin} />
+									<WrappedRegistrationForm />
 								</Route>
 								<Route path="/">
 									<Redirect to="/login" />

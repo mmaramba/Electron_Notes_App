@@ -3,6 +3,7 @@ import { Form, Icon, Input, Button, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { userLogin } from '../../api.js';
 import styled from 'styled-components';
+import { login } from '../../actions.js';
 
 const { Title, Text } = Typography;
 
@@ -56,7 +57,7 @@ class Login extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    /*this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
         userLogin(values).then((res) => {
@@ -73,11 +74,21 @@ class Login extends React.Component {
         console.log(err);
       }
     });
+    */
+   this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        this.props.login(values);
+      }
+      else {
+        console.log(err);
+      }
+    });
   };
 
   render() {
     const { getFieldDecorator } = this.props.form;
-
+    console.log(this.props);
     return (
       <LoginContainer>
         <CenteredDiv>
@@ -85,7 +96,7 @@ class Login extends React.Component {
             <Title level={4}>Sign in with your account</Title>
           </LoginHeader>
           <WarningContainer>
-            <Text type="warning"> { this.state.errorText } </Text>
+            <Text type="warning"> { this.props.loginStatus.error } </Text>
           </WarningContainer>
           <LoginForm onSubmit={this.handleSubmit}>
             <EmailFormItem>

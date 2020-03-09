@@ -46,7 +46,7 @@ class LeftNav extends React.Component {
           last={this.props.last}
           email={this.props.email}
         />
-        <NavMenu cats={this.props.cats} createItemHandler={this.props.createItemHandler}/>
+        <NavMenu createItemHandler={this.props.createItemHandler} categories={this.props.categories} />
         <NavFooter
           collapsed={this.state.collapsed.toString()}
           handleToggle={this.toggle}

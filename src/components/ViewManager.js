@@ -15,7 +15,6 @@ class ViewManager extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       this.props.loginStatus.loggedIn?
         <LoggedInView /> :

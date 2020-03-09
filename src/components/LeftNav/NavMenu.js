@@ -37,11 +37,10 @@ class NavMenu extends React.Component {
 	}
 
 	render() {
-
-		const userCats = this.props.cats.map((cat) => {
+		const userCats = this.props.categories.allIds.map(id => {
 			return (
-				<Menu.Item key={cat._id.$oid}>
-					<Link to={"/cat/" + cat._id.$oid}>{cat.name}</Link>
+				<Menu.Item key={id}>
+					<Link to={"/cat/" + id}>{this.props.categories.byId[id].name}</Link>
 				</Menu.Item>
 			);
 		});

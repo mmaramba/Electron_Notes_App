@@ -109,17 +109,6 @@ class ItemCol extends React.Component {
       }
     }));
   }
-  
-  findItemCategory = (item) => {
-    if (!item) {
-      return "";
-    }
-    if (!item.categoryId) {
-      return "Uncategorized";
-    }
-    let res = this.props.cats.find(e => e._id.$oid === item.categoryId);
-    return res.name;
-  }
 
   render() {
     //console.log(this.props.filter);
@@ -162,7 +151,10 @@ class ItemCol extends React.Component {
             <ItemContentContainer>
                 <TextEditor
                   title={this.state.currItemObj.title}
-                  cat={this.findItemCategory(this.state.currItemObj)}
+                  cat={this.state.currItemObj.categoryId ? 
+                    this.props.categories.byId[this.state.currItemObj.categoryId].name :
+                    "Uncategorized"
+                  }
                   placeholder="Start typing here!"
                   content={this.state.currItemObj.content}
                   handleContentChange={this.handleContentChange}

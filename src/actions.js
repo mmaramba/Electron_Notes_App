@@ -1,20 +1,12 @@
-import { userLogin } from './api.js';
+import { userLogin, getUser, getUserCategories } from './api.js';
 
-export const REQUEST_POSTS = 'REQUEST_POSTS'
-export const RECEIVE_POSTS = 'RECEIVE_POSTS'
-export const SELECT_SUBREDDIT = 'SELECT_SUBREDDIT'
-export const INVALIDATE_SUBREDDIT = 'INVALIDATE_SUBREDDIT'
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
 export const RECEIVE_LOGIN_SUCCESS = 'RECEIVE_LOGIN_SUCCESS'
 export const RECEIVE_LOGIN_ERROR = 'RECEIVE_LOGIN_ERROR'
-
-export function login(data) {
-	return dispatch => {
-		dispatch(requestLogin(data));
-		return userLogin(data)
-			.then(res => dispatch(receiveLoginResponse(data, res)))
-	}
-}
+export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
+export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'
+export const REQUEST_CATEGORIES = 'REQUEST_CATEGORIES'
+export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 
 function requestLogin(data) {
 	return {
@@ -23,7 +15,7 @@ function requestLogin(data) {
   }
 }
 
-function receiveLoginResponse(data, res) {
+function receiveLoginResponse(res) {
 	return (res.success ?
 		{ type: RECEIVE_LOGIN_SUCCESS } : 
 		{
@@ -33,60 +25,56 @@ function receiveLoginResponse(data, res) {
 	);
 }
 
-export function selectSubreddit(subreddit) {
-	return {
-		type: SELECT_SUBREDDIT,
-		subreddit
-	}
-}
-
-export function invalidateSubreddit(subreddit) {
-	return {
-		type: INVALIDATE_SUBREDDIT,
-		subreddit
-	}
-}
-
-function requestPosts(subreddit) {
-	return {
-		type: REQUEST_POSTS,
-		subreddit
-	}
-}
-
-function receivePosts(subreddit, json) {
-	return {
-		type: RECEIVE_POSTS,
-		subreddit,
-		posts: json.data.children.map(child => child.data),
-		receivedAt: Date.now()
-	}
-}
-
-function fetchPosts(subreddit) {
+export function login(data) {
 	return dispatch => {
-		dispatch(requestPosts(subreddit))
-		return fetch(`https://www.reddit.com/r/${subreddit}.json`)
-			.then(response => response.json())
-			.then(json => dispatch(receivePosts(subreddit, json)))
+		dispatch(requestLogin(data));
+		return userLogin(data)
+			.then(res => dispatch(receiveLoginResponse(res)))
 	}
 }
 
-function shouldFetchPosts(state, subreddit) {
-	const posts = state.postsBySubreddit[subreddit]
-	if (!posts) {
-		return true
-	} else if (posts.isFetching) {
-		return false
-	} else {
-		return posts.didInvalidate
+function requestUserInfo() {
+	return {
+		type: REQUEST_USER_INFO
 	}
 }
 
-export function fetchPostsIfNeeded(subreddit) {
-	return (dispatch, getState) => {
-		if (shouldFetchPosts(getState(), subreddit)) {
-			return dispatch(fetchPosts(subreddit))
-		}
+function receiveUserInfo(data) {
+	return {
+		type: RECEIVE_USER_INFO,
+		email: data.email,
+		firstName: data.firstName,
+		lastName: data.lastName,
+	}
+}
+
+// TODO: implement error handling, e.g. RECEIVE_USER_INFO_ERROR
+export function fetchUserInfo() {
+	return dispatch => {
+		dispatch(requestUserInfo());
+		return getUser()
+			.then(res => dispatch(receiveUserInfo(res)))
+	}
+}
+
+function requestCategories() {
+	return {
+		type: REQUEST_CATEGORIES
+	}
+}
+
+function receiveCategories(data) {
+	return {
+		type: RECEIVE_CATEGORIES,
+		data
+	}
+}
+
+// TODO: implement error handling, e.g. RECEIVE_CATEGORIES_ERROR
+export function fetchCategories() {
+	return dispatch => {
+		dispatch(requestCategories());
+		return getUserCategories()
+			.then(res =>  dispatch(receiveCategories(res)))
 	}
 }

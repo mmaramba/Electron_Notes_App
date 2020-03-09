@@ -5,6 +5,11 @@ import ItemsView from './Items/ItemsView.js';
 import { getUser, createItem } from '../api.js';
 import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import {
+  fetchUserInfo,
+  fetchCategories
+} from '../actions.js';
+import { connect } from 'react-redux';
 
 const SpinContainer = styled.div`
   display: inline-block;
@@ -17,22 +22,25 @@ const StyledLayout = styled(Layout)`
 
 
 class LoggedInView extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
 
   state = {
-      user: {}
+    user: {}
   }
 
   componentDidMount() {
-      console.log("Make GET /user request here");
-      getUser().then((res) => {
-        console.log(res);
-        this.setState({
-          user: res
-        });
+    console.log("Make GET /user request here");
+    getUser().then((res) => {
+      console.log(res);
+      this.setState({
+        user: res
       });
+    });
+
+    this.props.dispatch(fetchUserInfo());
+    this.props.dispatch(fetchCategories());
   }
 
   createItemButtonPressed = () => {
@@ -70,36 +78,38 @@ class LoggedInView extends React.Component {
 
     }];
     */
-    
+
   }
 
   render() {
-    console.log(this.state.user);
+    const { userInfo, categories } = this.props;
+    const { isFetchingUser, email, firstName, lastName } = userInfo;
+    const { isFetchingCategories, byId, allIds } = categories;
 
-    // if empty object
-    if (Object.keys(this.state.user).length === 0 && this.state.user.constructor === Object) {
-        return <SpinContainer><Spin /></SpinContainer>
+    // if empty object or fetching user
+    if ((Object.keys(this.state.user).length === 0 && this.state.user.constructor === Object) || isFetchingUser || isFetchingCategories) {
+      return <SpinContainer><Spin /></SpinContainer>
     }
 
     return (
       <StyledLayout>
         <HashRouter>
           <LeftNav
-            cats={this.state.user.categories}
-            first={this.state.user.firstName}
-            last={this.state.user.lastName}
-            email={this.state.user.email}
+            categories={categories}
+            first={firstName}
+            last={lastName}
+            email={email}
             createItemHandler={this.createItemButtonPressed}
           />
           <Switch>
             <Route path="/items">
-              <ItemsView filter="all" items={this.state.user.items} cats={this.state.user.categories} />
+              <ItemsView filter="all" items={this.state.user.items} categories={categories} />
             </Route>
             <Route path="/starred">
-              <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} cats={this.state.user.categories} />
+              <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} categories={categories} />
             </Route>
             <Route path="/cat/:categoryId" render={(props) => {
-                return <ItemsView filter="category" items={this.state.user.items} cats={this.state.user.categories} {...props} />
+              return <ItemsView filter="category" items={this.state.user.items} categories={categories} {...props} />
             }} />
             <Route path="/">
               <Redirect to="/items" />
@@ -111,4 +121,24 @@ class LoggedInView extends React.Component {
   }
 }
 
-export default LoggedInView;
+function mapStateToProps(state) {
+  const { userInfo, categories } = state;
+  const { email, firstName, lastName, isFetchingUser } = userInfo || { email: '', firstName: '', lastName: '', isFetchingUser: true }
+  const { byId, allIds, isFetchingCategories } = categories || { byId: {}, allIds: [], isFetchingCategories: true }
+
+  return {
+    userInfo: {
+      email,
+      firstName,
+      lastName,
+      isFetchingUser
+    },
+    categories: {
+      byId,
+      allIds,
+      isFetchingCategories
+    }
+  }
+}
+
+export default connect(mapStateToProps)(LoggedInView);

@@ -119,7 +119,6 @@ class ListCol extends React.Component {
     var div = document.createElement('div');
     div.innerHTML = content;
     var text = div.textContent;
-    console.log(text);
 
     if (text.length > MAX_LEN) {
       return text.slice(0, MAX_LEN) + '...';
@@ -128,17 +127,7 @@ class ListCol extends React.Component {
     }
   }
 
-  findItemCategory = (catId) => {
-    if (!catId) {
-      return "Uncategorized";
-    }
-    let res = this.props.cats.find(e => e._id.$oid === catId);
-    return res.name;
-  }
-
   onUserItemClicked = (itemId, e, item) => {
-    console.log(itemId);
-    console.log(item);
     this.props.currItemCallback(itemId, item);
     this.setState({
       currentItem: itemId,
@@ -158,6 +147,7 @@ class ListCol extends React.Component {
 
   render() {
     let headerText = "Loading...";
+    const { byId, allIds } = this.props.categories;
     switch (this.props.filter) {
       case "all":
         headerText = "All Items";
@@ -166,7 +156,7 @@ class ListCol extends React.Component {
         headerText = "Starred Items";
         break;
       case "category":
-        headerText = this.findItemCategory(this.props.location.pathname.split("/")[2]);
+        headerText = byId[this.props.location.pathname.split("/")[2]].name;
         break;
     }
 
@@ -205,7 +195,7 @@ class ListCol extends React.Component {
                             <RelativeDiv>
                               <ListItemCategoryText>
                                 <Icon type="folder" />
-                                <span> {this.findItemCategory(item.categoryId)} · </span>
+                                <span> {item.categoryId? byId[item.categoryId].name : "Uncategorized"} · </span>
                               </ListItemCategoryText>
                               <ListItemTimeText>
                                 {formatDistanceToNow(addHours(new Date(item.dateModified.$date), 8))} ago

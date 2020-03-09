@@ -50,8 +50,6 @@ class ItemsView extends React.Component {
   }
 
   onItemChange = (itemId, item) => {
-    console.log(itemId);
-    console.log(item);
     this.setState({
       currentItem: itemId,
       currentItemObj: item
@@ -93,7 +91,6 @@ class ItemsView extends React.Component {
     var items;
     switch(this.props.filter) {
       case "all":
-        console.log("HERE");
         items = this.state.items;
         break;
       case "starred":
@@ -101,8 +98,6 @@ class ItemsView extends React.Component {
         break;
       case "category":
         items = this.state.items.filter(e => e.categoryId === this.props.location.pathname.split("/")[2]);
-        console.log(this.props.location.pathname);
-        console.log(items);
         break;
     }
 
@@ -114,7 +109,7 @@ class ItemsView extends React.Component {
           <Row>
             <ListCol
               items={items}
-              cats={this.props.cats}
+              categories={this.props.categories}
               filter={this.props.filter}
               location={this.props.location}
               currItem={this.state.currentItem}
@@ -123,7 +118,7 @@ class ItemsView extends React.Component {
             />
             <ItemCol
               items={items}
-              cats={this.props.cats}
+              categories={this.props.categories}
               location={this.props.location}
               filter={this.props.filter}
               currItem={currItem}

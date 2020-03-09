@@ -33,7 +33,6 @@ class LoggedInView extends React.Component {
   componentDidMount() {
     console.log("Make GET /user request here");
     getUser().then((res) => {
-      console.log(res);
       this.setState({
         user: res
       });

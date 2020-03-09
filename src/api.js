@@ -94,7 +94,7 @@ async function createItem(data) {
 
 async function handleErrors(response) {
     const json = await response.json()
-    console.log(json);
+    //console.log(json);
     if (!response.ok) {
         console.log(json.error);
     }

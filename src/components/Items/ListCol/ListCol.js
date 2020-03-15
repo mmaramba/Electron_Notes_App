@@ -142,6 +142,7 @@ class ListCol extends React.Component {
     let headerText = "Loading...";
     const { byId, allIds } = this.props.categories;
     const { itemsById, allItemIds } = this.props.itemsByFilter;
+    const { selectedId, isSelected } = this.props.selectedItem;
 
     switch (this.props.filter) {
       case "all":
@@ -182,7 +183,7 @@ class ListCol extends React.Component {
                     renderItem={itemId => (
                       <StyledListItem
                         key={itemId}
-                        iscurrentitem={(itemId === this.props.selectedItemId).toString()}
+                        iscurrentitem={(itemId === selectedId).toString()}
                         onClick={(e) => this.onUserItemClicked(itemId, e, itemsById[itemId])}
                       >
                         <List.Item.Meta

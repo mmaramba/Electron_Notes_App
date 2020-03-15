@@ -58,6 +58,28 @@ async function getAllItems() {
     .catch(error => console.log(error));  
 }
 
+async function getStarredItems() {
+    return fetch(baseUrl + '/item/starred', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
+async function getItemsFromCategory(categoryId) {
+    return fetch(baseUrl + '/item/cat/' + categoryId, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function getUser() {
     return fetch(baseUrl + '/user', {
         method: 'GET',
@@ -119,3 +141,5 @@ module.exports.getUser = getUser;
 module.exports.editItem = editItem;
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
+module.exports.getStarredItems = getStarredItems;
+module.exports.getItemsFromCategory = getItemsFromCategory;

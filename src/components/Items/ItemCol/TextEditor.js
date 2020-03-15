@@ -85,7 +85,6 @@ class TextEditor extends React.Component {
 
   
   handleChange (html) {
-    console.log("here...");
   	this.setState({ editorHtml: html });
   }
 

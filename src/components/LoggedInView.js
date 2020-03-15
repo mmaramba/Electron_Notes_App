@@ -110,12 +110,12 @@ class LoggedInView extends React.Component {
             createItemHandler={this.createItemButtonPressed}
           />
           <Switch>
-            <Route path="/items">
-              <ItemsView filter="all" items={this.state.user.items} categories={categories} />
-            </Route>
-            <Route path="/starred">
-              <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} categories={categories} />
-            </Route>
+            <Route path="/items" render={(props) => {
+              return <ItemsView filter="all" items={this.state.user.items} categories={categories} {...props} />
+            }} />
+            <Route path="/starred" render={(props) => {
+              return <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} categories={categories} {...props} />
+            }} />
             <Route path="/cat/:categoryId" render={(props) => {
               return <ItemsView filter="category" items={this.state.user.items} categories={categories} {...props} />
             }} />

@@ -1,4 +1,11 @@
-import { userLogin, getUser, getUserCategories, getAllItems } from './api.js';
+import { 
+  userLogin,
+  getUser,
+  getUserCategories,
+  getAllItems,
+  getStarredItems,
+  getItemsFromCategory
+} from './api.js';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
 export const RECEIVE_LOGIN_SUCCESS = 'RECEIVE_LOGIN_SUCCESS'
@@ -10,6 +17,11 @@ export const RECEIVE_CATEGORIES = 'RECEIVE_CATEGORIES'
 export const RECEIVE_ALL_ITEMS = 'RECEIVE_ALL_ITEMS'
 export const REQUEST_ALL_ITEMS = 'REQUEST_ALL_ITEMS'
 export const SELECT_ITEM = 'SELECT_ITEM'
+export const RECEIVE_STARRED_ITEMS = 'RECEIVE_STARRED_ITEMS'
+export const REQUEST_STARRED_ITEMS = 'REQUEST_STARRED_ITEMS'
+export const DESELECT_ITEM = 'DESELECT_ITEM'
+export const REQUEST_CATEGORY_ITEMS = 'REQUEST_CATEGORY_ITEMS'
+export const RECEIVE_CATEGORY_ITEMS = 'RECEIVE_CATEGORY_ITEMS'
 
 function requestLogin(data) {
   return {
@@ -104,9 +116,61 @@ export function fetchAllItems() {
   }
 }
 
+function requestStarredItems() {
+  return {
+    type: REQUEST_STARRED_ITEMS
+  }
+}
+
+function receiveStarredItems(data) {
+  return {
+    type: RECEIVE_STARRED_ITEMS,
+    data
+  }
+}
+
+// TODO: implement error handling, e.g. RECEIVE_ITEMS_ERR
+export function fetchStarredItems() {
+  return dispatch => {
+    dispatch(requestStarredItems());
+    return getStarredItems()
+      .then(res => dispatch(receiveStarredItems(res)))
+  }
+}
+
+function requestCategoryItems(categoryId) {
+  return {
+    type: REQUEST_CATEGORY_ITEMS,
+    id: categoryId
+  }
+}
+
+function receiveCategoryItems(data) {
+  return {
+    type: RECEIVE_CATEGORY_ITEMS,
+    data
+  }
+}
+
+// TODO: implement error handling, e.g. RECEIVE_ITEMS_ERR
+export function fetchCategoryItems(categoryId) {
+  return dispatch => {
+    dispatch(requestCategoryItems(categoryId));
+    return getItemsFromCategory(categoryId)
+      .then(res => dispatch(receiveCategoryItems(res)))
+  }
+}
+
+
 export function selectItem(id) {
   return {
     type: SELECT_ITEM,
     id
+  }
+}
+
+export function deselectItem() {
+  return {
+    type: DESELECT_ITEM
   }
 }

@@ -5,7 +5,10 @@ import ItemCol from './ItemCol/ItemCol.js';
 import styled from 'styled-components';
 import {
   fetchAllItems,
-  selectItem
+  selectItem,
+  fetchStarredItems,
+  deselectItem,
+  fetchCategoryItems
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -95,9 +98,28 @@ class ItemsView extends React.Component {
         currentItemObj: this.props.items[this.props.items.length-1]
       });
     }
-    // route change
+    // route change if new route
     if (this.props.location !== prevProps.location) {
-      console.log("ROUTE CHANGE");
+      const pathName = this.props.location.pathname;
+      if (pathName.startsWith('/cat/')) {
+        this.props.dispatch(deselectItem());
+        this.props.dispatch(fetchCategoryItems(pathName.split("/")[2]));
+        return;
+      } else {
+        switch(this.props.location.pathname) {
+          case "/items":
+            this.props.dispatch(deselectItem());
+            this.props.dispatch(fetchAllItems());
+            return;
+          case "/starred":
+            this.props.dispatch(deselectItem());
+            this.props.dispatch(fetchStarredItems());
+            return;
+          default:
+            console.log("Items");
+            return;
+        }
+      }
     }
   }
 
@@ -136,7 +158,7 @@ class ItemsView extends React.Component {
               categories={this.props.categories}
               filter={this.props.filter}
               location={this.props.location}
-              selectedItemId={selectedId}
+              selectedItem={selectedItem}
               currItemCallback={this.onItemChange}
             />
             <ItemCol

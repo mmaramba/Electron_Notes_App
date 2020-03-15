@@ -9,7 +9,12 @@ import {
   RECEIVE_CATEGORIES,
   REQUEST_ALL_ITEMS,
   RECEIVE_ALL_ITEMS,
-  SELECT_ITEM
+  SELECT_ITEM,
+  REQUEST_STARRED_ITEMS,
+  RECEIVE_STARRED_ITEMS,
+  DESELECT_ITEM,
+  REQUEST_CATEGORY_ITEMS,
+  RECEIVE_CATEGORY_ITEMS
 } from './actions'
 
 function loginStatus(
@@ -109,12 +114,37 @@ function itemsByFilter(
       });
     case RECEIVE_ALL_ITEMS:
       const byIdObj = {}
-      console.log(action.data)
       action.data.forEach(item => byIdObj[item._id.$oid] = item)
 
       return Object.assign({}, state, {
         isFetchingItems: false,
         itemsById: byIdObj,
+        allItemIds: action.data.map(item => item._id.$oid)
+      });
+    case REQUEST_STARRED_ITEMS:
+      return Object.assign({}, state, {
+        isFetchingItems: true
+      });
+    case RECEIVE_STARRED_ITEMS:
+      const byIdObjS = {}
+      action.data.forEach(item => byIdObjS[item._id.$oid] = item)
+
+      return Object.assign({}, state, {
+        isFetchingItems: false,
+        itemsById: byIdObjS,
+        allItemIds: action.data.map(item => item._id.$oid)
+      });
+    case REQUEST_CATEGORY_ITEMS:
+      return Object.assign({}, state, {
+        isFetchingItems: true
+      });
+    case RECEIVE_CATEGORY_ITEMS:
+      const byIdObjC = {}
+      action.data.forEach(item => byIdObjC[item._id.$oid] = item)
+
+      return Object.assign({}, state, {
+        isFetchingItems: false,
+        itemsById: byIdObjC,
         allItemIds: action.data.map(item => item._id.$oid)
       });
     default:
@@ -134,6 +164,11 @@ function selectedItem(
       return Object.assign({}, state, {
         isSelected: true,
         selectedId: action.id
+      });
+    case DESELECT_ITEM:
+      return Object.assign({}, state, {
+        isSelected: false,
+        selectedId: ''
       });
     default:
       return state;

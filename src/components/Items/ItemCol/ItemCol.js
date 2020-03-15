@@ -113,8 +113,10 @@ class ItemCol extends React.Component {
   render() {
     //console.log(this.props.filter);
     //console.log(this.props.currItemObj);
+    const { itemsById } = this.props.itemsByFilter;
+    const { selectedId, isSelected} = this.props.selectedItem;
 
-    if (!this.props.currItemObj || !this.state.currItemObj) {
+    if (!isSelected) {
       return <div></div>
     }
     
@@ -129,7 +131,7 @@ class ItemCol extends React.Component {
                   type="link"
                   onClick={e => this.handleStarPressed(e, this.props.currItemObj)}
                 >
-                  <Icon type="star" theme={this.state.currItemObj.star? "filled" : "outlined"} />
+                  <Icon type="star" theme={itemsById[selectedId].star ? "filled" : "outlined"} />
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Delete item">
@@ -150,13 +152,13 @@ class ItemCol extends React.Component {
             </TopRightToolbar>
             <ItemContentContainer>
                 <TextEditor
-                  title={this.state.currItemObj.title}
-                  cat={this.state.currItemObj.categoryId ? 
-                    this.props.categories.byId[this.state.currItemObj.categoryId].name :
+                  title={itemsById[selectedId].title}
+                  cat={itemsById[selectedId].categoryId ? 
+                    this.props.categories.byId[itemsById[selectedId].categoryId].name :
                     "Uncategorized"
                   }
                   placeholder="Start typing here!"
-                  content={this.state.currItemObj.content}
+                  content={itemsById[selectedId].content}
                   handleContentChange={this.handleContentChange}
                 />
             </ItemContentContainer>

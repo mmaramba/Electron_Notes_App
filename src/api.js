@@ -47,6 +47,17 @@ async function getUserCategories() {
     .catch(error => console.log(error));  
 }
 
+async function getAllItems() {
+    return fetch(baseUrl + '/item/all', {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function getUser() {
     return fetch(baseUrl + '/user', {
         method: 'GET',
@@ -107,3 +118,4 @@ module.exports.getUserCategories = getUserCategories;
 module.exports.getUser = getUser;
 module.exports.editItem = editItem;
 module.exports.createItem = createItem;
+module.exports.getAllItems = getAllItems;

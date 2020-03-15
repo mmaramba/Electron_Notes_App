@@ -1,8 +1,13 @@
 import React from 'react';
-import { Layout, Row } from 'antd';
+import { Layout, Row, Spin, Skeleton } from 'antd';
 import ListCol from './ListCol/ListCol.js';
 import ItemCol from './ItemCol/ItemCol.js';
 import styled from 'styled-components';
+import {
+  fetchAllItems,
+  selectItem
+} from '../../actions.js';
+import { connect } from 'react-redux';
 
 const StyledLayout = styled(Layout)`
   background-color: white;
@@ -17,6 +22,10 @@ class ItemsView extends React.Component {
     currentItem: null,
     currentItemObj: null,
     items: this.props.items
+  }
+
+  componentDidMount() {
+    this.props.dispatch(fetchAllItems());
   }
 
   switchToCreatedItem = () => {
@@ -54,6 +63,7 @@ class ItemsView extends React.Component {
       currentItem: itemId,
       currentItemObj: item
     });
+    this.props.dispatch(selectItem(itemId));
   }
 
   onItemEdit = (item) => {
@@ -85,9 +95,22 @@ class ItemsView extends React.Component {
         currentItemObj: this.props.items[this.props.items.length-1]
       });
     }
+    // route change
+    if (this.props.location !== prevProps.location) {
+      console.log("ROUTE CHANGE");
+    }
   }
 
   render() {
+    const { itemsByFilter, selectedItem } = this.props;
+    const { byId, allIds, isFetchingItems } = itemsByFilter;
+    const { isSelected, selectedId } = selectedItem;
+
+    // if fetching user (probably move this back)
+    if (isFetchingItems) {
+      return <div><Skeleton /></div>
+    }
+
     var items;
     switch(this.props.filter) {
       case "all":
@@ -109,15 +132,17 @@ class ItemsView extends React.Component {
           <Row>
             <ListCol
               items={items}
+              itemsByFilter={itemsByFilter}
               categories={this.props.categories}
               filter={this.props.filter}
               location={this.props.location}
-              currItem={this.state.currentItem}
-              currItemObj={this.state.currentItemObj}
+              selectedItemId={selectedId}
               currItemCallback={this.onItemChange}
             />
             <ItemCol
               items={items}
+              itemsByFilter={itemsByFilter}
+              selectedItem={selectedItem}
               categories={this.props.categories}
               location={this.props.location}
               filter={this.props.filter}
@@ -132,4 +157,22 @@ class ItemsView extends React.Component {
   }
 }
 
-export default ItemsView;
+function mapStateToProps(state) {
+  const { itemsByFilter, selectedItem } = state;
+  const { itemsById, allItemIds, isFetchingItems } = itemsByFilter || { itemsById: {}, allItemIds: [], isFetchingItems: true }
+  const { isSelected, selectedId } = selectedItem || { isSelected: false, selectedId: '' }
+
+  return {
+    itemsByFilter: {
+      itemsById,
+      allItemIds,
+      isFetchingItems
+    },
+    selectedItem: {
+      isSelected,
+      selectedId
+    }
+  }
+}
+
+export default connect(mapStateToProps)(ItemsView);

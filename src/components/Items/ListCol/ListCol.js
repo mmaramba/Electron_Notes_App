@@ -99,11 +99,6 @@ class ListCol extends React.Component {
     this.container = React.createRef();
   }
 
-  state = {
-    currentItem: this.props.currItem,
-    currentItemObj: this.props.currItemObj
-  };
-
   limitPreviewContentLength = (content) => {
     const MAX_LEN = 30;
     var noLineBreaks = content.replace(/\s/g, "")
@@ -129,17 +124,15 @@ class ListCol extends React.Component {
 
   onUserItemClicked = (itemId, e, item) => {
     this.props.currItemCallback(itemId, item);
-    this.setState({
-      currentItem: itemId,
-      currentItemObj: item
-    });
   }
 
   componentDidMount() {
     window.addEventListener(
       "scroll",
       () => {
-        this.affixRef.current.updatePosition();
+        if (this.affixRef.current) {
+          this.affixRef.current.updatePosition();
+        }
       },
       true
     );
@@ -148,6 +141,8 @@ class ListCol extends React.Component {
   render() {
     let headerText = "Loading...";
     const { byId, allIds } = this.props.categories;
+    const { itemsById, allItemIds } = this.props.itemsByFilter;
+
     switch (this.props.filter) {
       case "all":
         headerText = "All Items";
@@ -169,14 +164,14 @@ class ListCol extends React.Component {
                 <Affix ref={this.affixRef} target={() => this.container}>
                   <ListColHeader
                     location={this.props.location}
-                    numItems={this.props.items.length}
+                    numItems={allItemIds.length}
                     headerText={headerText}
                   />
                 </Affix>
                 <div>
                   <List
                     itemLayout="horizontal"
-                    dataSource={this.props.items}
+                    dataSource={allItemIds}
                     size="large"
                     locale={{
                       emptyText:
@@ -184,32 +179,32 @@ class ListCol extends React.Component {
                           No items were found. 😔
                         </span> 
                     }}
-                    renderItem={item => (
+                    renderItem={itemId => (
                       <StyledListItem
-                        key={item._id.$oid}
-                        iscurrentitem={(item._id.$oid === this.props.currItem).toString()}
-                        onClick={(e) => this.onUserItemClicked(item._id.$oid, e, item)}
+                        key={itemId}
+                        iscurrentitem={(itemId === this.props.selectedItemId).toString()}
+                        onClick={(e) => this.onUserItemClicked(itemId, e, itemsById[itemId])}
                       >
                         <List.Item.Meta
                           title={
                             <RelativeDiv>
                               <ListItemCategoryText>
                                 <Icon type="folder" />
-                                <span> {item.categoryId? byId[item.categoryId].name : "Uncategorized"} · </span>
+                                <span> {itemsById[itemId].categoryId? byId[itemsById[itemId].categoryId].name : "Uncategorized"} · </span>
                               </ListItemCategoryText>
                               <ListItemTimeText>
-                                {formatDistanceToNow(addHours(new Date(item.dateModified.$date), 8))} ago
+                                {formatDistanceToNow(addHours(new Date(itemsById[itemId].dateModified.$date), 8))} ago
                               </ListItemTimeText>
                             </RelativeDiv>
                           }
                           description={
                             <RelativeDiv>
-                              <ListItemTitleDiv>{item.title}</ListItemTitleDiv>
+                              <ListItemTitleDiv>{itemsById[itemId].title}</ListItemTitleDiv>
                               <ListItemContentPreview>
-                                {this.extractTextFromContent(item.content)}
+                                {this.extractTextFromContent(itemsById[itemId].content)}
                               </ListItemContentPreview>
                               <ListItemStar>
-                                {item.star ? <Icon type="star" theme="filled" /> : ""}
+                                {itemsById[itemId].star ? <Icon type="star" theme="filled" /> : ""}
                               </ListItemStar>
                             </RelativeDiv>
                           }

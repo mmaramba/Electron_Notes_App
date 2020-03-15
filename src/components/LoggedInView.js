@@ -20,6 +20,10 @@ const StyledLayout = styled(Layout)`
   height: 100vh;
 `
 
+const LoadingText = styled.div`
+  margin-top: 20px;
+`
+
 
 class LoggedInView extends React.Component {
   constructor(props) {
@@ -87,7 +91,12 @@ class LoggedInView extends React.Component {
 
     // if empty object or fetching user
     if ((Object.keys(this.state.user).length === 0 && this.state.user.constructor === Object) || isFetchingUser || isFetchingCategories) {
-      return <SpinContainer><Spin /></SpinContainer>
+      return (
+        <SpinContainer>
+          <Spin />
+          <LoadingText>Loading...</LoadingText>
+        </SpinContainer>
+      );
     }
 
     return (

@@ -79,25 +79,24 @@ class TextEditor extends React.Component {
   constructor (props) {
     super(props)
     //console.log(this.props.content);
-    //this.state = { editorHtml: this.props.content }
-    //this.handleChange = this.handleChange.bind(this)
+    this.state = { editorHtml: this.props.content }
+    this.handleChange = this.handleChange.bind(this)
   }
 
-  /*
+  
   handleChange (html) {
     console.log("here...");
   	this.setState({ editorHtml: html });
   }
 
   
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     if (this.props.content !== prevProps.content) {
       this.setState({
         editorHtml: this.props.content
       });
     }
   }
-  */
 
   render() {
     //console.log(this.state.editorHtml);
@@ -109,10 +108,10 @@ class TextEditor extends React.Component {
         <CustomToolbar />
         <ItemTitle>{this.props.title}</ItemTitle>
         <StyledReactQuill
-          onChange={this.props.handleContentChange}
+          onChange={this.handleChange}
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
-          value={this.props.content}
+          value={this.state.editorHtml}
         />
       </div>
     )

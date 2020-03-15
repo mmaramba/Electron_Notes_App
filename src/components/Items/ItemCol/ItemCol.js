@@ -55,21 +55,26 @@ class ItemCol extends React.Component {
   }
 
   state = {
-    currItemObj: this.props.currItemObj
+    content: ''
   }
 
-  handleStarPressed = (e, item) => {
+  handleStarPressed = (e) => {
     console.log(e);
     console.log("star button pressed");
+    /*
     this.setState(prevState => ({
       currItemObj: {
         ...prevState.currItemObj,
         star: !item.star
       }
     }));
+    */
     const reqBody = {
-      star: !item.star
+      star: !this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].star
     }
+
+    this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
+    /*
     editItem(item._id.$oid, reqBody).then((res) => {
       if (res.success) {
         console.log("item star button press successful");
@@ -79,16 +84,26 @@ class ItemCol extends React.Component {
         console.log(res.error);
       }
     });
+    */
   }
 
-  handleSave = (e, item) => {
-    console.log("saving...");
-    console.log(item.content);
-    const hide = message.loading('Saving item...', 0);
+  handleSaveContent = () => {
+    console.log("saving content...");
+    
     const reqBody = {
-      content: item.content
+      content: this.state.content
     }
-    editItem(item._id.$oid, reqBody).then((res) => {
+    console.log(reqBody);
+
+    
+    const success = () => {
+      const hide = message.loading('Saving item...', 0);
+      this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
+      setTimeout(hide, 0);
+    }
+
+    success();
+    /*editItem(item._id.$oid, reqBody).then((res) => {
       if (res.success) {
         console.log("item save content successful");
         this.props.editCallback(item);
@@ -97,9 +112,11 @@ class ItemCol extends React.Component {
         console.log(res.error);
       }
     });
-    setTimeout(hide, 750);
+    */
+    //setTimeout(hide, 750);
   }
 
+  /*
   handleContentChange = (html) => {
     console.log("ITEM CHANGED");
     this.setState(prevState => ({
@@ -108,6 +125,23 @@ class ItemCol extends React.Component {
         content: html
       }
     }));
+  }
+  */
+  
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedItem !== prevProps.selectedItem) {
+      console.log("Item selection updated");
+      this.setState({
+        content: this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].content
+      });
+    }
+  }
+  
+  handleContentChange = (html) => {
+    console.log("ITEM CHANGED");
+    this.setState({
+      content: html
+    })
   }
 
   render() {
@@ -145,7 +179,7 @@ class ItemCol extends React.Component {
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Save">
-                <ColoredButton type="link" size="small" onClick={e => this.handleSave(e, this.state.currItemObj)}>
+                <ColoredButton type="link" size="small" onClick={e => this.handleSaveContent(e)}>
                   <Icon type="save" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
@@ -158,7 +192,7 @@ class ItemCol extends React.Component {
                     "Uncategorized"
                   }
                   placeholder="Start typing here!"
-                  content={itemsById[selectedId].content}
+                  content={this.state.content}
                   handleContentChange={this.handleContentChange}
                 />
             </ItemContentContainer>

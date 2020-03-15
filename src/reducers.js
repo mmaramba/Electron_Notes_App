@@ -14,7 +14,9 @@ import {
   RECEIVE_STARRED_ITEMS,
   DESELECT_ITEM,
   REQUEST_CATEGORY_ITEMS,
-  RECEIVE_CATEGORY_ITEMS
+  RECEIVE_CATEGORY_ITEMS,
+  REQUEST_EDIT_ITEM,
+  RECEIVE_EDIT_ITEM
 } from './actions'
 
 function loginStatus(
@@ -147,6 +149,19 @@ function itemsByFilter(
         itemsById: byIdObjC,
         allItemIds: action.data.map(item => item._id.$oid)
       });
+    case REQUEST_EDIT_ITEM:
+      return state;
+    case RECEIVE_EDIT_ITEM:
+      return {
+        ...state,
+        itemsById: {
+          ...state.itemsById,
+          [action.id]: {
+            ...state.itemsById[action.id],
+            ...action.data
+          }
+        }
+      }
     default:
       return state;
   }

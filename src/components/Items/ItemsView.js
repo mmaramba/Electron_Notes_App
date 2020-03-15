@@ -8,7 +8,8 @@ import {
   selectItem,
   fetchStarredItems,
   deselectItem,
-  fetchCategoryItems
+  fetchCategoryItems,
+  fetchEditItem
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -29,6 +30,10 @@ class ItemsView extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchAllItems());
+  }
+
+  boundedSave = (itemId, reqBody) => {
+    this.props.dispatch(fetchEditItem(itemId, reqBody));
   }
 
   switchToCreatedItem = () => {
@@ -172,6 +177,7 @@ class ItemsView extends React.Component {
               currItemObj={currItemObj}
               editCallback={this.onItemEdit}
               key={currItem}
+              saveContentCb={this.boundedSave}
             />
           </Row>
         </StyledLayout>

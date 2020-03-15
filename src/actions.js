@@ -4,7 +4,8 @@ import {
   getUserCategories,
   getAllItems,
   getStarredItems,
-  getItemsFromCategory
+  getItemsFromCategory,
+  editItem
 } from './api.js';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
@@ -22,6 +23,8 @@ export const REQUEST_STARRED_ITEMS = 'REQUEST_STARRED_ITEMS'
 export const DESELECT_ITEM = 'DESELECT_ITEM'
 export const REQUEST_CATEGORY_ITEMS = 'REQUEST_CATEGORY_ITEMS'
 export const RECEIVE_CATEGORY_ITEMS = 'RECEIVE_CATEGORY_ITEMS'
+export const REQUEST_EDIT_ITEM = 'REQUEST_EDIT_ITEM'
+export const RECEIVE_EDIT_ITEM = 'RECEIVE_EDIT_ITEM'
 
 function requestLogin(data) {
   return {
@@ -158,6 +161,31 @@ export function fetchCategoryItems(categoryId) {
     dispatch(requestCategoryItems(categoryId));
     return getItemsFromCategory(categoryId)
       .then(res => dispatch(receiveCategoryItems(res)))
+  }
+}
+
+function requestEditItem(itemId, data) {
+  return {
+    type: REQUEST_EDIT_ITEM,
+    id: itemId,
+    data
+  }
+}
+
+function receiveEditItem(res, itemId, data) {
+  return {
+    type: RECEIVE_EDIT_ITEM,
+    res,
+    id: itemId,
+    data
+  }
+}
+
+export function fetchEditItem(itemId, data) {
+  return dispatch => {
+    dispatch(requestEditItem(itemId, data));
+    return editItem(itemId, data)
+      .then(res => dispatch(receiveEditItem(res, itemId, data)))
   }
 }
 

@@ -107,10 +107,10 @@ class TextEditor extends React.Component {
         <CustomToolbar />
         <ItemTitle>{this.props.title}</ItemTitle>
         <StyledReactQuill
-          onChange={this.handleChange}
+          onChange={this.props.handleContentChange}
           placeholder={this.props.placeholder}
           modules={TextEditor.modules}
-          value={this.state.editorHtml}
+          value={this.props.content}
         />
       </div>
     )

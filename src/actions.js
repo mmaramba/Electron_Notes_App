@@ -6,7 +6,8 @@ import {
   getStarredItems,
   getItemsFromCategory,
   editItem,
-  createItem
+  createItem,
+  deleteItem
 } from './api.js';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
@@ -29,6 +30,10 @@ export const RECEIVE_EDIT_ITEM = 'RECEIVE_EDIT_ITEM'
 export const UNABLE_TO_SELECT_ITEM = 'UNABLE_TO_SELECT_ITEM'
 export const REQUEST_CREATE_ITEM = 'REQUEST_CREATE_ITEM'
 export const RECEIVE_CREATE_ITEM = 'RECEIVE_CREATE_ITEM'
+export const CHANGE_FILTER = 'CHANGE_FILTER'
+export const REQUEST_DELETE_ITEM = 'REQUEST_DELETE_ITEM'
+export const RECEIVE_DELETE_ITEM = 'RECEIVE_DELETE_ITEM'
+
 
 
 function requestLogin(data) {
@@ -118,6 +123,7 @@ function receiveAllItems(data) {
 // TODO: implement error handling, e.g. RECEIVE_ITEMS_ERR
 export function fetchAllItems() {
   return dispatch => {
+    dispatch(changeFilter('All Items', null));
     dispatch(requestAllItems());
     return getAllItems()
       .then(res => dispatch(receiveAllItems(res)))
@@ -141,6 +147,7 @@ function receiveStarredItems(data) {
 // TODO: implement error handling, e.g. RECEIVE_ITEMS_ERR
 export function fetchStarredItems() {
   return dispatch => {
+    dispatch(changeFilter('Starred Items', null));
     dispatch(requestStarredItems());
     return getStarredItems()
       .then(res => dispatch(receiveStarredItems(res)))
@@ -164,7 +171,9 @@ function receiveCategoryItems(data) {
 
 // TODO: implement error handling, e.g. RECEIVE_ITEMS_ERR
 export function fetchCategoryItems(categoryId) {
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { categories } = getState();
+    dispatch(changeFilter(categories.byId[categoryId].name, categoryId));
     dispatch(requestCategoryItems(categoryId));
     return getItemsFromCategory(categoryId)
       .then(res => dispatch(receiveCategoryItems(res)))
@@ -242,11 +251,49 @@ function receiveCreateItem(data) {
   }
 }
 
+// may have to getstate to see if new item is created -- see empty cat
 export function fetchCreateItem(body) {
-  return dispatch => {
+  return (dispatch, getState) => {
     dispatch(requestCreateItem(body));
     return createItem(body)
       .then(res => dispatch(receiveCreateItem(res)))
-      .then(res => dispatch(selectItem(res.data._id.$oid)))
+      .then(res => {
+        const { itemsByFilter } = getState();
+        itemsByFilter.itemsById[res.data._id.$oid] ?
+          dispatch(selectItem(res.data._id.$oid)) :
+          dispatch(unableToSelectItem())
+      })
+  }
+}
+
+export function changeFilter(filter, categoryId=null) {
+  return {
+    type: CHANGE_FILTER,
+    filterType: filter,
+    categoryId
+  }
+}
+
+function requestDeleteItem(itemId) {
+  return {
+    type: REQUEST_DELETE_ITEM,
+    id: itemId
+  }
+}
+
+function receiveDeleteItem(res, itemId) {
+  return {
+    type: RECEIVE_DELETE_ITEM,
+    res,
+    id: itemId
+  }
+}
+
+export function fetchDeleteItem(itemId) {
+  return dispatch => {
+    dispatch(deselectItem());
+    dispatch(requestDeleteItem(itemId));
+    return deleteItem(itemId)
+      .then(res => dispatch(receiveDeleteItem(res, itemId)))
   }
 }

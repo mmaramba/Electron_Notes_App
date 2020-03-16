@@ -139,22 +139,9 @@ class ListCol extends React.Component {
   }
 
   render() {
-    let headerText = "Loading...";
     const { byId, allIds } = this.props.categories;
     const { itemsById, allItemIds } = this.props.itemsByFilter;
     const { selectedId, isSelected } = this.props.selectedItem;
-
-    switch (this.props.filter) {
-      case "all":
-        headerText = "All Items";
-        break;
-      case "starred":
-        headerText = "Starred Items";
-        break;
-      case "category":
-        headerText = byId[this.props.location.pathname.split("/")[2]].name;
-        break;
-    }
 
     return (
       <StyledCol span={8}>
@@ -166,7 +153,7 @@ class ListCol extends React.Component {
                   <ListColHeader
                     location={this.props.location}
                     numItems={allItemIds.length}
-                    headerText={headerText}
+                    headerText={this.props.filter}
                   />
                 </Affix>
                 <div>

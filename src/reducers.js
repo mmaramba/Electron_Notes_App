@@ -18,7 +18,10 @@ import {
   REQUEST_EDIT_ITEM,
   RECEIVE_EDIT_ITEM,
   REQUEST_CREATE_ITEM,
-  RECEIVE_CREATE_ITEM
+  RECEIVE_CREATE_ITEM,
+  CHANGE_FILTER,
+  REQUEST_DELETE_ITEM,
+  RECEIVE_DELETE_ITEM
 } from './actions'
 
 function loginStatus(
@@ -181,6 +184,18 @@ function itemsByFilter(
           ...state.allItemIds
         ]
       }
+    case REQUEST_DELETE_ITEM:
+      return state;
+    case RECEIVE_DELETE_ITEM:
+      const { 
+        [action.id] : _,
+        ...rest
+      } = state.itemsById;
+
+      return Object.assign({}, state, {
+        itemsById: rest,
+        allItemIds: state.allItemIds.filter(id => id !== action.id)
+      });
     default:
       return state;
   }
@@ -209,12 +224,31 @@ function selectedItem(
   }
 }
 
+function filter(
+  state = {
+    filterType: 'all',
+    categoryId: null
+  },
+  action
+) {
+  switch (action.type) {
+    case CHANGE_FILTER:
+      return Object.assign({}, state, {
+        filterType: action.filterType,
+        categoryId: action.categoryId
+      });
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   loginStatus,
   userInfo,
   categories,
   itemsByFilter,
-  selectedItem
+  selectedItem,
+  filter
 })
 
 export default rootReducer

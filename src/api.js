@@ -125,6 +125,17 @@ async function createItem(data) {
     .catch(error => console.log(error));
 }
 
+async function deleteItem(itemId) {
+    return fetch(baseUrl + '/item/' + itemId, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function handleErrors(response) {
     const json = await response.json()
     //console.log(json);
@@ -143,3 +154,4 @@ module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
 module.exports.getStarredItems = getStarredItems;
 module.exports.getItemsFromCategory = getItemsFromCategory;
+module.exports.deleteItem = deleteItem;

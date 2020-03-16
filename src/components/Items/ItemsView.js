@@ -10,7 +10,8 @@ import {
   deselectItem,
   fetchCategoryItems,
   fetchEditItem,
-  selectFirstItem
+  selectFirstItem,
+  fetchDeleteItem
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -23,12 +24,6 @@ class ItemsView extends React.Component {
     super(props);
   }
 
-  state = {
-    currentItem: null,
-    currentItemObj: null,
-    items: this.props.items
-  }
-
   componentDidMount() {
     this.props.dispatch(fetchAllItems());
   }
@@ -37,73 +32,15 @@ class ItemsView extends React.Component {
     this.props.dispatch(fetchEditItem(itemId, reqBody));
   }
 
-  switchToCreatedItem = () => {
-    console.log("in child component, set current here");
-    /*
-    this.setState({
-      currentItem: this.state.items[this.state.items.length-1]._id.$oid,
-      currentItemObj: this.state.items[this.state.items.length-1]
-    });
-    */
-  }
-
-  getCurrentItem = (items) => {
-    if (this.state.currentItem) {
-      return this.state.currentItem;
-    } else if (!this.state.currentItem && items.length > 0) {
-      return items[0]._id.$oid;
-    } else {
-      return null;
-    }
-  }
-
-  getCurrentItemObj = (items) => {
-    if (this.state.currentItemObj) {
-      return this.state.currentItemObj;
-    } else if (!this.state.currentItemObj && items.length > 0) {
-      return items[0];
-    } else {
-      return null;
-    }
+  boundedDelete = itemId => {
+    this.props.dispatch(fetchDeleteItem(itemId));
   }
 
   onItemChange = (itemId, item) => {
-    this.setState({
-      currentItem: itemId,
-      currentItemObj: item
-    });
     this.props.dispatch(selectItem(itemId));
   }
 
-  onItemEdit = (item) => {
-    console.log(item);
-    console.log("change item object here");
-
-    var newItems = this.state.items.map(el => {
-      if (el._id.$oid === this.state.currentItemObj._id.$oid) {
-        return Object.assign({}, el, item);
-      }
-      return el;
-    });
-
-    this.setState({
-      currentItemObj: item,
-      items: newItems
-    });
-
-    console.log("items changed");
-    console.log(this.state.items);
-  }
-
-  // update when item is created (or deleted, take care)
   componentDidUpdate(prevProps) {
-    if (this.props.items.length !== prevProps.items.length) {
-      this.setState({
-        items: this.props.items,
-        currentItem: this.props.items[this.props.items.length-1]._id.$oid,
-        currentItemObj: this.props.items[this.props.items.length-1]
-      });
-    }
     // route change if new route
     if (this.props.location !== prevProps.location) {
       const pathName = this.props.location.pathname;
@@ -133,55 +70,35 @@ class ItemsView extends React.Component {
   }
 
   render() {
-    const { itemsByFilter, selectedItem } = this.props;
+    const { itemsByFilter, selectedItem, filter } = this.props;
     const { byId, allIds, isFetchingItems } = itemsByFilter;
     const { isSelected, selectedId } = selectedItem;
+    const { filterType, categoryId } = filter;
 
     // if fetching user (probably move this back)
     if (isFetchingItems) {
       return <div><Skeleton /></div>
     }
 
-    var items;
-    switch(this.props.filter) {
-      case "all":
-        items = this.state.items;
-        break;
-      case "starred":
-        items = this.state.items;
-        break;
-      case "category":
-        items = this.state.items.filter(e => e.categoryId === this.props.location.pathname.split("/")[2]);
-        break;
-    }
-
-    var currItem = this.getCurrentItem(items);
-    var currItemObj = this.getCurrentItemObj(items);
-
     return (
         <StyledLayout>
           <Row>
             <ListCol
-              items={items}
               itemsByFilter={itemsByFilter}
               categories={this.props.categories}
-              filter={this.props.filter}
+              filter={filterType}
               location={this.props.location}
               selectedItem={selectedItem}
               currItemCallback={this.onItemChange}
             />
             <ItemCol
-              items={items}
               itemsByFilter={itemsByFilter}
               selectedItem={selectedItem}
               categories={this.props.categories}
               location={this.props.location}
-              filter={this.props.filter}
-              currItem={currItem}
-              currItemObj={currItemObj}
-              editCallback={this.onItemEdit}
-              key={currItem}
+              filter={filterType}
               saveContentCb={this.boundedSave}
+              deleteItemCb={this.boundedDelete}
             />
           </Row>
         </StyledLayout>
@@ -190,9 +107,10 @@ class ItemsView extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { itemsByFilter, selectedItem } = state;
+  const { itemsByFilter, selectedItem, filter } = state;
   const { itemsById, allItemIds, isFetchingItems } = itemsByFilter || { itemsById: {}, allItemIds: [], isFetchingItems: true }
   const { isSelected, selectedId } = selectedItem || { isSelected: false, selectedId: '' }
+  const { filterType, categoryId } = filter || { filterType: 'all', categoryId: null }
 
   return {
     itemsByFilter: {
@@ -203,6 +121,10 @@ function mapStateToProps(state) {
     selectedItem: {
       isSelected,
       selectedId
+    },
+    filter: {
+      filterType,
+      categoryId
     }
   }
 }

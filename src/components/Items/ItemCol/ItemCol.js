@@ -87,6 +87,12 @@ class ItemCol extends React.Component {
     */
   }
 
+  handleDelete = () => {
+    console.log("Deleting" + this.props.selectedItem.selectedId);
+
+    this.props.deleteItemCb(this.props.selectedItem.selectedId);
+  }
+
   handleSaveContent = () => {
     console.log("saving content...");
     
@@ -131,9 +137,11 @@ class ItemCol extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.selectedItem !== prevProps.selectedItem) {
       console.log("Item selection updated");
-      this.setState({
-        content: this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].content
-      });
+      if (this.props.selectedItem.isSelected) {
+        this.setState({
+          content: this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].content
+        });
+      }
     }
   }
   
@@ -169,7 +177,7 @@ class ItemCol extends React.Component {
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Delete item">
-                <ColoredButton type="link" size="small" onClick={() => console.log("delete pressed")}>
+                <ColoredButton type="link" size="small" onClick={this.handleDelete}>
                   <Icon type="delete" theme="outlined" />
                 </ColoredButton>
               </Tooltip>

@@ -47,47 +47,19 @@ class LoggedInView extends React.Component {
     this.props.dispatch(fetchCategories());
   }
 
+  // todo: make create item when in /starred auto-star item
   createItemButtonPressed = () => {
     console.log("Create item button was pressed");
-
-    //console.log(this.props.location);
+    console.log(this.props.filter);
 
     const reqBody = {
       content: "",
-      categoryId: null,
+      categoryId: this.props.filter.categoryId,
       title: "Untitled"
     }
 
     console.log(reqBody);
-
     this.props.dispatch(fetchCreateItem(reqBody));
-
-    /*createItem(reqBody).then((res) => {
-      if (res) {
-        console.log("POST /item successful");
-        console.log(res);
-
-        // push newly created item to list and update state
-        const newItems = [...this.state.user.items, res];
-        this.setState(prevState => ({
-          user: {
-            ...prevState.user,
-            items: newItems
-          }
-        }));
-        console.log(this.state);
-      } else {
-        console.log("POST /item unsuccessful");
-        console.log(res.error);
-      }
-    });
-    */
-    /*
-    const newItems = [...this.state.user.items, {
-
-    }];
-    */
-
   }
 
   render() {
@@ -117,13 +89,13 @@ class LoggedInView extends React.Component {
           />
           <Switch>
             <Route path="/items" render={(props) => {
-              return <ItemsView filter="all" items={this.state.user.items} categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} />
             }} />
             <Route path="/starred" render={(props) => {
-              return <ItemsView filter="starred" items={this.state.user.items.filter(e => e.star)} categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} />
             }} />
             <Route path="/cat/:categoryId" render={(props) => {
-              return <ItemsView filter="category" items={this.state.user.items} categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} />
             }} />
             <Route path="/">
               <Redirect to="/items" />
@@ -136,9 +108,10 @@ class LoggedInView extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { userInfo, categories } = state;
+  const { userInfo, categories, filter } = state;
   const { email, firstName, lastName, isFetchingUser } = userInfo || { email: '', firstName: '', lastName: '', isFetchingUser: true }
   const { byId, allIds, isFetchingCategories } = categories || { byId: {}, allIds: [], isFetchingCategories: true }
+  const { filterType, categoryId } = filter || { filterType: 'All Items', categoryId: null }
 
   return {
     userInfo: {
@@ -151,6 +124,10 @@ function mapStateToProps(state) {
       byId,
       allIds,
       isFetchingCategories
+    },
+    filter: {
+      filterType,
+      categoryId
     }
   }
 }

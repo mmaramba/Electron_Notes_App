@@ -9,7 +9,8 @@ import {
   fetchStarredItems,
   deselectItem,
   fetchCategoryItems,
-  fetchEditItem
+  fetchEditItem,
+  selectFirstItem
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -109,16 +110,19 @@ class ItemsView extends React.Component {
       if (pathName.startsWith('/cat/')) {
         this.props.dispatch(deselectItem());
         this.props.dispatch(fetchCategoryItems(pathName.split("/")[2]));
+        //this.props.dispatch(selectFirstItem());
         return;
       } else {
         switch(this.props.location.pathname) {
           case "/items":
             this.props.dispatch(deselectItem());
             this.props.dispatch(fetchAllItems());
+            //this.props.dispatch(selectFirstItem());
             return;
           case "/starred":
             this.props.dispatch(deselectItem());
             this.props.dispatch(fetchStarredItems());
+            //this.props.dispatch(selectFirstItem());
             return;
           default:
             console.log("Items");

@@ -7,7 +7,8 @@ import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   fetchUserInfo,
-  fetchCategories
+  fetchCategories,
+  fetchCreateItem
 } from '../actions.js';
 import { connect } from 'react-redux';
 
@@ -49,6 +50,8 @@ class LoggedInView extends React.Component {
   createItemButtonPressed = () => {
     console.log("Create item button was pressed");
 
+    //console.log(this.props.location);
+
     const reqBody = {
       content: "",
       categoryId: null,
@@ -57,7 +60,9 @@ class LoggedInView extends React.Component {
 
     console.log(reqBody);
 
-    createItem(reqBody).then((res) => {
+    this.props.dispatch(fetchCreateItem(reqBody));
+
+    /*createItem(reqBody).then((res) => {
       if (res) {
         console.log("POST /item successful");
         console.log(res);
@@ -76,6 +81,7 @@ class LoggedInView extends React.Component {
         console.log(res.error);
       }
     });
+    */
     /*
     const newItems = [...this.state.user.items, {
 

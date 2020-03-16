@@ -16,7 +16,9 @@ import {
   REQUEST_CATEGORY_ITEMS,
   RECEIVE_CATEGORY_ITEMS,
   REQUEST_EDIT_ITEM,
-  RECEIVE_EDIT_ITEM
+  RECEIVE_EDIT_ITEM,
+  REQUEST_CREATE_ITEM,
+  RECEIVE_CREATE_ITEM
 } from './actions'
 
 function loginStatus(
@@ -161,6 +163,23 @@ function itemsByFilter(
             ...action.data
           }
         }
+      }
+    case REQUEST_CREATE_ITEM:
+      return state;
+    case RECEIVE_CREATE_ITEM:
+      console.log(action.data);
+      return {
+        ...state,
+        itemsById: {
+          ...state.itemsById,
+          [action.data._id.$oid] : {
+            ...action.data
+          }
+        },
+        allItemIds: [
+          action.data._id.$oid,
+          ...state.allItemIds
+        ]
       }
     default:
       return state;

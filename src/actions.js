@@ -5,7 +5,8 @@ import {
   getAllItems,
   getStarredItems,
   getItemsFromCategory,
-  editItem
+  editItem,
+  createItem
 } from './api.js';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
@@ -25,6 +26,10 @@ export const REQUEST_CATEGORY_ITEMS = 'REQUEST_CATEGORY_ITEMS'
 export const RECEIVE_CATEGORY_ITEMS = 'RECEIVE_CATEGORY_ITEMS'
 export const REQUEST_EDIT_ITEM = 'REQUEST_EDIT_ITEM'
 export const RECEIVE_EDIT_ITEM = 'RECEIVE_EDIT_ITEM'
+export const UNABLE_TO_SELECT_ITEM = 'UNABLE_TO_SELECT_ITEM'
+export const REQUEST_CREATE_ITEM = 'REQUEST_CREATE_ITEM'
+export const RECEIVE_CREATE_ITEM = 'RECEIVE_CREATE_ITEM'
+
 
 function requestLogin(data) {
   return {
@@ -116,6 +121,7 @@ export function fetchAllItems() {
     dispatch(requestAllItems());
     return getAllItems()
       .then(res => dispatch(receiveAllItems(res)))
+      .then(res => dispatch(selectFirstItemIfHas(res)))
   }
 }
 
@@ -138,6 +144,7 @@ export function fetchStarredItems() {
     dispatch(requestStarredItems());
     return getStarredItems()
       .then(res => dispatch(receiveStarredItems(res)))
+      .then(res => dispatch(selectFirstItemIfHas(res)))
   }
 }
 
@@ -161,6 +168,7 @@ export function fetchCategoryItems(categoryId) {
     dispatch(requestCategoryItems(categoryId));
     return getItemsFromCategory(categoryId)
       .then(res => dispatch(receiveCategoryItems(res)))
+      .then(res => dispatch(selectFirstItemIfHas(res)))
   }
 }
 
@@ -200,5 +208,45 @@ export function selectItem(id) {
 export function deselectItem() {
   return {
     type: DESELECT_ITEM
+  }
+}
+
+export function unableToSelectItem() {
+  return {
+    type: UNABLE_TO_SELECT_ITEM
+  }
+}
+
+export function selectFirstItemIfHas(res) {
+  console.log(res);
+  return dispatch => {
+    return (
+      res.data.length?
+        dispatch(selectItem(res.data[0]._id.$oid)) :
+        dispatch(unableToSelectItem())
+    );
+  }
+}
+
+function requestCreateItem(body) {
+  return {
+    type: REQUEST_CREATE_ITEM,
+    body
+  }
+}
+
+function receiveCreateItem(data) {
+  return {
+    type: RECEIVE_CREATE_ITEM,
+    data
+  }
+}
+
+export function fetchCreateItem(body) {
+  return dispatch => {
+    dispatch(requestCreateItem(body));
+    return createItem(body)
+      .then(res => dispatch(receiveCreateItem(res)))
+      .then(res => dispatch(selectItem(res.data._id.$oid)))
   }
 }

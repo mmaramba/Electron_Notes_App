@@ -58,6 +58,16 @@ class ItemCol extends React.Component {
     content: ''
   }
 
+  handleTitleChange = (newTitle) => {
+    console.log("FROM IC: " + newTitle);
+    const reqBody = {
+      title: newTitle
+    }
+
+    // should rename to editItemCb
+    this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
+  }
+
   handleStarPressed = (e) => {
     console.log(e);
     console.log("star button pressed");
@@ -202,6 +212,7 @@ class ItemCol extends React.Component {
                   placeholder="Start typing here!"
                   content={this.state.content}
                   handleContentChange={this.handleContentChange}
+                  handleTitleChange={this.handleTitleChange}
                 />
             </ItemContentContainer>
           </ItemColumnContent>

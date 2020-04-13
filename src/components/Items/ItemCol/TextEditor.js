@@ -62,12 +62,14 @@ const CategoryLabel = styled.h4`
   user-select: none;
 `
 
-const ItemTitle = styled.h2`
+const ItemTitle = styled.div`
   text-align: left;
   margin-top: 8px;
   margin-left: 16px;
-  cursor: pointer;
+  cursor: text;
   user-select: none;
+  font-weight: 600;
+  font-size: 1.4em;
 `
 
 const StyledReactQuill = styled(ReactQuill)`
@@ -79,8 +81,15 @@ class TextEditor extends React.Component {
   constructor (props) {
     super(props)
     //console.log(this.props.content);
-    this.state = { editorHtml: this.props.content }
+    this.state = { 
+      editorHtml: this.props.content,
+      title: this.props.title
+    }
     this.handleChange = this.handleChange.bind(this)
+    this.handleClickTitle = this.handleClickTitle.bind(this)
+    this.handleClickAwayFromTitle = this.handleClickAwayFromTitle.bind(this)
+    this.handleTitleKeyPress = this.handleTitleKeyPress.bind(this)
+    this.inputEl = React.createRef();
   }
 
   
@@ -88,6 +97,36 @@ class TextEditor extends React.Component {
   	this.setState({ editorHtml: html });
   }
 
+  handleClickTitle () {
+    this.setState({ title: '' });
+  }
+
+  // TODO
+  handleClickAwayFromTitle () {
+    // if title is empty: don't change title and change it back to what it was before
+    if (this.inputEl.current.innerText === '') {
+      this.setState({ title: this.props.title });
+    } 
+    // otherwise, change it
+    else {
+      this.setState({ title: this.inputEl.current.innerText })
+      console.log("send api req here");
+
+      this.props.handleTitleChange(this.inputEl.current.innerText);
+    }
+  }
+
+  // TODO
+  handleTitleKeyPress (event) {
+    // trigger blur, change title if enter key
+    if (event.charCode === 13) {
+      event.preventDefault();
+      console.log("update title:" + this.inputEl.current.innerText);
+
+      //triggers handleClickAwayFromTitle
+      this.inputEl.current.blur();
+    }
+  }
   
   componentDidUpdate(prevProps) {
     if (this.props.content !== prevProps.content) {
@@ -95,17 +134,34 @@ class TextEditor extends React.Component {
         editorHtml: this.props.content
       });
     }
+
+    if (this.props.title !== prevProps.title) {
+      this.setState({
+        title: this.props.title
+      });
+    }
   }
 
   render() {
     //console.log(this.state.editorHtml);
+    console.log("rerendering");
+    console.log(this.state.title);
     return (
       <div>
         <CategoryLabel>
           <span><Icon type="folder" /> {this.props.cat}</span>
         </CategoryLabel>
         <CustomToolbar />
-        <ItemTitle>{this.props.title}</ItemTitle>
+        <ItemTitle
+          contentEditable={true}
+          onClick={this.handleClickTitle}
+          onBlur={this.handleClickAwayFromTitle}
+          onKeyPress={this.handleTitleKeyPress}
+          ref={this.inputEl}
+          suppressContentEditableWarning={true}
+        >
+          {this.state.title}
+        </ItemTitle>
         <StyledReactQuill
           onChange={this.props.handleContentChange}
           placeholder={this.props.placeholder}

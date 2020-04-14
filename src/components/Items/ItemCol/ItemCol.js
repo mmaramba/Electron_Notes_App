@@ -14,7 +14,7 @@ import styled from 'styled-components';
 const { Content } = Layout;
 
 const ItemColumnContainer = styled(Col)`
-  background-color: white;
+  background-color: ${props => props.lightmode === "true" ? "white" : "darkgray"};
   overflow-x: hidden; 
   height: 100vh;
   overflow-y: auto;
@@ -173,7 +173,7 @@ class ItemCol extends React.Component {
     }
     
     return (
-      <ItemColumnContainer span={16}>
+      <ItemColumnContainer span={16} lightmode={this.props.lightmode}>
         <ItemColumnLayout>
           <ItemColumnContent>
             <TopRightToolbar>

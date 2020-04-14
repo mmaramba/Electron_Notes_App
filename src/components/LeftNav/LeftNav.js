@@ -8,7 +8,7 @@ import NavMenu from './NavMenu.js';
 const { Sider } = Layout;
 
 const StyledSider = styled(Sider)`
-  background-color: white;
+  background-color: ${props => props.lightmode === "true" ? "white" : "darkgray"};
 `
 
 class LeftNav extends React.Component {
@@ -38,13 +38,14 @@ class LeftNav extends React.Component {
   render() {
 
     return (
-      <StyledSider trigger={null} collapsible collapsed={this.state.collapsed}>
+      <StyledSider trigger={null} collapsible collapsed={this.state.collapsed} lightmode={this.props.lightmode}>
         <NavHeader
           name={this.state.name}
           collapsed={this.state.collapsed.toString()}
           first={this.props.first}
           last={this.props.last}
           email={this.props.email}
+          switchCb={this.props.switchCb}
         />
         <NavMenu createItemHandler={this.props.createItemHandler} categories={this.props.categories} />
         <NavFooter

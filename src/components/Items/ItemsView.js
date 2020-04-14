@@ -90,6 +90,7 @@ class ItemsView extends React.Component {
               location={this.props.location}
               selectedItem={selectedItem}
               currItemCallback={this.onItemChange}
+              lightmode={this.props.lightmode}
             />
             <ItemCol
               itemsByFilter={itemsByFilter}
@@ -99,6 +100,7 @@ class ItemsView extends React.Component {
               filter={filterType}
               saveContentCb={this.boundedSave}
               deleteItemCb={this.boundedDelete}
+              lightmode={this.props.lightmode}
             />
           </Row>
         </StyledLayout>

@@ -37,9 +37,10 @@ const AffixContainer = styled.div`
   overflow-x: hidden;
 `
 
+// change back to #fcfcfc
 const ScrollableArea = styled.div`
   height: 4000px;
-  background-color: #fcfcfc;
+  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "darkgray"};
 `
 
 const StyledListItem = styled(List.Item)`
@@ -148,12 +149,13 @@ class ListCol extends React.Component {
         <StyledLayout>
           <StyledContent>
             <AffixContainer ref={node => this.container = node}>
-              <ScrollableArea>
+              <ScrollableArea lightmode={this.props.lightmode}>
                 <Affix ref={this.affixRef} target={() => this.container}>
                   <ListColHeader
                     location={this.props.location}
                     numItems={allItemIds.length}
                     headerText={this.props.filter}
+                    lightmode={this.props.lightmode}
                   />
                 </Affix>
                 <div>

@@ -21,7 +21,8 @@ import {
   RECEIVE_CREATE_ITEM,
   CHANGE_FILTER,
   REQUEST_DELETE_ITEM,
-  RECEIVE_DELETE_ITEM
+  RECEIVE_DELETE_ITEM,
+  SWITCH_MODE
 } from './actions'
 
 function loginStatus(
@@ -58,6 +59,7 @@ function userInfo(
     email: '',
     firstName: '',
     lastName: '',
+    lightMode: 'true',
     isFetchingUser: false
   },
   action
@@ -73,6 +75,11 @@ function userInfo(
         email: action.email,
         firstName: action.firstName,
         lastName: action.lastName
+      });
+    case SWITCH_MODE:
+      const newMode = state.lightMode === 'true' ? 'false' : 'true';
+      return Object.assign({}, state, {
+        lightMode: newMode
       });
     default:
       return state;

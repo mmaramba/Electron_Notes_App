@@ -33,6 +33,7 @@ export const RECEIVE_CREATE_ITEM = 'RECEIVE_CREATE_ITEM'
 export const CHANGE_FILTER = 'CHANGE_FILTER'
 export const REQUEST_DELETE_ITEM = 'REQUEST_DELETE_ITEM'
 export const RECEIVE_DELETE_ITEM = 'RECEIVE_DELETE_ITEM'
+export const SWITCH_MODE = 'SWITCH_MODE'
 
 
 
@@ -295,5 +296,11 @@ export function fetchDeleteItem(itemId) {
     dispatch(requestDeleteItem(itemId));
     return deleteItem(itemId)
       .then(res => dispatch(receiveDeleteItem(res, itemId)))
+  }
+}
+
+export function switchMode() {
+  return {
+    type: SWITCH_MODE 
   }
 }

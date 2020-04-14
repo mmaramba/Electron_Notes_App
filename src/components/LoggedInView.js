@@ -8,7 +8,8 @@ import styled from 'styled-components';
 import {
   fetchUserInfo,
   fetchCategories,
-  fetchCreateItem
+  fetchCreateItem,
+  switchMode
 } from '../actions.js';
 import { connect } from 'react-redux';
 
@@ -47,6 +48,10 @@ class LoggedInView extends React.Component {
     this.props.dispatch(fetchCategories());
   }
 
+  boundedSwitchMode = () => {
+    this.props.dispatch(switchMode());
+  }
+
   // todo: make create item when in /starred auto-star item
   createItemButtonPressed = () => {
     console.log("Create item button was pressed");
@@ -64,7 +69,7 @@ class LoggedInView extends React.Component {
 
   render() {
     const { userInfo, categories } = this.props;
-    const { isFetchingUser, email, firstName, lastName } = userInfo;
+    const { isFetchingUser, email, firstName, lastName, lightMode } = userInfo;
     const { isFetchingCategories, byId, allIds } = categories;
 
     // if empty object or fetching user
@@ -86,16 +91,18 @@ class LoggedInView extends React.Component {
             last={lastName}
             email={email}
             createItemHandler={this.createItemButtonPressed}
+            lightmode={lightMode}
+            switchCb={this.boundedSwitchMode}
           />
           <Switch>
             <Route path="/items" render={(props) => {
-              return <ItemsView categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} lightmode={lightMode} />
             }} />
             <Route path="/starred" render={(props) => {
-              return <ItemsView categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} lightmode={lightMode} />
             }} />
             <Route path="/cat/:categoryId" render={(props) => {
-              return <ItemsView categories={categories} {...props} />
+              return <ItemsView categories={categories} {...props} lightmode={lightMode} />
             }} />
             <Route path="/">
               <Redirect to="/items" />
@@ -109,7 +116,7 @@ class LoggedInView extends React.Component {
 
 function mapStateToProps(state) {
   const { userInfo, categories, filter } = state;
-  const { email, firstName, lastName, isFetchingUser } = userInfo || { email: '', firstName: '', lastName: '', isFetchingUser: true }
+  const { email, firstName, lastName, lightMode, isFetchingUser } = userInfo || { email: '', firstName: '', lastName: '', lightMode: 'true', isFetchingUser: true }
   const { byId, allIds, isFetchingCategories } = categories || { byId: {}, allIds: [], isFetchingCategories: true }
   const { filterType, categoryId } = filter || { filterType: 'All Items', categoryId: null }
 
@@ -118,6 +125,7 @@ function mapStateToProps(state) {
       email,
       firstName,
       lastName,
+      lightMode,
       isFetchingUser
     },
     categories: {

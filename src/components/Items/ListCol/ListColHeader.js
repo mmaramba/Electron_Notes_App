@@ -18,7 +18,7 @@ import { isEqual } from 'date-fns';
 const HeaderContainer = styled.div`
 	height: 100px;
 	border-bottom: 1px solid #e8e8e8;
-	background-color: white;
+	background-color: ${props => props.lightmode === "true" ? "white" : "darkgray"};
 `
 
 const HeaderTitle = styled.h3`
@@ -40,7 +40,7 @@ class ListColHeader extends React.Component {
 
 	render() {
 		return (
-			<HeaderContainer>
+			<HeaderContainer lightmode={this.props.lightmode}>
 				<HeaderTitle>{this.props.headerText}</HeaderTitle>
 				<NumItemsTextContainer>
 					{this.props.numItems} Items

@@ -11,6 +11,7 @@ const { SubMenu } = Menu;
 
 const StyledMenuContainer = styled(Menu)`
   text-align: left;
+  color: rgba(0, 0, 0, 0.65);
 `
 
 const StyledSpan = styled.span`
@@ -46,7 +47,7 @@ class NavMenu extends React.Component {
 		});
 
 		return (
-			<StyledMenuContainer theme="light" defaultSelectedKeys={['9']} mode="inline">
+			<StyledMenuContainer theme="light" defaultSelectedKeys={['9']} mode="inline" lightmode={this.props.lightmode}>
 				<SpecialMenuOption key="1" disabled={true}>
 					<div onClick={() => this.props.createItemHandler()}>
 						<ColoredIcon type="plus-circle" theme="filled" />

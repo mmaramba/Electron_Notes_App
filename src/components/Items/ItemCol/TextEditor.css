@@ -12,6 +12,7 @@
     border: none;
 }
 
+
 .ql-snow .ql-picker:not(.ql-color-picker):not(.ql-icon-picker) svg {
     padding-left: 5px;
 }

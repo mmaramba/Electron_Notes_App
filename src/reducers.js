@@ -22,7 +22,9 @@ import {
   CHANGE_FILTER,
   REQUEST_DELETE_ITEM,
   RECEIVE_DELETE_ITEM,
-  SWITCH_MODE
+  SWITCH_MODE,
+  REQUEST_EDIT_NAME,
+  RECEIVE_EDIT_NAME
 } from './actions'
 
 function loginStatus(
@@ -73,6 +75,13 @@ function userInfo(
       return Object.assign({}, state, {
         isFetchingUser: false,
         email: action.email,
+        firstName: action.firstName,
+        lastName: action.lastName
+      });
+    case REQUEST_EDIT_NAME:
+      return state;
+    case RECEIVE_EDIT_NAME:
+      return Object.assign({}, state, {
         firstName: action.firstName,
         lastName: action.lastName
       });

@@ -14,7 +14,8 @@ import styled from 'styled-components';
 const { Content } = Layout;
 
 const ItemColumnContainer = styled(Col)`
-  background-color: ${props => props.lightmode === "true" ? "white" : "darkgray"};
+  background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+  color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white"};
   overflow-x: hidden; 
   height: 100vh;
   overflow-y: auto;
@@ -27,7 +28,7 @@ const ItemColumnLayout = styled(Layout)`
 
 const ItemColumnContent = styled(Content)`
   width: 100%;
-  background-color: white;
+  background-color: ${props => props.lightmode === "true" ? "white" : "black"};
 `
 
 const TopRightToolbar = styled.div`
@@ -40,7 +41,7 @@ const TopRightToolbar = styled.div`
 `
 
 const ColoredButton = styled(Button)`
-  color: rgba(0, 0, 0, 0.65);
+  color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white"};
 `
 
 const ItemContentContainer = styled.div`
@@ -175,10 +176,11 @@ class ItemCol extends React.Component {
     return (
       <ItemColumnContainer span={16} lightmode={this.props.lightmode}>
         <ItemColumnLayout>
-          <ItemColumnContent>
-            <TopRightToolbar>
+          <ItemColumnContent lightmode={this.props.lightmode}>
+            <TopRightToolbar lightmode={this.props.lightmode}>
               <Tooltip placement="bottomRight" title="Star item">
                 <ColoredButton
+                  lightmode={this.props.lightmode}
                   size="small"
                   type="link"
                   onClick={e => this.handleStarPressed(e, this.props.currItemObj)}
@@ -187,17 +189,17 @@ class ItemCol extends React.Component {
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Delete item">
-                <ColoredButton type="link" size="small" onClick={this.handleDelete}>
+                <ColoredButton type="link" size="small" onClick={this.handleDelete} lightmode={this.props.lightmode}>
                   <Icon type="delete" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Share item">
-                <ColoredButton type="link" size="small">
+                <ColoredButton type="link" size="small" lightmode={this.props.lightmode}>
                   <Icon type="share-alt" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Save">
-                <ColoredButton type="link" size="small" onClick={e => this.handleSaveContent(e)}>
+                <ColoredButton type="link" size="small" onClick={e => this.handleSaveContent(e)} lightmode={this.props.lightmode}>
                   <Icon type="save" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
@@ -213,6 +215,7 @@ class ItemCol extends React.Component {
                   content={this.state.content}
                   handleContentChange={this.handleContentChange}
                   handleTitleChange={this.handleTitleChange}
+                  lightmode={this.props.lightmode}
                 />
             </ItemContentContainer>
           </ItemColumnContent>

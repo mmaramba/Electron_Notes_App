@@ -108,6 +108,23 @@ async function editItem(itemId, data) {
     .catch(error => console.log(error));
 }
 
+async function editUser(data) {
+    return fetch(baseUrl + '/user', {
+        method: 'PUT',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));
+}
+
 async function createItem(data) {
     return fetch(baseUrl + '/item', {
         method: 'POST',
@@ -155,3 +172,4 @@ module.exports.getAllItems = getAllItems;
 module.exports.getStarredItems = getStarredItems;
 module.exports.getItemsFromCategory = getItemsFromCategory;
 module.exports.deleteItem = deleteItem;
+module.exports.editUser = editUser;

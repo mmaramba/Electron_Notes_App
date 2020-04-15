@@ -39,7 +39,7 @@ const PaddedHeaderIcon = styled(Icon)`
     `
       padding-left: 10px;
 			display: initial;
-			color: rgba(0, 0, 0, 0.25);
+      color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.25)" : "white" };
 			
 			:hover {
 				color: #1890ff;
@@ -50,7 +50,7 @@ const PaddedHeaderIcon = styled(Icon)`
 
 const NameContainer = styled.div`
   padding-top: 10px;
-  color: black;
+  color: ${props => props.lightmode === "true" ? "black" : "white" };
   userSelect: none;
 `
 
@@ -65,7 +65,9 @@ class NavHeader extends React.Component {
 
   state = {
     settingsVisible: false,
-    prefsVisible: false
+    prefsVisible: false,
+    firstNameInputVal: '',
+    lastNameInputVal: ''
   }
 
   showSettingsModal = () => {
@@ -80,10 +82,27 @@ class NavHeader extends React.Component {
     });
   };
 
+  handleInputValChangeFN = (e) => {
+    this.setState({
+      firstNameInputVal: e.target.value
+    })
+  }
+
+  handleInputValChangeLN = (e) => {
+    this.setState({
+      lastNameInputVal: e.target.value
+    })
+  }
+
   handleSettingsOk = e => {
     console.log(e);
     console.log("MAKE API CALL HERE");
+    console.log(this.state);
     //this.props.switchCb();
+    this.props.editNameCb({
+      firstName: this.state.firstNameInputVal,
+      lastName: this.state.lastNameInputVal
+    });
 
     this.setState({
       settingsVisible: false,
@@ -131,15 +150,14 @@ class NavHeader extends React.Component {
     return (
       <NavHeaderContainer>
         <StyledAvatar size={48} onClick={() => console.log("Avatar clicked")}>{userInitials}</StyledAvatar>
-        <NameContainer>
+        <NameContainer lightmode={this.props.lightmode}>
           {this.props.name}
           <Dropdown overlay={userMenu} trigger={['click']}>
-            <a className="ant-dropdown-link" href="#">
               <PaddedHeaderIcon
+                lightmode={this.props.lightmode}
                 type="down"
                 collapsed={this.props.collapsed}
               />
-            </a>
           </Dropdown>
           <Modal
             title="Settings"
@@ -156,9 +174,9 @@ class NavHeader extends React.Component {
           >
             <SettingsHeading>User Information</SettingsHeading>
             <div>First Name</div>
-            <StyledInput placeholder={this.props.first} />
+            <StyledInput placeholder={this.props.first} value={this.state.firstNameInputVal} onChange={this.handleInputValChangeFN} />
             <div>Last Name</div>
-            <StyledInput placeholder={this.props.last} />
+            <StyledInput placeholder={this.props.last} value={this.state.lastNameInputVal} onChange={this.handleInputValChangeLN} />
           </Modal>
           <Modal
             title="Preferences"

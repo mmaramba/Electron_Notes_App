@@ -57,7 +57,7 @@ const CustomToolbar = () => (
 const CategoryLabel = styled.h4`
   text-align: left;
   margin-left: 16px;
-  color: rgba(0, 0, 0, 0.65);
+  color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white"};
   cursor: pointer;
   user-select: none;
 `
@@ -76,6 +76,7 @@ const StyledReactQuill = styled(ReactQuill)`
   height: 300px;
   width: 100%;
 `
+
 
 class TextEditor extends React.Component {
   constructor (props) {
@@ -148,7 +149,7 @@ class TextEditor extends React.Component {
     console.log(this.state.title);
     return (
       <div>
-        <CategoryLabel>
+        <CategoryLabel lightmode={this.props.lightmode}>
           <span><Icon type="folder" /> {this.props.cat}</span>
         </CategoryLabel>
         <CustomToolbar />

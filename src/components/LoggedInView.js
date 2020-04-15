@@ -9,7 +9,8 @@ import {
   fetchUserInfo,
   fetchCategories,
   fetchCreateItem,
-  switchMode
+  switchMode,
+  fetchEditName
 } from '../actions.js';
 import { connect } from 'react-redux';
 
@@ -50,6 +51,10 @@ class LoggedInView extends React.Component {
 
   boundedSwitchMode = () => {
     this.props.dispatch(switchMode());
+  }
+
+  boundedEditName = (data) => {
+    this.props.dispatch(fetchEditName(data));
   }
 
   // todo: make create item when in /starred auto-star item
@@ -93,6 +98,7 @@ class LoggedInView extends React.Component {
             createItemHandler={this.createItemButtonPressed}
             lightmode={lightMode}
             switchCb={this.boundedSwitchMode}
+            editNameCb={this.boundedEditName}
           />
           <Switch>
             <Route path="/items" render={(props) => {

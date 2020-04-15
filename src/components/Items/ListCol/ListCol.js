@@ -40,7 +40,7 @@ const AffixContainer = styled.div`
 // change back to #fcfcfc
 const ScrollableArea = styled.div`
   height: 4000px;
-  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "darkgray"};
+  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "black"};
 `
 
 const StyledListItem = styled(List.Item)`

@@ -3,7 +3,7 @@ import { Icon } from 'antd';
 import styled from 'styled-components';
 
 const NavFooterContainer = styled.div`
-  color: black;
+  color: ${props => props.lightmode === "true"? "black" : "white"};
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -25,7 +25,7 @@ class NavFooter extends React.Component {
 
   render() {
     return (
-      <NavFooterContainer>
+      <NavFooterContainer lightmode={this.props.lightmode}>
         <PaddedFooterIcon
           collapsed={this.props.collapsed}
           className="trigger"

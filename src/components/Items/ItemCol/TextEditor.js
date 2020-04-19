@@ -12,14 +12,14 @@ ReactQuill.Quill.register(Font, true);
 // From QuillJS Custom Toolbar Example
 const CustomToolbar = () => (
   <div id="toolbar">
-    <span className="ql-formats">
+    <span className="ql-formats fmt1">
         <select className="ql-header" defaultValue={"3"} onChange={e => e.persist()}>
         <option value="3">Small</option>
         <option value="2">Medium</option>
         <option value="1">Large</option>
         </select>
     </span>
-    <span className="ql-formats">
+    <span className="ql-formats fmt2">
         <button className="ql-bold"></button>
         <button className="ql-italic">
         </button>
@@ -42,11 +42,11 @@ const CustomToolbar = () => (
             <option value="white"></option>
         </select>
     </span>
-    <span className="ql-formats">
+    <span className="ql-formats fmt2">
         <button className="ql-list" value="ordered"></button>
         <button className="ql-list" value="bullet"></button>
     </span>
-    <span className="ql-formats">
+    <span className="ql-formats fmt2">
         <button className="ql-link"></button>
         <button className="ql-blockquote"></button>
         <button className="ql-code-block"></button>
@@ -75,6 +75,24 @@ const ItemTitle = styled.div`
 const StyledReactQuill = styled(ReactQuill)`
   height: 300px;
   width: 100%;
+`
+
+const TextEditorContainer = styled.div`
+
+  .ql-toolbar.ql-snow .fmt2{
+    border: none;
+    filter: ${props => props.lightmode === "true" ? "none" : "brightness(0) invert(1)"};
+  }
+
+  .ql-toolbar.ql-snow .ql-picker-label{
+    border: none;
+    filter: ${props => props.lightmode === "true" ? "none" : "brightness(0) invert(1)"};
+  }
+
+  .ql-toolbar.ql-snow .ql-picker-options{
+    background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+    color: ${props => props.lightmode === "true" ? "black" : "white"};
+  }
 `
 
 
@@ -148,7 +166,7 @@ class TextEditor extends React.Component {
     console.log("rerendering");
     console.log(this.state.title);
     return (
-      <div>
+      <TextEditorContainer lightmode={this.props.lightmode}>
         <CategoryLabel lightmode={this.props.lightmode}>
           <span><Icon type="folder" /> {this.props.cat}</span>
         </CategoryLabel>
@@ -169,7 +187,7 @@ class TextEditor extends React.Component {
           modules={TextEditor.modules}
           value={this.props.content}
         />
-      </div>
+      </TextEditorContainer>
     )
   }
 }

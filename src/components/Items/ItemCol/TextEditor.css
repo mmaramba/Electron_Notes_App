@@ -8,8 +8,19 @@
     border: #d9d9d9;
 }
 
-.ql-toolbar.ql-snow .ql-picker-label {
+.ql-toolbar.ql-snow .fmt2{
     border: none;
+    filter: brightness(0) invert(1);
+}
+
+.ql-toolbar.ql-snow .ql-picker-label{
+    border: none;
+    filter: brightness(0) invert(1);
+}
+
+.ql-toolbar.ql-snow .ql-picker-options{
+    background-color: black;
+    color: white;
 }
 
 

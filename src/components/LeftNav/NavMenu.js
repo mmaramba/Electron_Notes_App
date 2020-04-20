@@ -6,13 +6,12 @@ import {
 } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import './TestMenu.css';
 
 const { SubMenu } = Menu;
 
 const StyledMenuContainer = styled(Menu)`
   text-align: left;
-  color: rgba(0, 0, 0, 0.65);
+  filter: ${props => props.lightmode === "true" ? "none" : "invert(.8)"};
 `
 
 const StyledSpan = styled.span`

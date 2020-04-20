@@ -40,11 +40,10 @@ const PaddedHeaderIcon = styled(Icon)`
       padding-left: 10px;
 			display: initial;
       color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.25)" : "white" };
-			
-			:hover {
-				color: #1890ff;
-			}
     `
+  }
+  :hover {
+    color: ${props => props.lightmode === "true" ? "#1890ff" : "#be7633"};
   }
 `
 

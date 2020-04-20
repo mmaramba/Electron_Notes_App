@@ -42,6 +42,9 @@ const TopRightToolbar = styled.div`
 
 const ColoredButton = styled(Button)`
   color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white"};
+  :hover {
+    color: ${props => props.lightmode === "true" ? "#1890ff" : "#be7633"};
+  }
 `
 
 const ItemContentContainer = styled.div`

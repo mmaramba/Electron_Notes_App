@@ -72,22 +72,25 @@ const ListItemCategoryText = styled.span`
   margin-left: 3px;
   margin-top: 3px;
   font-size: 0.8em;
+  color: ${props => props.lightmode === "true" ? "#666666" : "white"};
 `
 
 const ListItemTimeText = styled.span`
   font-size: 0.8em;
   font-weight: normal;
+  color: ${props => props.lightmode === "true" ? "#666666" : "white"};
 `
 
 const ListItemTitleDiv = styled.div`
   font-weight: 600;
-  color: #666666;
+  color: ${props => props.lightmode === "true" ? "#666666" : "white"};
 `
 
 const ListItemContentPreview = styled.div`
   font-size: 0.8em;
   padding-top: 3px;
   height: 30px;
+  color: ${props => props.lightmode === "true" ? "#666666" : "white"};
 `
 
 const ListItemStar = styled.span`
@@ -98,6 +101,7 @@ const ListItemStar = styled.span`
   font-weight: normal;
   height: 30px;
   padding-top: 3px;
+  color: ${props => props.lightmode === "true" ? "#666666" : "white"};
 `
 
 
@@ -187,22 +191,22 @@ class ListCol extends React.Component {
                         <List.Item.Meta
                           title={
                             <RelativeDiv>
-                              <ListItemCategoryText>
+                              <ListItemCategoryText lightmode={this.props.lightmode}>
                                 <Icon type="folder" />
                                 <span> {itemsById[itemId].categoryId? byId[itemsById[itemId].categoryId].name : "Uncategorized"} · </span>
                               </ListItemCategoryText>
-                              <ListItemTimeText>
+                              <ListItemTimeText lightmode={this.props.lightmode}>
                                 {formatDistanceToNow(addHours(new Date(itemsById[itemId].dateModified.$date), 8))} ago
                               </ListItemTimeText>
                             </RelativeDiv>
                           }
                           description={
                             <RelativeDiv>
-                              <ListItemTitleDiv>{itemsById[itemId].title}</ListItemTitleDiv>
-                              <ListItemContentPreview>
+                              <ListItemTitleDiv lightmode={this.props.lightmode}>{itemsById[itemId].title}</ListItemTitleDiv>
+                              <ListItemContentPreview lightmode={this.props.lightmode}>
                                 {this.extractTextFromContent(itemsById[itemId].content)}
                               </ListItemContentPreview>
-                              <ListItemStar>
+                              <ListItemStar lightmode={this.props.lightmode}>
                                 {itemsById[itemId].star ? <Icon type="star" theme="filled" /> : ""}
                               </ListItemStar>
                             </RelativeDiv>

@@ -8,7 +8,7 @@ import NavMenu from './NavMenu.js';
 const { Sider } = Layout;
 
 const StyledSider = styled(Sider)`
-  background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+  background-color: ${props => props.lightmode === "true" ? "white" : "#333333"};
 `
 
 class LeftNav extends React.Component {

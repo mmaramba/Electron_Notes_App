@@ -17,8 +17,8 @@ import { isEqual } from 'date-fns';
 
 const HeaderContainer = styled.div`
 	height: 100px;
-	border-bottom: 1px solid #e8e8e8;
-	background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+	border-bottom: ${props => props.lightmode === "true" ? "1px solid #e8e8e8" : "1px solid #333333"};
+	background-color: ${props => props.lightmode === "true" ? "white" : "#262626"};
 `
 
 const HeaderTitle = styled.h3`

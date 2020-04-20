@@ -1,0 +1,12 @@
+.ant-menu {
+    filter: invert(.8);
+    color: white;
+}
+
+.ant-menu-sub.ant-menu-inline {
+    background-color: black;
+}
+
+.ant-menu-sub.ant-menu-inline .ant-menu-item {
+    filter: invert(1);
+}

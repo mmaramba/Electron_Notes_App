@@ -14,7 +14,7 @@ import styled from 'styled-components';
 const { Content } = Layout;
 
 const ItemColumnContainer = styled(Col)`
-  background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+  background-color: ${props => props.lightmode === "true" ? "white" : "#141414"};
   color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white"};
   overflow-x: hidden; 
   height: 100vh;
@@ -28,7 +28,7 @@ const ItemColumnLayout = styled(Layout)`
 
 const ItemColumnContent = styled(Content)`
   width: 100%;
-  background-color: ${props => props.lightmode === "true" ? "white" : "black"};
+  background-color: ${props => props.lightmode === "true" ? "white" : "#141414"};
 `
 
 const TopRightToolbar = styled.div`

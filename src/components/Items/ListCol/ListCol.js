@@ -18,7 +18,7 @@ const { Search } = Input;
 
 const StyledCol = styled(Col)`
   user-select: none;
-  background-color: white;
+  background-color: black !important;
   overflow-x: hidden;
 `
 
@@ -27,7 +27,7 @@ const StyledLayout = styled(Layout)`
 `
 
 const StyledContent = styled(Content)`
-  background-color: white;
+  background-color: black !important;
   position: relative;
 `
 
@@ -40,7 +40,7 @@ const AffixContainer = styled.div`
 // change back to #fcfcfc
 const ScrollableArea = styled.div`
   height: 4000px;
-  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "black"};
+  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "#262626"};
 `
 
 const StyledListItem = styled(List.Item)`
@@ -48,13 +48,21 @@ const StyledListItem = styled(List.Item)`
   padding-left: 10px;
   padding-top: 6px !important;
   padding-bottom: 2px !important;
-  border-bottom: 1px solid #e8e8e8;
-
-  ${({ iscurrentitem }) => iscurrentitem === "true" ?
-    `background-color: #ededed;` :
-    `background-color: white;`
-  }
+  border-bottom: ${props => props.lightmode === "true" ? "1px solid #e8e8e8" : "1px solid #333333"} !important;
+  background-color: ${props => HandleListItemBackgroundColor(props.lightmode, props.iscurrentitem)};
 `
+
+const HandleListItemBackgroundColor = (lightmode, iscurrentitem) => {
+  if (lightmode === "true" && iscurrentitem === "true") {
+    return "#ededed";
+  } else if (lightmode === "true" && iscurrentitem !== "true") {
+    return "white";
+  } else if (lightmode !== "true" && iscurrentitem === "true") {
+    return "gray";
+  } else {
+    return "#262626";
+  }
+}
 
 const RelativeDiv = styled.div`
   position: relative;
@@ -174,6 +182,7 @@ class ListCol extends React.Component {
                         key={itemId}
                         iscurrentitem={(itemId === selectedId).toString()}
                         onClick={(e) => this.onUserItemClicked(itemId, e, itemsById[itemId])}
+                        lightmode={this.props.lightmode}
                       >
                         <List.Item.Meta
                           title={

@@ -170,6 +170,7 @@ class TextEditor extends React.Component {
         <CategoryLabel lightmode={this.props.lightmode}>
           <span><Icon type="folder" /> {this.props.cat}</span>
         </CategoryLabel>
+        <div>{this.props.saveMsg}</div>
         <CustomToolbar />
         <ItemTitle
           contentEditable={true}

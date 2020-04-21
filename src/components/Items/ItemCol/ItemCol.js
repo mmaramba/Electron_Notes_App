@@ -1,6 +1,7 @@
 import React from 'react';
 import TextEditor from './TextEditor.js';
 import { editItem } from '../../../api.js';
+import format from 'date-fns/format';
 import {
     Layout,
     Button,
@@ -56,10 +57,13 @@ const ItemContentContainer = styled.div`
 class ItemCol extends React.Component {
   constructor(props) {
     super(props)
+
+    this.typingTimeout = null;
   }
 
   state = {
-    content: ''
+    content: '',
+    saveMsg: '\xa0'
   }
 
   handleTitleChange = (newTitle) => {
@@ -114,12 +118,16 @@ class ItemCol extends React.Component {
       content: this.state.content
     }
     console.log(reqBody);
-
+    const date = format(new Date(), 'KK:mm:ss');
     
     const success = () => {
       const hide = message.loading('Saving item...', 0);
       this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
       setTimeout(hide, 0);
+
+      this.setState({
+        saveMsg: `Last save: ${date}`
+      })
     }
 
     success();
@@ -159,8 +167,12 @@ class ItemCol extends React.Component {
     }
   }
   
+  // need to change content: K sec after user stops typing, trigger a save
   handleContentChange = (html) => {
     console.log("ITEM CHANGED");
+    clearTimeout(this.typingTimeout);
+    this.typingTimeout = setTimeout(this.handleSaveContent, 3000);
+
     this.setState({
       content: html
     })
@@ -219,6 +231,7 @@ class ItemCol extends React.Component {
                   handleContentChange={this.handleContentChange}
                   handleTitleChange={this.handleTitleChange}
                   lightmode={this.props.lightmode}
+                  saveMsg={this.state.saveMsg}
                 />
             </ItemContentContainer>
           </ItemColumnContent>

@@ -1,6 +1,13 @@
-const { app, BrowserWindow } = require('electron')
+const electron = require('electron');
+const { app, BrowserWindow } = electron;
 const path = require("path")
 const isDev = require("electron-is-dev")
+
+// dealing with pdf
+const fs = require('fs');
+const os = require('os');
+const ipc = electron.ipcMain;
+const shell = electron.shell;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -34,6 +41,12 @@ function createWindow () {
     // when you should delete the corresponding element.
     win = null
   })
+
+  /* create worker window for PDF creation
+  workerWindow = new BrowserWindow();
+  workerWindow.loadURL(`file://${path.join(__dirname, "/worker.html")}`)
+  workerWindow.hide();
+  */
 }
 
 // This method will be called when Electron has finished
@@ -60,3 +73,46 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+// create pdf
+ipc.on('print-to-pdf', event => {
+  console.log("PDF Print Event");
+  const pdfPath = path.join(os.tmpdir(), 'testsaveitem.pdf');
+  console.log(pdfPath);
+  const win = BrowserWindow.fromWebContents(event.sender);
+  console.log(win.webContents.printToPDF);
+
+  win.webContents.printToPDF({}).then(data => {
+    console.log("HERE");
+    fs.writeFile(pdfPath, data, err => {
+      if (err) return console.log(err.message);
+      console.log("Write file successful");
+      shell.openExternal('file://' + pdfPath);
+      event.sender.send('wrote-pdf', pdfPath);
+    })
+  })
+})
+
+/*
+ipc.on('printPDF', (event, content) => {
+  console.log("Sending content to worker window");
+  workerWindow.webContents.send('print-item-pdf', content);
+})
+
+ipc.on('readyToPrintPDF', (event) => {
+  const pdfPath = path.join(os.tmpdir(), 'testsaveitem.pdf');
+
+  workerWindow.webContents.printToPDF({}).then(data => {
+    console.log("HERE");
+    fs.writeFile(pdfPath, data, err => {
+      if (err) return console.log(err.message);
+      console.log("Write file successful");
+      shell.openExternal('file://' + pdfPath);
+      event.sender.send('wrote-pdf', pdfPath);
+    })
+  })
+})
+*/
+
+
+console.log("testing");

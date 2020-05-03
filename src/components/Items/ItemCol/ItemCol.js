@@ -57,13 +57,39 @@ const ItemContentContainer = styled.div`
 class ItemCol extends React.Component {
   constructor(props) {
     super(props)
-
+    this.textEditorRef = React.createRef();
     this.typingTimeout = null;
   }
 
   state = {
     content: '',
     saveMsg: '\xa0'
+  }
+
+  handleClickShare = () => {
+    const { ipcRenderer } = window.require('electron');
+    const ipc = ipcRenderer;
+    /*const pdfPath = path.join(app.getPath("downloads"), 'testsaveitem.pdf');
+    const remote = window.require('electron').remote;
+
+    remote.getCurrentWindow().webContents.printToPDF({}).then(data => {
+      console.log("Saving now...");
+      fs.writeFile(pdfPath, data, err => {
+        if (err) return console.log(err.message);
+        console.log("Write file successful");
+        shell.openExternal('file://' + pdfPath);
+        event.sender.send('wrote-pdf', pdfPath);
+      })
+    })
+    */
+
+    ipc.send('print-to-pdf');
+    //ipc.send('printPDF', this.textEditorRef.current);
+
+    ipc.on('wrote-pdf', (event, path) => {
+      const message = 'PDF Saved';
+      console.log("MESSAGE");
+    });
   }
 
   handleTitleChange = (newTitle) => {
@@ -209,7 +235,7 @@ class ItemCol extends React.Component {
                 </ColoredButton>
               </Tooltip>
               <Tooltip placement="bottomRight" title="Share item">
-                <ColoredButton type="link" size="small" lightmode={this.props.lightmode}>
+                <ColoredButton type="link" size="small" onClick={e => this.handleClickShare()} lightmode={this.props.lightmode}>
                   <Icon type="share-alt" theme="outlined" />
                 </ColoredButton>
               </Tooltip>
@@ -221,6 +247,7 @@ class ItemCol extends React.Component {
             </TopRightToolbar>
             <ItemContentContainer>
                 <TextEditor
+                  ref={this.textEditorRef}
                   title={itemsById[selectedId].title}
                   cat={itemsById[selectedId].categoryId ? 
                     this.props.categories.byId[itemsById[selectedId].categoryId].name :

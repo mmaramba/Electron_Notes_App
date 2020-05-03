@@ -42,11 +42,19 @@ function createWindow () {
     win = null
   })
 
-  /* create worker window for PDF creation
-  workerWindow = new BrowserWindow();
+  // create worker window for PDF creation
+  workerWindow = new BrowserWindow({
+    width: 300,
+    height: 200,
+    title: 'Add Item',
+
+    webPreferences: {
+      nodeIntegration: true
+    }
+  }
+  );
   workerWindow.loadURL(`file://${path.join(__dirname, "/worker.html")}`)
-  workerWindow.hide();
-  */
+  //workerWindow.hide();
 }
 
 // This method will be called when Electron has finished
@@ -93,10 +101,11 @@ ipc.on('print-to-pdf', event => {
   })
 })
 
-/*
+
 ipc.on('printPDF', (event, content) => {
   console.log("Sending content to worker window");
-  workerWindow.webContents.send('print-item-pdf', content);
+  console.log(content);
+  workerWindow.webContents.send('printPDF', content);
 })
 
 ipc.on('readyToPrintPDF', (event) => {
@@ -112,7 +121,6 @@ ipc.on('readyToPrintPDF', (event) => {
     })
   })
 })
-*/
 
 
 console.log("testing");

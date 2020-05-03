@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import TextEditor from './TextEditor.js';
 import { editItem } from '../../../api.js';
 import format from 'date-fns/format';
@@ -58,12 +59,17 @@ class ItemCol extends React.Component {
   constructor(props) {
     super(props)
     this.textEditorRef = React.createRef();
+    this.currentItemRef = React.createRef();
     this.typingTimeout = null;
   }
 
   state = {
     content: '',
     saveMsg: '\xa0'
+  }
+
+  setRef = (ref) => {
+    this.currentItemRef = ref;
   }
 
   handleClickShare = () => {
@@ -83,13 +89,16 @@ class ItemCol extends React.Component {
     })
     */
 
-    ipc.send('print-to-pdf');
-    //ipc.send('printPDF', this.textEditorRef.current);
+    //ipc.send('print-to-pdf');
 
+    ipc.send('printPDF', ReactDOM.findDOMNode(this.currentItemRef.current).innerHTML);
+
+    /*
     ipc.on('wrote-pdf', (event, path) => {
       const message = 'PDF Saved';
       console.log("MESSAGE");
     });
+    */
   }
 
   handleTitleChange = (newTitle) => {
@@ -259,6 +268,7 @@ class ItemCol extends React.Component {
                   handleTitleChange={this.handleTitleChange}
                   lightmode={this.props.lightmode}
                   saveMsg={this.state.saveMsg}
+                  setRef={this.setRef}
                 />
             </ItemContentContainer>
           </ItemColumnContent>

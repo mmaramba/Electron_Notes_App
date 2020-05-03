@@ -109,6 +109,7 @@ class TextEditor extends React.Component {
     this.handleClickAwayFromTitle = this.handleClickAwayFromTitle.bind(this)
     this.handleTitleKeyPress = this.handleTitleKeyPress.bind(this)
     this.inputEl = React.createRef();
+    this.pdfSaveRef = React.createRef();
   }
 
   
@@ -146,6 +147,10 @@ class TextEditor extends React.Component {
       this.inputEl.current.blur();
     }
   }
+
+  componentDidMount() {
+    this.props.setRef(this.pdfSaveRef);
+  }
   
   componentDidUpdate(prevProps) {
     if (this.props.content !== prevProps.content) {
@@ -172,22 +177,24 @@ class TextEditor extends React.Component {
         </CategoryLabel>
         <div>{this.props.saveMsg}</div>
         <CustomToolbar />
-        <ItemTitle
-          contentEditable={true}
-          onClick={this.handleClickTitle}
-          onBlur={this.handleClickAwayFromTitle}
-          onKeyPress={this.handleTitleKeyPress}
-          ref={this.inputEl}
-          suppressContentEditableWarning={true}
-        >
-          {this.state.title}
-        </ItemTitle>
-        <StyledReactQuill
-          onChange={this.props.handleContentChange}
-          placeholder={this.props.placeholder}
-          modules={TextEditor.modules}
-          value={this.props.content}
-        />
+        <div ref={this.pdfSaveRef}>
+          <ItemTitle
+            contentEditable={true}
+            onClick={this.handleClickTitle}
+            onBlur={this.handleClickAwayFromTitle}
+            onKeyPress={this.handleTitleKeyPress}
+            ref={this.inputEl}
+            suppressContentEditableWarning={true}
+          >
+            {this.state.title}
+          </ItemTitle>
+          <StyledReactQuill
+            onChange={this.props.handleContentChange}
+            placeholder={this.props.placeholder}
+            modules={TextEditor.modules}
+            value={this.props.content}
+          />
+        </div>
       </TextEditorContainer>
     )
   }

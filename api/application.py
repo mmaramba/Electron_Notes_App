@@ -98,6 +98,29 @@ def getStarredItems():
     else:
         abort(401, "Not logged in")
 
+# Retrieve user's searched items
+@app.route('/item/search', methods=['GET'])
+def getSearchItems():
+    if 'email' in session:
+        email = session['email']
+        res = client.db.users.find_one({'email': email})
+        items = res['items']
+
+        # TODO: convert + to spaces (make accounted for in the front end)
+        title_qry = request.args.get('title')
+
+        # Add results to search_res array
+        search_res = []
+        for item in items:
+            if title_qry in item['title']:
+                search_res.append(item)
+        print(search_res)
+
+        sanitized = json.loads(dumps(search_res))
+        return jsonify(sanitized)
+    else:
+        abort(401, "Not logged in")
+
 
 # Retrieve user's items in given category
 @app.route('/item/cat/<categoryId>', methods=['GET'])

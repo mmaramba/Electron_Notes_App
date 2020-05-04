@@ -54,7 +54,7 @@ function createWindow () {
   }
   );
   workerWindow.loadURL(`file://${path.join(__dirname, "/worker.html")}`)
-  //workerWindow.hide();
+  workerWindow.hide();
 }
 
 // This method will be called when Electron has finished

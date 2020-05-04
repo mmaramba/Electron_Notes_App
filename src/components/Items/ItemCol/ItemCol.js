@@ -155,17 +155,14 @@ class ItemCol extends React.Component {
     console.log(reqBody);
     const date = format(new Date(), 'KK:mm:ss');
     
-    const success = () => {
-      const hide = message.loading('Saving item...', 0);
-      this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
-      setTimeout(hide, 0);
 
-      this.setState({
-        saveMsg: `Last save: ${date}`
-      })
-    }
+    this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
 
-    success();
+    this.setState({
+      saveMsg: `Last save: ${date}`
+    })
+    
+
     /*editItem(item._id.$oid, reqBody).then((res) => {
       if (res.success) {
         console.log("item save content successful");

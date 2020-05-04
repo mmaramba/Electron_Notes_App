@@ -110,6 +110,9 @@ class LoggedInView extends React.Component {
             <Route path="/cat/:categoryId" render={(props) => {
               return <ItemsView categories={categories} {...props} lightmode={lightMode} />
             }} />
+            <Route path="/search" render={(props) => {
+              return <ItemsView categories={categories} {...props} lightmode={lightMode} />
+            }} />
             <Route path="/">
               <Redirect to="/items" />
             </Route>

@@ -54,11 +54,13 @@ class NavMenu extends React.Component {
             <StyledSpan>Create Item</StyledSpan>
           </div>
         </SpecialMenuOption>
-        <SpecialMenuOption key="10" disabled={true}>
-          <div onClick={() => console.log("ASDF")}>
-            <ColoredIcon type="search" />
-            <StyledSpan>Search All Items</StyledSpan>
-          </div>
+        <SpecialMenuOption key="10">
+          <Link to="/search">
+            <div onClick={() => console.log("ASDF")}>
+              <ColoredIcon type="search" />
+              <StyledSpan>Search All Items</StyledSpan>
+            </div>
+          </Link>
         </SpecialMenuOption>
         <Menu.Item key="9">
           <Link to="/items">

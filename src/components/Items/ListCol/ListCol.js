@@ -168,6 +168,7 @@ class ListCol extends React.Component {
                     numItems={allItemIds.length}
                     headerText={this.props.filter}
                     lightmode={this.props.lightmode}
+                    searchCb={this.props.searchCb}
                   />
                 </Affix>
                 <div>

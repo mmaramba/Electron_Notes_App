@@ -30,9 +30,14 @@ const HeaderTitle = styled.h3`
 
 const NumItemsTextContainer = styled.div`
 	text-align: left;
-	padding-top: 30px;
+	padding-top: 12px;
 	margin-left: 10px;
 	color: ${props => props.lightmode === "true" ? "rgba(0, 0, 0, 0.65)" : "white" };
+`
+
+const StyledSearchInput = styled(Input)`
+	width: 80%;
+	visibility: ${props => props.headerText === "Search Items" ? "default" : "hidden"};
 `
 
 class ListColHeader extends React.Component {
@@ -40,10 +45,33 @@ class ListColHeader extends React.Component {
 		super(props)
 	}
 
+	state = {
+		searchContent: ""
+	}
+
+	handleSearchChange = (e) => {
+		this.setState({
+			searchContent: e.target.value
+		});
+	}
+
+	handleSearchEnter = (e) => {
+		console.log("Enter pressed");
+		console.log(e.target.value);
+		this.props.searchCb(e.target.value);
+	}
+
 	render() {
 		return (
 			<HeaderContainer lightmode={this.props.lightmode}>
 				<HeaderTitle lightmode={this.props.lightmode}>{this.props.headerText}</HeaderTitle>
+				<StyledSearchInput
+					placeholder="Search items by title"
+					size="small"
+					headerText={this.props.headerText}
+					onPressEnter={this.handleSearchEnter}
+					onChange={this.handleSearchChange}
+				/>
 				<NumItemsTextContainer lightmode={this.props.lightmode}>
 					{this.props.numItems} Items
         		</NumItemsTextContainer>

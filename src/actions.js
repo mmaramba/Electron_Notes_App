@@ -4,6 +4,7 @@ import {
   getUserCategories,
   getAllItems,
   getStarredItems,
+  getSearchItems,
   getItemsFromCategory,
   editItem,
   createItem,
@@ -37,6 +38,8 @@ export const RECEIVE_DELETE_ITEM = 'RECEIVE_DELETE_ITEM'
 export const SWITCH_MODE = 'SWITCH_MODE'
 export const RECEIVE_EDIT_NAME = 'RECEIVE_EDIT_NAME'
 export const REQUEST_EDIT_NAME = 'REQUEST_EDIT_NAME'
+export const REQUEST_SEARCH_ITEMS = 'REQUEST_SEARCH_ITEMS'
+export const RECEIVE_SEARCH_ITEMS = 'RECEIVE_SEARCH_ITEMS'
 
 
 
@@ -155,6 +158,31 @@ export function fetchStarredItems() {
     dispatch(requestStarredItems());
     return getStarredItems()
       .then(res => dispatch(receiveStarredItems(res)))
+      .then(res => dispatch(selectFirstItemIfHas(res)))
+  }
+}
+
+function requestSearchItems(query) {
+  return {
+    type: REQUEST_SEARCH_ITEMS,
+    query
+  }
+}
+
+function receiveSearchItems(data) {
+  return {
+    type: RECEIVE_SEARCH_ITEMS,
+    data
+  }
+}
+
+
+export function fetchSearchItems(query) {
+  return dispatch => {
+    dispatch(changeFilter('Search Items', null));
+    dispatch(requestSearchItems(query));
+    return getSearchItems(query)
+      .then(res => dispatch(receiveSearchItems(res)))
       .then(res => dispatch(selectFirstItemIfHas(res)))
   }
 }

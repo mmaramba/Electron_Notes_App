@@ -24,7 +24,9 @@ import {
   RECEIVE_DELETE_ITEM,
   SWITCH_MODE,
   REQUEST_EDIT_NAME,
-  RECEIVE_EDIT_NAME
+  RECEIVE_EDIT_NAME, 
+  REQUEST_SEARCH_ITEMS,
+  RECEIVE_SEARCH_ITEMS
 } from './actions'
 
 function loginStatus(
@@ -155,6 +157,19 @@ function itemsByFilter(
       return Object.assign({}, state, {
         isFetchingItems: false,
         itemsById: byIdObjS,
+        allItemIds: action.data.map(item => item._id.$oid)
+      });
+    case REQUEST_SEARCH_ITEMS:
+      return Object.assign({}, state, {
+        isFetchingItems: true
+      });
+    case RECEIVE_SEARCH_ITEMS:
+      const byIdObjQ = {}
+      action.data.forEach(item => byIdObjQ[item._id.$oid] = item)
+
+      return Object.assign({}, state, {
+        isFetchingItems: false,
+        itemsById: byIdObjQ,
         allItemIds: action.data.map(item => item._id.$oid)
       });
     case REQUEST_CATEGORY_ITEMS:

@@ -11,7 +11,8 @@ import {
   fetchCategoryItems,
   fetchEditItem,
   selectFirstItem,
-  fetchDeleteItem
+  fetchDeleteItem,
+  fetchSearchItems
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -26,6 +27,11 @@ class ItemsView extends React.Component {
 
   componentDidMount() {
     this.props.dispatch(fetchAllItems());
+  }
+
+  boundedSearch = query => {
+    this.props.dispatch(deselectItem());
+    this.props.dispatch(fetchSearchItems(query));
   }
 
   boundedSave = (itemId, reqBody) => {
@@ -61,6 +67,9 @@ class ItemsView extends React.Component {
             this.props.dispatch(fetchStarredItems());
             //this.props.dispatch(selectFirstItem());
             return;
+          case "/search":
+            this.props.dispatch(deselectItem());
+            this.props.dispatch(fetchSearchItems(""));
           default:
             console.log("Items");
             return;
@@ -91,6 +100,7 @@ class ItemsView extends React.Component {
               selectedItem={selectedItem}
               currItemCallback={this.onItemChange}
               lightmode={this.props.lightmode}
+              searchCb={this.boundedSearch}
             />
             <ItemCol
               itemsByFilter={itemsByFilter}

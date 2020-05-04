@@ -69,6 +69,17 @@ async function getStarredItems() {
     .catch(error => console.log(error));  
 }
 
+async function getSearchItems(query) {
+    return fetch(baseUrl + '/item/search?title=' + query, {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function getItemsFromCategory(categoryId) {
     return fetch(baseUrl + '/item/cat/' + categoryId, {
         method: 'GET',
@@ -170,6 +181,7 @@ module.exports.editItem = editItem;
 module.exports.createItem = createItem;
 module.exports.getAllItems = getAllItems;
 module.exports.getStarredItems = getStarredItems;
+module.exports.getSearchItems = getSearchItems;
 module.exports.getItemsFromCategory = getItemsFromCategory;
 module.exports.deleteItem = deleteItem;
 module.exports.editUser = editUser;

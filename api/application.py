@@ -184,7 +184,7 @@ def singleItemOperation(itemId):
                 if field == '_id':
                     abort(403, "Forbidden request to change ID")
                 elif field == 'categoryId':
-                    set_obj['items.$.categoryId'] = ObjectId(content['categoryId'])
+                    set_obj['items.$.categoryId'] = content['categoryId']
                 else:
                     print(field, content[field])
                     key_str = 'items.$.' + field

@@ -146,6 +146,22 @@ class ItemCol extends React.Component {
     this.props.deleteItemCb(this.props.selectedItem.selectedId);
   }
 
+  handleEditCat = (key) => {
+    console.log(typeof key);
+    const currentCat = this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].categoryId;
+    if (key !== currentCat) {
+      console.log("Change category");
+      // EDIT ITEM SAVECONTENTCB BUT JUST THE CATEGORY ID IS THE ONE THATS CLICKED
+
+      const reqBody = {
+        categoryId: key
+      }
+      console.log(reqBody);
+      this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
+    }
+    
+  }
+
   handleSaveContent = () => {
     console.log("saving content...");
     
@@ -189,11 +205,12 @@ class ItemCol extends React.Component {
   */
   
   componentDidUpdate(prevProps) {
-    if (this.props.selectedItem !== prevProps.selectedItem) {
+    if (this.props.selectedItem.selectedId !== prevProps.selectedItem.selectedId) {
       console.log("Item selection updated");
       if (this.props.selectedItem.isSelected) {
         this.setState({
-          content: this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].content
+          content: this.props.itemsByFilter.itemsById[this.props.selectedItem.selectedId].content,
+          saveMsg: '\xa0'
         });
       }
     }
@@ -259,12 +276,14 @@ class ItemCol extends React.Component {
                     this.props.categories.byId[itemsById[selectedId].categoryId].name :
                     "Uncategorized"
                   }
+                  categories={this.props.categories}
                   placeholder="Start typing here!"
                   content={this.state.content}
                   handleContentChange={this.handleContentChange}
                   handleTitleChange={this.handleTitleChange}
                   lightmode={this.props.lightmode}
                   saveMsg={this.state.saveMsg}
+                  editCatCb={this.handleEditCat}
                   setRef={this.setRef}
                 />
             </ItemContentContainer>

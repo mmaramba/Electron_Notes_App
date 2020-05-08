@@ -27,7 +27,7 @@ const StyledLayout = styled(Layout)`
 `
 
 const StyledContent = styled(Content)`
-  background-color: black !important;
+  background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "#262626"};
   position: relative;
 `
 
@@ -39,7 +39,6 @@ const AffixContainer = styled.div`
 
 // change back to #fcfcfc
 const ScrollableArea = styled.div`
-  height: 4000px;
   background-color: ${props => props.lightmode === "true" ? "#fcfcfc" : "#262626"};
 `
 
@@ -159,7 +158,7 @@ class ListCol extends React.Component {
     return (
       <StyledCol span={8}>
         <StyledLayout>
-          <StyledContent>
+          <StyledContent lightmode={this.props.lightmode}>
             <AffixContainer ref={node => this.container = node}>
               <ScrollableArea lightmode={this.props.lightmode}>
                 <Affix ref={this.affixRef} target={() => this.container}>

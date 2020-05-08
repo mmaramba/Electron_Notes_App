@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import { Icon } from 'antd';
+import { Icon, Dropdown, Menu } from 'antd';
 import './TextEditor.css';
 import styled from 'styled-components';
 
@@ -75,6 +75,10 @@ const ItemTitle = styled.div`
 const StyledReactQuill = styled(ReactQuill)`
   height: 300px;
   width: 100%;
+`
+
+const StyledMenu = styled(Menu)`
+  width: 200px;
 `
 
 const TextEditorContainer = styled.div`
@@ -166,20 +170,41 @@ class TextEditor extends React.Component {
     }
   }
 
+  handleCategoryClick = ({ key }) => {
+    console.log(`CLICKED ON CAT  ${key}`);
+    console.log(`NAME OF CAT: ${this.props.categories.byId[key].name}`);
+    this.props.editCatCb(key);
+  }
+
   render() {
     //console.log(this.state.editorHtml);
     console.log("rerendering");
-    console.log(this.state.title);
+
+    const menu = (
+      <StyledMenu onClick={this.handleCategoryClick}>
+        {this.props.categories.allIds.map(cat => {
+          return (
+            <Menu.Item key={this.props.categories.byId[cat]._id.$oid}>
+              {this.props.categories.byId[cat].name}
+            </Menu.Item>
+          );
+        })}
+      </StyledMenu>
+    );
+
     return (
       <TextEditorContainer lightmode={this.props.lightmode}>
-        <CategoryLabel lightmode={this.props.lightmode}>
-          <span><Icon type="folder" /> {this.props.cat}</span>
-        </CategoryLabel>
+        <Dropdown overlay={menu}>
+          <CategoryLabel lightmode={this.props.lightmode}>
+            <span><Icon type="folder" /> {this.props.cat}</span>
+          </CategoryLabel>
+        </Dropdown>
         <div>{this.props.saveMsg}</div>
         <CustomToolbar />
         <div ref={this.pdfSaveRef}>
           <ItemTitle
             contentEditable={true}
+            className="itemTitle"
             onClick={this.handleClickTitle}
             onBlur={this.handleClickAwayFromTitle}
             onKeyPress={this.handleTitleKeyPress}

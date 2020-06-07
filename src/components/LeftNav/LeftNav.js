@@ -53,6 +53,7 @@ class LeftNav extends React.Component {
           createItemHandler={this.props.createItemHandler} 
           categories={this.props.categories}
           lightmode={this.props.lightmode}
+          newCatCb={this.props.newCatCb}
         />
         <NavFooter
           collapsed={this.state.collapsed.toString()}

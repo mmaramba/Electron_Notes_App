@@ -70,17 +70,24 @@ class Register extends React.Component {
 				console.log('Received values of form: ', values);
 				registerUser(values).then((res) => {
 					if (res.success) {
+						const loginValues = {
+							'email': values.email,
+							'password': values.password
+						};
+						this.props.login(loginValues);
+						/*
 						userLogin({
 							'email': values.email,
 							'password': values.password
 						}).then((loginRes) => {
 							if (loginRes.success) {
-								this.props.onUserLogin();
+								this.props.login(values);
 								this.setState({ errorText: '' });
 							} else {
 								console.log("Error logging in as newly registered user");
 							}
 						})
+						*/
 					} else {
 						console.log("Do something with error");
 						this.setState({ errorText: res.error });

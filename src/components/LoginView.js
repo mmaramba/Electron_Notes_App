@@ -43,7 +43,7 @@ class LoginView extends React.Component {
 									<WrappedNormalLoginForm login={this.props.login} loginStatus={this.props.loginStatus}/>
 								</Route>
 								<Route path="/register">
-									<WrappedRegistrationForm />
+									<WrappedRegistrationForm login={this.props.login} />
 								</Route>
 								<Route path="/">
 									<Redirect to="/login" />

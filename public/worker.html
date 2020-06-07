@@ -30,13 +30,10 @@
 </head>
 <body>
     <script>
-        console.log("HI");
         const ipcRenderer = require("electron").ipcRenderer;
 
         ipcRenderer.on("printPDF", (event, content) => {
-            console.log("HERE");
             document.body.innerHTML = content;
-
             ipcRenderer.send("readyToPrintPDF");
         });
     </script>

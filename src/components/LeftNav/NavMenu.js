@@ -2,7 +2,9 @@ import React from 'react';
 import {
   Icon,
   Menu,
-  Tooltip
+  Tooltip,
+  Modal,
+  Input
 } from 'antd';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -34,8 +36,46 @@ class NavMenu extends React.Component {
   }
 
   state = {
-    settingsVisible: false
+    settingsVisible: false,
+    newCatModalVisible: false,
+    newCatInputVal: ''
   }
+
+  openNewCat = () => {
+    console.log("menu option clicked for new cat");
+		this.setState({
+			newCatModalVisible: true
+		});
+	}
+
+	handleOk = () => {
+    console.log(this.state.newCatInputVal);
+    
+		const reqBody = {
+			"name": this.state.newCatInputVal
+		}
+
+    this.props.newCatCb(reqBody);
+    
+		
+		this.setState({
+      newCatModalVisible: false,
+      newCatInputVal: ''
+		});
+	};
+
+	handleCancel = () => {
+		this.setState({
+			newCatModalVisible: false,
+			newCatInputVal: ''
+		});
+	};
+
+	handleNewCatInputChange = (e) => {
+		this.setState({
+			newCatInputVal: e.target.value
+		})
+	}
 
   render() {
     const userCats = this.props.categories.allIds.map(id => {
@@ -78,6 +118,11 @@ class NavMenu extends React.Component {
           }
         >
           {userCats}
+          <SpecialMenuOption key="usercatsbutton" disabled={true}>
+            <div onClick={this.openNewCat}>
+              Add a new category...
+            </div>
+          </SpecialMenuOption>
         </SubMenu>
         <Menu.Item key="2" className="menuItem">
           <Link to="/starred">
@@ -85,6 +130,14 @@ class NavMenu extends React.Component {
             <span>Starred</span>
           </Link>
         </Menu.Item>
+        <Modal
+            title="New Category Name"
+            visible={this.state.newCatModalVisible}
+            onOk={this.handleOk}
+            onCancel={this.handleCancel}
+          >
+            <Input onChange={this.handleNewCatInputChange} />
+          </Modal>
       </StyledMenuContainer>
     )
   }

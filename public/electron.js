@@ -112,7 +112,6 @@ ipc.on('readyToPrintPDF', (event) => {
   const pdfPath = path.join(os.tmpdir(), 'testsaveitem.pdf');
 
   workerWindow.webContents.printToPDF({}).then(data => {
-    console.log("HERE");
     fs.writeFile(pdfPath, data, err => {
       if (err) return console.log(err.message);
       console.log("Write file successful");

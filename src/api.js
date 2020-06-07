@@ -1,5 +1,5 @@
 const baseUrl = 'http://127.0.0.1:5000';
-
+//const baseUrl = 'https://mm-senior-proj.azurewebsites.net/';
 
 
 async function userLogin(data) {
@@ -136,6 +136,40 @@ async function editUser(data) {
     .catch(error => console.log(error));
 }
 
+async function editCat(catId, data) {
+    return fetch(baseUrl + '/category/' + catId, {
+        method: 'PUT',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));
+}
+
+async function createCat(data) {
+    return fetch(baseUrl + '/category', {
+        method: 'POST',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify(data)
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));
+}
+
 async function createItem(data) {
     return fetch(baseUrl + '/item', {
         method: 'POST',
@@ -164,7 +198,19 @@ async function deleteItem(itemId) {
     .catch(error => console.log(error));  
 }
 
+async function deleteCat(id) {
+    return fetch(baseUrl + '/category/' + id, {
+        method: 'DELETE',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'include'
+    })
+    .then(handleErrors)
+    .catch(error => console.log(error));  
+}
+
 async function handleErrors(response) {
+    console.log("HI");
     const json = await response.json()
     //console.log(json);
     if (!response.ok) {
@@ -185,3 +231,6 @@ module.exports.getSearchItems = getSearchItems;
 module.exports.getItemsFromCategory = getItemsFromCategory;
 module.exports.deleteItem = deleteItem;
 module.exports.editUser = editUser;
+module.exports.editCat = editCat;
+module.exports.createCat = createCat;
+module.exports.deleteCat = deleteCat;

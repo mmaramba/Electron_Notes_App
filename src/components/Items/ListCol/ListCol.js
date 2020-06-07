@@ -166,8 +166,13 @@ class ListCol extends React.Component {
                     location={this.props.location}
                     numItems={allItemIds.length}
                     headerText={this.props.filter}
+                    filterObj={this.props.filterObj}
                     lightmode={this.props.lightmode}
                     searchCb={this.props.searchCb}
+                    categories={this.props.categories}
+                    editCatNameCb={this.props.editCatNameCb}
+                    deleteCatCb={this.props.deleteCatCb}
+                    history={this.props.history}
                   />
                 </Affix>
                 <div>
@@ -196,7 +201,7 @@ class ListCol extends React.Component {
                                 <span> {itemsById[itemId].categoryId? byId[itemsById[itemId].categoryId].name : "Uncategorized"} · </span>
                               </ListItemCategoryText>
                               <ListItemTimeText lightmode={this.props.lightmode}>
-                                {formatDistanceToNow(addHours(new Date(itemsById[itemId].dateModified.$date), 8))} ago
+                                {formatDistanceToNow(addHours(new Date(itemsById[itemId].dateModified.$date), 7))} ago
                               </ListItemTimeText>
                             </RelativeDiv>
                           }

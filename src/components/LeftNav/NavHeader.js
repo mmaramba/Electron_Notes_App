@@ -125,6 +125,16 @@ class NavHeader extends React.Component {
     })
   }
 
+  createNameText = () => {
+    if (this.props.collapsed === "true") {
+      return "";
+    } else if (this.props.collapsed === "false" && this.props.first && this.props.last) {
+      return `${this.props.first} ${this.props.last}`;
+    } else {
+      return this.props.email;
+    }
+  }
+
   render() {
 
     const userMenu = (
@@ -150,7 +160,7 @@ class NavHeader extends React.Component {
       <NavHeaderContainer>
         <StyledAvatar size={48} onClick={() => console.log("Avatar clicked")}>{userInitials}</StyledAvatar>
         <NameContainer lightmode={this.props.lightmode}>
-          {this.props.name}
+          {this.createNameText()}
           <Dropdown overlay={userMenu} trigger={['click']}>
               <PaddedHeaderIcon
                 lightmode={this.props.lightmode}

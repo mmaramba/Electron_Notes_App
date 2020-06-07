@@ -26,7 +26,14 @@ import {
   REQUEST_EDIT_NAME,
   RECEIVE_EDIT_NAME, 
   REQUEST_SEARCH_ITEMS,
-  RECEIVE_SEARCH_ITEMS
+  RECEIVE_SEARCH_ITEMS,
+  REQUEST_EDIT_CAT_NAME,
+  RECEIVE_EDIT_CAT_NAME,
+  UPDATE_FILTER_NAME,
+  REQUEST_CREATE_CAT,
+  RECEIVE_CREATE_CAT,
+  REQUEST_DELETE_CAT,
+  RECEIVE_DELETE_CAT
 } from './actions'
 
 function loginStatus(
@@ -118,6 +125,36 @@ function categories(
         isFetchingCategories: false,
         byId: byIdObj,
         allIds: action.data.map(cat => cat._id.$oid)
+      });
+    case REQUEST_EDIT_CAT_NAME:
+      return state;
+    case RECEIVE_EDIT_CAT_NAME:
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [action.id]: {
+            ...state.byId[action.id],
+            name: action.name
+          }
+        }
+      }
+    case REQUEST_CREATE_CAT:
+      return state;
+    case RECEIVE_CREATE_CAT:
+      // we just manually fetch categories after so i don't do anything here
+      return state;
+    case REQUEST_DELETE_CAT:
+      return state;
+    case RECEIVE_DELETE_CAT:
+      const { 
+        [action.id] : _,
+        ...rest
+      } = state.byId;
+
+      return Object.assign({}, state, {
+        byId: rest,
+        allIds: state.allIds.filter(id => id !== action.id)
       });
     default:
       return state;
@@ -267,6 +304,10 @@ function filter(
       return Object.assign({}, state, {
         filterType: action.filterType,
         categoryId: action.categoryId
+      });
+    case UPDATE_FILTER_NAME:
+      return Object.assign({}, state, {
+        filterType: action.name
       });
     default:
       return state;

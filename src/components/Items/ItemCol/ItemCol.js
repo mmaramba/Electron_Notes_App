@@ -75,30 +75,7 @@ class ItemCol extends React.Component {
   handleClickShare = () => {
     const { ipcRenderer } = window.require('electron');
     const ipc = ipcRenderer;
-    /*const pdfPath = path.join(app.getPath("downloads"), 'testsaveitem.pdf');
-    const remote = window.require('electron').remote;
-
-    remote.getCurrentWindow().webContents.printToPDF({}).then(data => {
-      console.log("Saving now...");
-      fs.writeFile(pdfPath, data, err => {
-        if (err) return console.log(err.message);
-        console.log("Write file successful");
-        shell.openExternal('file://' + pdfPath);
-        event.sender.send('wrote-pdf', pdfPath);
-      })
-    })
-    */
-
-    //ipc.send('print-to-pdf');
-
     ipc.send('printPDF', ReactDOM.findDOMNode(this.currentItemRef.current).innerHTML);
-
-    /*
-    ipc.on('wrote-pdf', (event, path) => {
-      const message = 'PDF Saved';
-      console.log("MESSAGE");
-    });
-    */
   }
 
   handleTitleChange = (newTitle) => {
@@ -169,13 +146,13 @@ class ItemCol extends React.Component {
       content: this.state.content
     }
     console.log(reqBody);
-    const date = format(new Date(), 'KK:mm:ss');
+    const date = format(new Date(), 'KK:mm');
     
 
     this.props.saveContentCb(this.props.selectedItem.selectedId, reqBody);
 
     this.setState({
-      saveMsg: `Last save: ${date}`
+      saveMsg: `Last saved at ${date}.`
     })
     
 

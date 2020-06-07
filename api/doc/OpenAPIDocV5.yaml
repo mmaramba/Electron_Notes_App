@@ -1,0 +1,482 @@
+openapi: 3.0.1
+info:
+  title: Senior Project API
+  description: Prototype documentation for Michael Maramba's Senior Project API. This
+    API features routes that support functionality for user registration, note-taking
+    and saving, and data display.
+  contact:
+    email: mpmaramb@calpoly.edu
+  version: 1.0.3
+servers:
+- url: /
+tags:
+- name: item
+  description: Routes used to manage item creation functionality
+- name: category
+  description: Routes used to manage categories associated with items
+- name: user
+  description: Routes used to manage login and registration
+- name: session
+  description: Routes used to manage session
+paths:
+  /item:
+    post:
+      tags:
+      - item
+      summary: Create item
+      operationId: createItem
+      requestBody:
+        description: Created item object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqItem'
+        required: true
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+  /item/all:
+    get:
+      tags:
+      - item
+      summary: Retrieve user's items
+      description: Returns a list of all of the user's items
+      operationId: getAllItems
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResItem'
+        401:
+          description: not logged in
+  /item/starred:
+    get:
+      tags:
+      - item
+      summary: Retrieve user's starred items
+      description: Returns a list of all of the user's starred items
+      operationId: getStarredItems
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResItem'
+        401:
+          description: not logged in
+  /item/search:
+    get:
+      tags:
+      - item
+      summary: Retrieve user's searched items
+      description: Returns a list of all titles that match user query
+      operationId: getSearchItems
+      parameters:
+        - in: query
+          name: title
+          schema:
+            type: string
+          description: Title of item(s) that user has searched for
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResItem'
+        401:
+          description: not logged in
+  /item/cat/{categoryId}:
+    get:
+      tags:
+      - item
+      summary: Retrieve items by category
+      description: Returns a list of items in user-specified category.
+      operationId: getItemsByCategory
+      parameters:
+      - name: categoryId
+        in: path
+        description: ID of category to search items by
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResItem'
+        401:
+          description: not logged in
+        404:
+          description: ID not found
+  /item/{itemId}:
+    get:
+      tags:
+      - item
+      summary: Retrieve item by ID
+      description: Returns a single item
+      operationId: getItemById
+      parameters:
+      - name: itemId
+        in: path
+        description: ID of item to return
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResItem'
+        401:
+          description: not logged in
+        404:
+          description: ID not found
+    put:
+      tags:
+      - item
+      summary: Update an existing item
+      operationId: updateItem
+      parameters:
+      - name: itemId
+        in: path
+        description: ID of item to edit
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+        403:
+          description: forbidden request
+    delete:
+      tags:
+      - item
+      summary: Delete an item
+      operationId: deleteItem
+      parameters:
+      - name: itemId
+        in: path
+        description: Item ID to delete
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+  /user:
+    post:
+      tags:
+      - user
+      summary: Register user
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqUser'
+        required: true
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Bad request. Also provides reason
+    get:
+      tags:
+      - user
+      summary: Retrieve user
+      description: Returns current user
+      operationId: getUserById
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResUser'
+        401:
+          description: not logged in
+    put:
+      tags:
+      - user
+      summary: Update user information
+      operationId: updateUser
+      requestBody:
+        description: Updated information of user
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqUser'
+        required: true
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+        400:
+          description: Bad request. Also provides reason
+    delete:
+      tags:
+      - user
+      summary: Delete an account
+      operationId: deleteUser
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+  /session:
+    post:
+      tags:
+      - session
+      summary: User Login
+      operationId: createSession
+      requestBody:
+        description: User login information
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+        required: true
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: Invalid credentials
+    delete:
+      tags:
+      - session
+      summary: User logout
+      operationId: deleteSession
+      responses:
+        200:
+          description: successful operation
+  /category:
+    post:
+      tags:
+      - category
+      summary: Create category
+      operationId: createCategory
+      requestBody:
+        description: Created category
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqCategory'
+        required: true
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Bad request. Also provides reason
+        401:
+          description: not logged in
+  /category/all:
+    get:
+      tags:
+      - category
+      summary: Retrieve user's categories
+      description: Returns a list of user's categories
+      operationId: getAllCategories
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ResCategory'
+        401:
+          description: not logged in
+  /category/{categoryId}:
+    put:
+      tags:
+      - category
+      summary: Edit an existing category
+      operationId: updateCategory
+      parameters:
+      - name: categoryId
+        in: path
+        description: ID of category to edit
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReqCategory'
+        required: true
+      responses:
+        200:
+          description: successful operation
+        400:
+          description: Bad request. Also provides reason
+        401:
+          description: not logged in
+    delete:
+      tags:
+      - category
+      summary: Delete a category
+      operationId: deleteCategory
+      parameters:
+      - name: categoryId
+        in: path
+        description: Category ID to delete
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: successful operation
+        401:
+          description: not logged in
+        404:
+          description: id not found
+components:
+  schemas:
+    ReqCategory:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+    ReqUser:
+      required:
+      - firstName
+      - lastName
+      - email
+      - password
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+    ReqItem:
+      required:
+      - content
+      - title
+      - categoryId
+      type: object
+      properties:
+        title:
+          type: string
+        categoryId:
+          type: string
+        content:
+          type: string
+          description: HTML representation of item content
+    ResCategory:
+      required:
+      - name
+      - _id
+      type: object
+      properties:
+        name:
+          type: string
+        _id:
+          type: object
+          properties:
+            $oid:
+              type: string
+    ResUser:
+      required:
+      - _id
+      - firstName
+      - lastName
+      - email
+      - password
+      - items
+      - categories
+      type: object
+      properties:
+        _id:
+          type: object
+          properties:
+            $oid:
+              type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResItem'
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResCategory'
+    ResItem:
+      required:
+      - _id
+      - content
+      - title
+      - categoryId
+      - dateCreated
+      - dateModified
+      - star
+      type: object
+      properties:
+        _id:
+          type: object
+          properties:
+            $oid:
+              type: string
+        categoryId:
+          type: object
+          properties:
+            $oid:
+              type: string
+        dateCreated:
+          type: string
+          format: date-time
+        dateModified:
+          type: string
+          format: date-time
+        title:
+          type: string
+        content:
+          type: string
+          description: HTML representation of item content
+        star:
+          type: boolean

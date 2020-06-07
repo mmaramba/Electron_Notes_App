@@ -12,7 +12,9 @@ import {
   fetchEditItem,
   selectFirstItem,
   fetchDeleteItem,
-  fetchSearchItems
+  fetchSearchItems,
+  fetchEditCatName,
+  fetchDeleteCat
 } from '../../actions.js';
 import { connect } from 'react-redux';
 
@@ -44,6 +46,14 @@ class ItemsView extends React.Component {
 
   onItemChange = (itemId, item) => {
     this.props.dispatch(selectItem(itemId));
+  }
+
+  boundedEditCatName = (catId, reqBody) => {
+    this.props.dispatch(fetchEditCatName(catId, reqBody));
+  }
+
+  boundedDeleteCat = (catId) => {
+    this.props.dispatch(fetchDeleteCat(catId));
   }
 
   componentDidUpdate(prevProps) {
@@ -96,11 +106,15 @@ class ItemsView extends React.Component {
               itemsByFilter={itemsByFilter}
               categories={this.props.categories}
               filter={filterType}
+              filterObj={filter}
               location={this.props.location}
               selectedItem={selectedItem}
               currItemCallback={this.onItemChange}
               lightmode={this.props.lightmode}
               searchCb={this.boundedSearch}
+              editCatNameCb={this.boundedEditCatName}
+              deleteCatCb={this.boundedDeleteCat}
+              history={this.props.history}
             />
             <ItemCol
               itemsByFilter={itemsByFilter}

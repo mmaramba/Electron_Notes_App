@@ -9,7 +9,10 @@ import {
   editItem,
   createItem,
   deleteItem,
-  editUser
+  editUser,
+  editCat,
+  createCat,
+  deleteCat
 } from './api.js';
 
 export const REQUEST_LOGIN = 'REQUEST_LOGIN'
@@ -40,7 +43,14 @@ export const RECEIVE_EDIT_NAME = 'RECEIVE_EDIT_NAME'
 export const REQUEST_EDIT_NAME = 'REQUEST_EDIT_NAME'
 export const REQUEST_SEARCH_ITEMS = 'REQUEST_SEARCH_ITEMS'
 export const RECEIVE_SEARCH_ITEMS = 'RECEIVE_SEARCH_ITEMS'
-
+export const REQUEST_EDIT_CAT_NAME = 'REQUEST_EDIT_CAT_NAME'
+export const RECEIVE_EDIT_CAT_NAME = 'RECEIVE_EDIT_CAT_NAME'
+export const UPDATE_FILTER_NAME = 'UPDATE_FILTER_NAME'
+export const REQUEST_CREATE_CAT = 'REQUEST_CREATE_CAT'
+export const RECEIVE_CREATE_CAT = 'RECEIVE_CREATE_CAT'
+export const REQUEST_DELETE_CAT = 'REQUEST_DELETE_CAT'
+export const RECEIVE_DELETE_CAT = 'RECEIVE_DELETE_CAT'
+export const SET_CAT_ITEMS_TO_NULL = 'SET_CAT_ITEMS_TO_NULL'
 
 
 function requestLogin(data) {
@@ -51,13 +61,19 @@ function requestLogin(data) {
 }
 
 function receiveLoginResponse(res) {
-  return (res.success ?
-    { type: RECEIVE_LOGIN_SUCCESS } :
-    {
+  if (res && res.success) {
+    return { type: RECEIVE_LOGIN_SUCCESS };
+  } else if (res) {
+    return {
       type: RECEIVE_LOGIN_ERROR,
       error: res.error
     }
-  );
+  } else {
+    return {
+      type: RECEIVE_LOGIN_ERROR,
+      error: "Server connection error"
+    }
+  }
 }
 
 export function login(data) {
@@ -123,7 +139,7 @@ function requestAllItems() {
 function receiveAllItems(data) {
   return {
     type: RECEIVE_ALL_ITEMS,
-    data
+    data: data.reverse()
   }
 }
 
@@ -147,7 +163,7 @@ function requestStarredItems() {
 function receiveStarredItems(data) {
   return {
     type: RECEIVE_STARRED_ITEMS,
-    data
+    data: data.reverse()
   }
 }
 
@@ -172,7 +188,7 @@ function requestSearchItems(query) {
 function receiveSearchItems(data) {
   return {
     type: RECEIVE_SEARCH_ITEMS,
-    data
+    data: data.reverse()
   }
 }
 
@@ -197,7 +213,7 @@ function requestCategoryItems(categoryId) {
 function receiveCategoryItems(data) {
   return {
     type: RECEIVE_CATEGORY_ITEMS,
-    data
+    data: data.reverse()
   }
 }
 
@@ -352,6 +368,108 @@ export function fetchEditName(data) {
     dispatch(requestEditName(data));
     return editUser(data)
       .then(res => dispatch(receiveEditName(res, data)))
+  }
+}
+
+function requestEditCatName(id, data) {
+  return {
+    type: REQUEST_EDIT_CAT_NAME,
+    name: data.name,
+    id: id
+  }
+}
+
+function receiveEditCatName(id, res, data) {
+  return {
+    type: RECEIVE_EDIT_CAT_NAME,
+    res,
+    name: data.name,
+    id
+  }
+}
+
+function updateFilterName(data) {
+  return {
+    type: UPDATE_FILTER_NAME,
+    name: data.name
+  }
+}
+
+export function fetchEditCatName(id, data) {
+  return dispatch => {
+    dispatch(requestEditCatName(id, data));
+    return editCat(id, data)
+      .then(res => {
+        dispatch(receiveEditCatName(id, res, data));
+        dispatch(updateFilterName(data));
+      })
+  }
+}
+
+function requestCreateCat(data) {
+  return {
+    type: REQUEST_CREATE_CAT,
+    name: data.name
+  }
+}
+
+function receiveCreateCat(res) {
+  return {
+    type: RECEIVE_CREATE_CAT,
+    res
+  }
+}
+
+export function fetchCreateCat(data) {
+  return (dispatch) => {
+    dispatch(requestCreateCat(data));
+    return createCat(data)
+      .then(res => {
+        dispatch(receiveCreateCat(res));
+        dispatch(fetchCategories());
+      })
+  }
+}
+
+function requestDeleteCat(id) {
+  return {
+    type: REQUEST_DELETE_CAT,
+    id
+  }
+}
+
+function receiveDeleteCat(id, res) {
+  return {
+    type: RECEIVE_DELETE_CAT,
+    id,
+    res
+  }
+}
+
+function setItemsCatToNull(catId) {
+  return (dispatch, getState) => {
+    const { itemsByFilter } = getState();
+    const itemsToDelete = itemsByFilter.allItemIds.filter(id => itemsByFilter.itemsById[id].categoryId === catId)
+    console.log(itemsToDelete);
+
+    const reqBody = {
+      categoryId: null
+    }
+
+    itemsToDelete.forEach(itemId => {
+      editItem(itemId, reqBody)
+      .then(res => dispatch(receiveEditItem(res, itemId, reqBody)))
+    });
+  }
+}
+
+export function fetchDeleteCat(id) {
+  return (dispatch) => {
+    dispatch(setItemsCatToNull(id));
+    dispatch(requestDeleteCat(id));
+
+    return deleteCat(id)
+      .then(res => dispatch(receiveDeleteCat(id, res)))
   }
 }
 
